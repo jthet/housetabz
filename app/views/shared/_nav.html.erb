@@ -1,0 +1,18 @@
+<nav class="flex items-center justify-between py-4 px-6 bg-gray-200">
+  <div>
+    <%= link_to 'HouseTabz', root_path, class: 'text-xl font-bold text-gray-800' %>
+  </div>
+
+  <% if user_signed_in? %>
+   <ul class="flex items-center space-x-4">
+  <li><%= link_to 'Profile', new_user_registration_path, class: 'text-gray-800' %></li>
+  <li><%= link_to 'My House', new_user_session_path, class: 'text-gray-800' %></li>
+  <li>  <%= button_to 'Log out', destroy_user_session_path, method: :delete %></li>
+  <% else %>
+ <ul class="flex items-center space-x-4">
+  <li><%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-800' %></li>
+  <li><%= link_to 'Login', new_user_session_path, class: 'text-gray-800' %></li>
+</ul>
+  </ul>
+<% end %>
+</nav>
