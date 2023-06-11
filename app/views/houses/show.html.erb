@@ -6,6 +6,15 @@
     <p><%= user.first_name %></p>
   <% end %>
 
+  <h2>Tabz:</h2>
+  <% @user.house.bills.each do |bill| %>
+    <p> <strong> <%= bill.name %>: </strong>$<%=bill.amount %></p>
+  <% end %>
+
+  <% total_amount = @user.house.bills.sum(:amount) %>
+  <p><strong>Total Bill Amount: $</strong><%= total_amount %></p>
+
+
 <% else %>
   <h1>Not yet a member of a house?</h1>
   <%= button_to 'Create House', create_house_path, method: :post, class: 'button' %>
