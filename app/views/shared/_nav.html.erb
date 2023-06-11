@@ -6,7 +6,7 @@
   <% if user_signed_in? %>
    <ul class="flex items-center space-x-4">
   <li><%= link_to 'Profile', user_profile_path(current_user), class: 'text-gray-800' %></li>
-  <li><%= link_to 'My House', new_user_session_path, class: 'text-gray-800' %></li>
+  <li><%= link_to 'My House', my_house_path(current_user.house), class: 'text-gray-800' %></li>
   <li>  <%= button_to 'Log out', destroy_user_session_path, method: :delete %></li>
   <% else %>
  <ul class="flex items-center space-x-4">

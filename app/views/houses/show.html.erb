@@ -1,0 +1,11 @@
+
+<% if @user.house %>
+  <h1><%= @user.house.name %></h1>
+ 
+<% else %>
+  <h1>Not yet a member of a house?</h1>
+  <%= button_to 'Create House', create_house_path, method: :post, class: 'button' %>
+<% end %>
+
+
+<%# <%= button_to 'Join House', join_house_path, method: :post, class: 'button' %> 
