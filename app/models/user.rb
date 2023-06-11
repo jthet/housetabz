@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_one :profile
   belongs_to :house
+  
 end
