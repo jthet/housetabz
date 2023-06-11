@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_003123) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_11_181344) do
+  create_table "houses", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.string "password_digest"
+    t.boolean "joinable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "first_name"
