@@ -4,6 +4,13 @@
   <p><strong>First Name:</strong> <%= @profile.first_name %></p>
   <p><strong>Last Name:</strong> <%= @profile.last_name %></p>
   <p><strong>Bio:</strong> <%= @profile.bio %></p>
+
+ <% if @user.house %>
+    <p><strong>House Name:</strong> <%= @user.house.name %></p>
+  <% else %>
+    <p>No house associated.</p>
+  <% end %>
+
   <%= button_to 'Edit Profile', edit_user_profile_path(@profile), method: :get, class: 'button' %>
 
   <!-- Other profile details -->
