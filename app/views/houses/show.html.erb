@@ -6,13 +6,12 @@
     <p><%= user.first_name %></p>
   <% end %>
 
-  <h2>Tabz:</h2>
+  <h2>Our Tabz: $<%= @user.house.total_charge %></h2>
   <% @user.house.bills.each do |bill| %>
     <p> <strong> <%= bill.name %>: </strong>$<%=bill.amount %></p>
   <% end %>
 
-  <% total_amount = @user.house.bills.sum(:amount) %>
-  <p><strong>Total Bill Amount: $</strong><%= total_amount %></p>
+
 
 
 <% else %>
