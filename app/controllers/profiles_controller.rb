@@ -34,15 +34,17 @@ def show
 
   
     def update
-      @profile = Profile.find(params[:id])
-  
+      @user = current_user
+      @profile = @user.profile
+    
       if @profile.update(profile_params)
         redirect_to user_profile_path(current_user), notice: 'Profile was successfully updated.'
       else
         render :edit
       end
     end
-  
+    
+
   
 
 private
