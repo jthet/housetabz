@@ -5,6 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :profile
-  belongs_to :house
+  belongs_to :house, optional: true
   
 end

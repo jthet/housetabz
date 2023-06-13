@@ -1,0 +1,18 @@
+<h1>Create a House</h1>
+<%= form_with model: @house, url: create_house_path, method: :post do |f| %>
+  <!-- Add necessary form fields for creating a house -->
+  <!-- For example: -->
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %>
+    <%= f.text_field :address %>
+  </div>
+  <div class = "field">
+    <%= f.label :password %>
+    <%= f.text_field :password %>
+
+  <%= f.submit 'Create House', class: 'button' %>
+<% end %>
