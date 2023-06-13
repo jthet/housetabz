@@ -1,4 +1,20 @@
 class ProfilesController < ApplicationController
+    
+    def new
+        @profile = Profile.new
+    end
+
+    def create
+        @profile = Profile.new(profile_params)
+        @profile.user = current_user
+
+    if @profile.save
+        redirect_to user_profile_path(current_user)
+    else
+        render :new
+    end
+end
+    
     def show
         @user = current_user
         @profile = Profile.find(params[:id])
@@ -17,7 +33,6 @@ class ProfilesController < ApplicationController
         redirect_to @profile
         else  
             render :edit, status: :unprocessable_entity
-
     end
 end
 
@@ -25,6 +40,6 @@ end
 private
 
 def profile_params
-    params.require(:profile).permit(:first_name, :last_name)
+    params.require(:profile).permit(:first_name, :last_name, :bio)
 end
 end

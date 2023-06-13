@@ -3,18 +3,23 @@
     <%= link_to 'HouseTabz', root_path, class: 'text-xl font-bold text-gray-800' %>
   </div>
 
-  <% if user_signed_in? %>
+  <% if current_user %>
     <ul class="flex items-center space-x-4">
-      <li><%= link_to 'Profile', user_profile_path(current_user), class: 'text-gray-800' %></li>
-  <% if current_user.house %>
-    <li><%= link_to 'My House', user_house_path(current_user, current_user.house), class: 'text-gray-800' %></li>
-  <% else %>
-    <li><%= link_to 'My House', new_house_path, class: 'text-gray-800' %></li>
-  <% end %>
+      <% if current_user.profile %>
+        <li><%= link_to 'Profile', user_profile_path(current_user), class: 'text-gray-800' %></li>
+      <% else %>
+        <li><%= link_to 'Profile', new_profile_path, class: 'text-gray-800' %></li>
+      <% end %>
 
+      <% if current_user.house %>
+        <li><%= link_to 'My House', user_house_path(current_user, current_user.house), class: 'text-gray-800' %></li>
+      <% else %>
+        <li><%= link_to 'My House', new_house_path, class: 'text-gray-800' %></li>
+      <% end %>
 
       <li><%= button_to 'Log out', destroy_user_session_path, method: :delete %></li>
     </ul>
+
   <% else %>
     <ul class="flex items-center space-x-4">
       <li><%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-800' %></li>

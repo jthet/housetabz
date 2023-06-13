@@ -1,1 +1,22 @@
-<h1>Create User Profile</h1>
+<h1>Create Profile</h1>
+
+<%= form_with(model: @profile, url: profiles_path, method: :post) do |form| %>
+  <div>
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+   <div>
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+   </div>
+
+  <div>
+    <%= form.label :bio %>
+    <%= form.text_area :bio %>
+  </div>
+
+  <div>
+    <%= form.submit 'Create Profile' %>
+  </div>
+<% end %>
