@@ -3,7 +3,9 @@
 <% if @profile %>
   <p><strong>First Name:</strong> <%= @profile.first_name %></p>
   <p><strong>Last Name:</strong> <%= @profile.last_name %></p>
-  <p><strong>Bio:</strong> <%= @profile.bio %></p> <%= button_to 'Edit Profile', edit_user_profile_path(@profile), method: :get, class: 'button' %>
+  <p><strong>Bio:</strong> <%= @profile.bio %></p> 
+ <%= link_to 'Edit Profile', edit_user_profile_path(@user, @profile), class: 'button' %>
+
 
   <p><strong>My Tab:</strong> $<%= current_user.house&.total_charge.to_f / current_user.house&.users&.count.to_f %></p>
  <% if @user.house %>
