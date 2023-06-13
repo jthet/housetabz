@@ -20,17 +20,31 @@ class HousesController < ApplicationController
         end
       end
       
-      def join
-        # Render the form for joining a house
+        def join
+          # Render the view for joining a house
+        end
+      
+        def join_process
+          house = House.find_by(name: params[:house_name])
+          
+          if house && house.authenticate(params[:house_password])
+            # Associate the house with the current user
+            current_user.update_attribute(:house_id, house.id)
+            redirect_to user_house_path(current_user, house), notice: 'You have joined the house successfully.'
+          else
+            flash.now[:alert] = 'Invalid house name or password.'
+            render :join
+          end
+        end
+        
+        
+        
+      
+        # ...
       end
       
-      def join_house
-        # Handle the form submission for joining a house
+      def house_options
       end
-      
-
-
-
 
 
       private
@@ -39,4 +53,4 @@ class HousesController < ApplicationController
         params.require(:house).permit(:name, :address, :password)
       end
       
-end
+
