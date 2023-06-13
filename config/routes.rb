@@ -12,4 +12,13 @@ Rails.application.routes.draw do
   resources :houses, only: [:show, :new]
   get 'house/join', to: 'houses#join', as: 'join_house'
   post 'house/create', to: 'houses#create', as: 'create_house'
+
+  get 'join_house', to: 'houses#join'
+  post 'join_house', to: 'houses#join_house'
+  
+  get 'house_options', to: 'houses#house_options'
+  
+
 end
+
+

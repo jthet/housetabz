@@ -20,6 +20,19 @@ class HousesController < ApplicationController
         end
       end
       
+      def join
+        # Render the form for joining a house
+      end
+      
+      def join_house
+        # Handle the form submission for joining a house
+      end
+      
+
+
+
+
+
       private
       
       def house_params

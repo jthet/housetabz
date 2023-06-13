@@ -1,0 +1,15 @@
+<h1>Join a House</h1>
+
+<%= form_with url: join_house_path, method: :post do |form| %>
+  <div>
+    <%= form.label :house_name %>
+    <%= form.text_field :house_name %>
+  </div>
+
+  <div>
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <%= form.submit 'Join House' %>
+<% end %>
