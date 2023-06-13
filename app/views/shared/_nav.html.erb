@@ -5,11 +5,12 @@
 
   <% if current_user %>
     <ul class="flex items-center space-x-4">
-      <% if current_user.profile %>
-        <li><%= link_to 'Profile', user_profile_path(current_user), class: 'text-gray-800' %></li>
+     <% if current_user.profile %>
+      <li><%= link_to 'Profile', user_profile_path(current_user), class: 'text-gray-800' %></li>
       <% else %>
-        <li><%= link_to 'Profile', new_profile_path, class: 'text-gray-800' %></li>
+      <li><%= link_to 'Profile', new_user_profile_path(current_user), class: 'text-gray-800' %></li>
       <% end %>
+
 
       <% if current_user.house %>
         <li><%= link_to 'My House', user_house_path(current_user, current_user.house), class: 'text-gray-800' %></li>

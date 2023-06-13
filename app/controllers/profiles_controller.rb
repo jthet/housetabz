@@ -7,21 +7,25 @@ class ProfilesController < ApplicationController
     def create
         @profile = Profile.new(profile_params)
         @profile.user = current_user
-
-    if @profile.save
-        redirect_to user_profile_path(current_user)
-    else
-        render :new
-    end
-end
-    
-    def show
-        @user = current_user
-        @profile = Profile.find(params[:id])
-
-        if @profile.nil?
+      
+        if @profile.save
+          redirect_to user_profile_path(current_user, @profile)
+        else
+          render :new
         end
+      end
+      
+    
+def show
+    @user = current_user
+    @profile = @user.profile
+  
+    # You can add additional logic if the profile is nil or not found
+    if @profile.nil?
+      # Handle the case when the profile is not found
     end
+  end
+  
 
     def edit 
         @profile = Profile.find(params[:id])

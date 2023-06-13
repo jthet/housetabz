@@ -3,9 +3,11 @@
   <h2>Members:</h2>
 
   <% @user.house.users.each do |user| %>
-    <p><%= user.first_name %></p>
+    <% if user.profile %>
+      <p><%= user.profile.first_name %></p>
+    <% end %>
   <% end %>
-
+  
   <h2>Our Tabz: $<%= @user.house.total_charge %></h2>
   <% @user.house.bills.each do |bill| %>
     <p> <strong> <%= bill.name %>: </strong>$<%=bill.amount %></p>
