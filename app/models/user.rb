@@ -8,4 +8,6 @@ class User < ApplicationRecord
   has_one :member
   belongs_to :house, optional: true
   
+  validates :username, presence: true, uniqueness: true
+  
 end

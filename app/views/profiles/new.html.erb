@@ -1,5 +1,6 @@
-<h1>Create Profile</h1>
+<h1>Create Profile for</h1>
 
+<h3> <%=current_user.username%></h3>
 
 <%= form_with(model: @profile, url: user_profile_path(current_user), method: :post) do |form| %>
 
@@ -19,6 +20,10 @@
     <%= form.label :bio %>
     <%= form.text_area :bio %>
   </div>
+
+  <div>
+    <%= form.label :profile_picture %>
+    <%= form.file_field :profile_picture %>
 
   <div>
     <%= form.submit 'Create Profile' %>

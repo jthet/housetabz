@@ -1,17 +1,19 @@
 <% if @user.house %>
   <h1><%= @user.house.name %></h1>
-  <h2>Members:</h2>
+  <h2>Roommates:</h2>
 
-  <% @user.house.users.each do |user| %>
-    <% if user.profile %>
-      <p><%= link_to user.profile.first_name, member_profile_path(user.profile) %></p>
-    <% end %>
+ <% @user.house.users.each do |user| %>
+  <% if user.profile %>
+    <p><%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile) %></p>
   <% end %>
+<% end %>
   
-  <h2>Our Tabz: $<%= @user.house.total_charge %></h2>
-  <% @user.house.bills.each do |bill| %>
-    <p> <strong> <%= bill.name %>: </strong>$<%= bill.amount %></p>
-  <% end %>
+ <h2>Our Tabz: $<%= @user.house.total_charge.to_f.ceil(2) %></h2>
+<% @user.house.bills.each do |bill| %>
+  <p><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
+<% end %>
+
+
 
 <% else %>
   <h1>Not yet a member of a house?</h1>

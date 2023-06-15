@@ -3,17 +3,16 @@ class ProfilesController < ApplicationController
     def new
         @profile = Profile.new
     end
-
+    
     def create
-        @profile = Profile.new(profile_params)
-        @profile.user = current_user
-      
-        if @profile.save
-          redirect_to user_profile_path(current_user, @profile)
-        else
-          render :new
-        end
+      @profile = current_user.build_profile(profile_params)
+      if @profile.save
+        redirect_to user_profile_path(current_user), notice: 'Profile created successfully.'
+      else
+        render :new
       end
+    end
+  
       
     
 def show
@@ -50,6 +49,6 @@ def show
 private
 
 def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :bio)
+    params.require(:profile).permit(:first_name, :last_name, :bio, :profile_picture)
 end
 end
