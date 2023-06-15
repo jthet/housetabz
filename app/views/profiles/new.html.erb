@@ -1,31 +1,66 @@
-<h1>Create Profile for</h1>
+<div class="flex justify-center items-center h-screen">
+  <div class="w-1/2 bg-white p-8 shadow-md rounded flex">
+    <div class="w-2/3">
+      <h1 class="text-3xl font-bold mb-4">Create Profile for</h1>
+      <h2 class="text-2xl font-bold mb-4"><%= current_user.username %></h2>
 
-<h3> <%=current_user.username%></h3>
+      <%= form_with(model: @profile, url: user_profile_path(current_user), method: :post, html: { class: 'w-full' }) do |form| %>
 
-<%= form_with(model: @profile, url: user_profile_path(current_user), method: :post) do |form| %>
+        <div class="mb-4">
+          <%= form.label :first_name, class: 'block font-bold' %>
+          <%= form.text_field :first_name, class: 'form-input mt-1' %>
+        </div>
 
+        <div class="mb-4">
+          <%= form.label :last_name, class: 'block font-bold' %>
+          <%= form.text_field :last_name, class: 'form-input mt-1' %>
+        </div>
 
+        <div class="mb-4">
+          <%= form.label :bio, class: 'block font-bold' %>
+          <%= form.text_area :bio, class: 'form-textarea mt-1' %>
+        </div>
 
-  <div>
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+        <div class="mb-4">
+          <%= form.label :profile_picture, class: 'block font-bold' %>
+          <%= form.file_field :profile_picture, class: 'form-input mt-1', id: 'profile-picture-input' %>
+        </div>
+
+        <div class="text-center">
+          <%= form.submit 'Create Profile', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="w-1/3 flex justify-center items-center">
+      <div id="profile-picture-preview"></div>
+    </div>
   </div>
+</div>
 
-   <div>
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
-   </div>
+<script>
+  // Image preview function
+  function previewProfilePicture() {
+    var preview = document.getElementById('profile-picture-preview');
+    var fileInput = document.getElementById('profile-picture-input');
+    
+    fileInput.addEventListener('change', function(event) {
+      var file = event.target.files[0];
+      var reader = new FileReader();
 
-  <div>
-    <%= form.label :bio %>
-    <%= form.text_area :bio %>
-  </div>
+      reader.onload = function(event) {
+        var image = document.createElement('img');
+        image.src = event.target.result;
+        image.classList.add('w-40', 'h-40', 'object-cover', 'rounded');
+        
+        preview.innerHTML = '';
+        preview.appendChild(image);
+      }
 
-  <div>
-    <%= form.label :profile_picture %>
-    <%= form.file_field :profile_picture %>
+      reader.readAsDataURL(file);
+    });
+  }
 
-  <div>
-    <%= form.submit 'Create Profile' %>
-  </div>
-<% end %>
+  // Call the preview function
+  previewProfilePicture();
+</script>

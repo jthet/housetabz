@@ -1,8 +1,12 @@
-<h1><%= @user.username %></h1>
-<% if @member.profile_picture.attached? %>
-  <%= image_tag @member.profile_picture %>
-<% else %>
-  <p>No profile picture available.</p>
-<% end %>
-<h2><%= @member.first_name %> <%= @member.last_name %></h2>
-<p><%= @member.bio %></p>
+<div class="flex flex-col items-center">
+  <h1 class="text-4xl font-bold mb-4"><%= @user.username %></h1>
+
+  <% if @member.profile_picture.attached? %>
+    <%= image_tag @member.profile_picture, class: "rounded-full w-40 h-40 mb-4" %>
+  <% else %>
+    <p>No profile picture available.</p>
+  <% end %>
+
+  <h2 class="text-2xl font-bold"><%= @member.first_name %> <%= @member.last_name %></h2>
+  <p class="text-xl text-gray-700"><%= @member.bio %></p>
+</div>

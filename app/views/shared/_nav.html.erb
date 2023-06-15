@@ -1,30 +1,30 @@
-<nav class="flex items-center justify-between py-4 px-6 bg-gray-200">
-  <div>
-    <%= link_to 'HouseTabz', root_path, class: 'text-xl font-bold text-gray-800' %>
+<nav class="flex items-center justify-between py-4 px-6 w-full">
+  <div class="name">
+    <%= link_to 'HouseTabz', root_path, class: 'text-xl font-bold text-white-800' %>
   </div>
 
   <% if current_user %>
-    <ul class="flex items-center space-x-4">
-     <% if current_user.profile %>
-      <li><%= link_to 'Profile', user_profile_path(current_user), class: 'text-gray-800' %></li>
-      <% else %>
-      <li><%= link_to 'Profile', new_user_profile_path(current_user), class: 'text-gray-800' %></li>
-      <% end %>
+    <div class="nav-links">
+      <ul class="flex items-center space-x-4 px-6">
+        <% if current_user.profile %>
+          <li><%= link_to 'Profile', user_profile_path(current_user) %></li>
+        <% else %>
+          <li><%= link_to 'Profile', new_user_profile_path(current_user) %></li>
+        <% end %>
 
+        <% if current_user.house %>
+          <li><%= link_to 'My House', user_house_path(current_user, current_user.house) %></li>
+        <% else %>
+          <li><%= link_to 'My House', house_options_path %></li>
+        <% end %>
 
-      <% if current_user.house %>
-        <li><%= link_to 'My House', user_house_path(current_user, current_user.house), class: 'text-gray-800' %></li>
-      <% else %>
-        <li><%= link_to 'My House', house_options_path, class: 'text-gray-800' %></li>
-      <% end %>
-
-      <li><%= button_to 'Log out', destroy_user_session_path, method: :delete %></li>
-    </ul>
-
+        <li><%= button_to 'Log out', destroy_user_session_path, method: :delete %></li>
+      </ul>
+    </div>
   <% else %>
     <ul class="flex items-center space-x-4">
-      <li><%= link_to 'Sign Up', new_user_registration_path, class: 'text-gray-800' %></li>
-      <li><%= link_to 'Login', new_user_session_path, class: 'text-gray-800' %></li>
+      <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+      <li><%= link_to 'Login', new_user_session_path %></li>
     </ul>
   <% end %>
 </nav>

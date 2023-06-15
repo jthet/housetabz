@@ -1,20 +1,31 @@
-<h2>Sign up</h2>
+<div class="w-64 mx-auto">
+  <h2 class="text-2xl font-bold mb-4">Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-  <%= f.label :username %>
-  <%= f.text_field :username %>
+    <div class="mb-4">
+      <%= f.label :username, class: "block font-bold" %>
+      <%= f.text_field :username, class: "form-input mt-1 block w-full" %>
+    </div>
 
-  <%= f.label :email %>
-  <%= f.email_field :email, autofocus: true %>
+    <div class="mb-4">
+      <%= f.label :email, class: "block font-bold" %>
+      <%= f.email_field :email, class: "form-input mt-1 block w-full", autofocus: true %>
+    </div>
 
-  <%= f.label :password %>
-  <%= f.password_field :password, autocomplete: "off" %>
+    <div class="mb-4">
+      <%= f.label :password, class: "block font-bold" %>
+      <%= f.password_field :password, class: "form-input mt-1 block w-full", autocomplete: "off" %>
+    </div>
 
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <div class="mb-4">
+      <%= f.label :password_confirmation, class: "block font-bold" %>
+      <%= f.password_field :password_confirmation, class: "form-input mt-1 block w-full", autocomplete: "off" %>
+    </div>
 
-    
+    <div class="text-center">
+      <%= f.submit "Sign up", class: "px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700" %>
+    </div>
 
-  <%= f.submit "Sign up" %>
-<% end %>
+  <% end %>
+</div>

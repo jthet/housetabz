@@ -1,32 +1,38 @@
-<h1>Edit Profile</h1>
+<div class="flex justify-center">
+  <div class="w-1/2">
+    <h1 class="text-3xl font-bold mb-4">Edit Profile</h1>
 
-<%= form_with model: @profile, url: user_profile_path(current_user) do |form| %>
+    <%= form_with model: @profile, url: user_profile_path(current_user), html: { class: 'w-full' } do |form| %>
 
-  <% if form.object.errors.any? %>
-    <div>
-      <% form.object.errors.full_messages.each do |message| %>
-        <div><%= message %></div>
+      <% if form.object.errors.any? %>
+        <div>
+          <% form.object.errors.full_messages.each do |message| %>
+            <div><%= message %></div>
+          <% end %>
+        </div>
       <% end %>
-    </div>
-  <% end %>
 
-  <div>
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+      <div class="mb-4">
+        <%= form.label :first_name, class: 'block' %>
+        <%= form.text_field :first_name, class: 'form-input mt-1' %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :last_name, class: 'block' %>
+        <%= form.text_field :last_name, class: 'form-input mt-1' %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :bio, class: 'block' %>
+        <%= form.text_area :bio, class: 'form-textarea mt-1' %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :profile_picture, class: 'block' %>
+        <%= form.file_field :profile_picture, class: 'form-input mt-1' %>
+      </div>
+
+      <%= form.submit 'Save Changes', class: 'btn' %>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
-  </div>
-
-  <div>
-    <%= form.label :bio %>
-    <%= form.text_area :bio %>
-  </div>
-
-  <%= form.label :profile_picture %>
-  <%= form.file_field :profile_picture %>
-
-  <%= form.submit %>
-<% end %>
+</div>

@@ -1,16 +1,21 @@
-<h1>Join a House</h1>
+<div class="flex justify-center items-center h-screen">
+  <div class="w-1/2 bg-white p-8 shadow-md rounded">
+    <h1 class="text-3xl font-bold mb-4">Join a House</h1>
 
-<%= form_with url: join_house_path, method: :post do |form| %>
-  <div>
-    <%= form.label :house_name %>
-    <%= form.text_field :house_name %>
+    <%= form_with url: join_house_path, method: :post do |form| %>
+      <div class="mb-4">
+        <%= form.label :house_name, class: 'block font-bold' %>
+        <%= form.text_field :house_name, class: 'form-input mt-1' %>
+      </div>
+
+      <div class="mb-4">
+        <label for="house_password" class="block font-bold">Password:</label>
+        <input type="password" name="house_password" id="house_password" class="form-input mt-1" />
+      </div>
+
+      <div class="text-center">
+        <%= form.submit 'Join House', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+      </div>
+    <% end %>
   </div>
-
-  <div>
-  <label for="house_password">Password:   </label>
-  <input type="password" name="house_password" id="house_password" />
-
-  </div>
-
-  <%= form.submit 'Join House' %>
-<% end %>
+</div>
