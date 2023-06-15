@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_14_213041) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_182917) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -65,6 +65,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_213041) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "members", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "profile_id", null: false
+    t.index ["profile_id"], name: "index_members_on_profile_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "first_name"
@@ -95,6 +104,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_14_213041) do
   add_foreign_key "bills", "houses"
   add_foreign_key "house_memberships", "houses"
   add_foreign_key "house_memberships", "users"
+  add_foreign_key "members", "profiles"
+  add_foreign_key "members", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "users", "houses"
 end

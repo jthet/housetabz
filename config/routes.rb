@@ -24,6 +24,8 @@ get 'join_house', to: 'houses#join'
 
 get 'house_options', to: 'houses#house_options'
 
+get '/members/:id', to: 'members#show', as: 'member_profile'
+
   
 
 end
