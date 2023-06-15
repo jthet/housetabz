@@ -1,6 +1,6 @@
 require "test_helper"
 
-class BillTest < ActiveSupport::TestCase
+class Admin::BillsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end
