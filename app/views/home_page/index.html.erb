@@ -6,39 +6,71 @@
   </div>
 <% else %>
   <%# This code should be displayed for users that are signed in. %>
-  <div class="flex justify-center">
-    <div class="w-1/2">
-      <h2 class="text-2xl font-bold"><%= current_user.house.name %>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
+  <% if current_user.house.nil? %>
+    <p class="text-2xl">You are not associated with any house.</p>
+  <% else %>
+    <div class="flex justify-center">
+      <div class="w-1/2 mt-40"> <!-- Added "mt-8" for top margin -->
+        <div class="flex">
+          <div class="w-1/2">
+            <h2 class="text-2xl font-bold"><%= current_user.house.name %>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
 
-      <% houseMembers = current_user.house.users.map { |user| user.profile.first_name } %>
-      <% status = (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>
-      <% backgroundColor = status == 'Paid' ? 'green' : 'red' %>
-      <canvas id="donutChart" style="max-width: 300px;"></canvas>
-
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const donutChartCanvas = document.getElementById('donutChart');
-
-          new Chart(donutChartCanvas, {
-            type: 'doughnut',
-            data: {
-              labels: <%= houseMembers.to_json.html_safe %>,
-              datasets: [
-                {
-                  data: [30, 40, 50], // Update with appropriate data
-                  backgroundColor: <%= backgroundColor.to_json.html_safe %>,
-                },
-              ],
-            },
-            options: {
-              // Customize chart options and styling here
-            },
-          });
-        });
-      </script>
+            <% houseMembers = current_user.house.users.map { |user| user.profile&.first_name } %>
+            <% status = (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>
+            <% backgroundColor = status == 'Paid' ? 'green' : 'red' %>
+            <canvas id="donutChart" style="max-width: 300px;"></canvas>
+          </div>
+          <div class="w-1/2">
+            <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) %></h2>
+            <canvas id="billsChart" style="max-width: 300px;"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <p class="text-2xl font-bold"><strong>My Tab:</strong> $<%= (current_user.house&.total_charge.to_f / current_user.house&.users&.count.to_f).ceil(2) %></p>
-  </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const donutChartCanvas = document.getElementById('donutChart');
+        const billsChartCanvas = document.getElementById('billsChart');
+
+        new Chart(donutChartCanvas, {
+          type: 'doughnut',
+          data: {
+            labels: <%= houseMembers.to_json.html_safe %>,
+            datasets: [
+              {
+                data: [30, 40, 50, 40], // Update with appropriate data
+                backgroundColor: <%= backgroundColor.to_json.html_safe %>,
+              },
+            ],
+          },
+          options: {
+            // Customize chart options and styling here
+          },
+        });
+
+        new Chart(billsChartCanvas, {
+          type: 'doughnut',
+          data: {
+            labels: ['Bill 1', 'Bill 2', 'Bill 3'], // Update with appropriate bill names
+            datasets: [
+              {
+                data: [10, 20, 30], // Update with appropriate data
+                backgroundColor: ['blue', 'orange', 'purple'], // Update with appropriate colors
+              },
+            ],
+          },
+          options: {
+            // Customize chart options and styling here
+          },
+        });
+      });
+    </script>
+ 
+
+      </div>
+
+  <% end %>
 <% end %>
