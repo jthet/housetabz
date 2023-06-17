@@ -8,7 +8,12 @@
     
         <% @user.house.users.each do |user| %>
           <% if user.profile %>
-            <p class="text-lg"><%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %></p>
+            <p class="text-lg">
+              <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
+              <span class="<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'text-green-500' : 'text-red-500' %>">
+                (Status: <%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>)
+              </span>
+            </p>
           <% end %>
         <% end %>
       </div>

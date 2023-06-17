@@ -1,5 +1,52 @@
-<div class="flex flex-col items-center justify-center h-screen">
+<%# This code should be displayed for new users or users that have not signed in. %>
+<% if current_user.nil? %>
+  <div class="flex flex-col items-center justify-center h-screen">
+    <h1 class="text-5xl font-bold mb-2">Hi, Welcome to HouseTabz</h1>
+    <h3 class="text-2xl text-gray-600 mb-4">A better way to split your House Tabs</h3>
+  </div>
+<% else %>
+  <%# This code should be displayed for users that are signed in. %>
+  <div class="flex justify-center">
+    <div class="w-1/2">
+      <h2 class="text-2xl font-bold"><%= current_user.house.name %>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
 
-  <h1 class="text-5xl font-bold mb-2">Hi, Welcome to HouseTabz</h1>
-  <h3 class="text-2xl text-gray-600 mb-4">A better way to split your House Tabs</h3>
-</div>
+      <% current_user.house.users.each do |user| %>
+        <% if user.profile %>
+          <p class="text-lg">
+            <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
+            <span class="<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'text-green-500' : 'text-red-500' %>">
+              (Status: <%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>)
+            </span>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="w-1/2">
+      <canvas id="donutChart" style="max-width: 300px;"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const donutChartCanvas = document.getElementById('donutChart');
+
+        new Chart(donutChartCanvas, {
+          type: 'doughnut',
+          data: {
+            labels: ['Label 1', 'Label 2', 'Label 3'],
+            datasets: [
+              {
+                data: [30, 40, 50],
+                backgroundColor: ['red', 'green', 'blue'],
+              },
+            ],
+          },
+          options: {
+            // Customize chart options and styling here
+          },
+        });
+      });
+    </script>
+  </div>
+<% end %>

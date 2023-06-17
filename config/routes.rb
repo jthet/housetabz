@@ -26,7 +26,7 @@ get 'house_options', to: 'houses#house_options'
 
 get '/members/:id', to: 'members#show', as: 'member_profile'
 
-  
+get '/payment', to: 'payments#show', as: 'make_payment'
 
 end
 

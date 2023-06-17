@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_195508) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_17_173502) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -98,6 +98,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_195508) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.integer "profile_id", null: false
+    t.integer "house_id", null: false
+    t.index ["house_id"], name: "index_members_on_house_id"
     t.index ["profile_id"], name: "index_members_on_profile_id"
     t.index ["user_id"], name: "index_members_on_user_id"
   end
@@ -136,6 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_195508) do
   add_foreign_key "bills", "houses"
   add_foreign_key "house_memberships", "houses"
   add_foreign_key "house_memberships", "users"
+  add_foreign_key "members", "houses"
   add_foreign_key "members", "profiles"
   add_foreign_key "members", "users"
   add_foreign_key "profiles", "users"
