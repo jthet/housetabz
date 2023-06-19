@@ -80,3 +80,5 @@ gem 'activeadmin'
 gem 'sassc'
 
 gem 'turbolinks'
+
+gem 'stripe'

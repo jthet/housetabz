@@ -13,7 +13,7 @@
       <div class="w-1/2 mt-40"> <!-- Added "mt-8" for top margin -->
         <div class="flex">
           <div class="w-1/2">
-            <h2 class="text-2xl font-bold"><%= current_user.house.name %>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
+            <h2 class="text-2xl font-bold"><strong><%= current_user.house.name %></strong>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
 
             <% houseMembers = current_user.house.users.map { |user| user.profile&.first_name } %>
             <% status = (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>
@@ -24,6 +24,9 @@
             <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) %></h2>
             <canvas id="billsChart" style="max-width: 300px;"></canvas>
           </div>
+        </div>
+        <div class="flex justify-end mt-4"> <!-- Added a container for the button with right alignment -->
+          <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Make Payment</a>
         </div>
       </div>
     </div>
@@ -68,9 +71,5 @@
         });
       });
     </script>
- 
-
-      </div>
-
   <% end %>
 <% end %>

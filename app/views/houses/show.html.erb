@@ -1,32 +1,48 @@
 <% if @user.house %>
   <div class="text-center">
     <h1 class="text-4xl font-bold mb-4"><%= @user.house.name %></h1>
-    
-    <div class="flex justify-center">
-      <div class="w-1/2">
-        <h2 class="text-2xl font-bold">Roommates:</h2>
-    
+  </div>
+
+  <div class="flex justify-center">
+    <div class="w-1/2 flex flex-col items-center">
+      <h2 class="text-2xl font-bold mb-4">Roommates:</h2>
+
+      <div class="flex flex-col space-y-4">
         <% @user.house.users.each do |user| %>
           <% if user.profile %>
-            <p class="text-lg">
-              <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
-              <span class="<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'text-green-500' : 'text-red-500' %>">
-                (Status: <%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>)
-              </span>
-            </p>
+            <div class="bg-white rounded-lg shadow-lg p-4">
+              <div class="flex items-center space-x-4 mt-4">
+                <% if user.profile.profile_picture.present? %>
+                  <%= image_tag user.profile.profile_picture, class: 'w-10 h-10 rounded-full' %>
+                <% else %>
+                  <%= image_tag 'profilepicplaceholder.png', alt: 'Placeholder Image', class: 'w-10 h-10 rounded-full' %>
+                <% end %>
+                <p class="text-lg">
+                  <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
+                  <span class="<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'text-green-500' : 'text-red-500' %>">
+                    (Status: <%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>)
+                  </span>
+                </p>
+              </div>
+            </div>
           <% end %>
         <% end %>
       </div>
-    
-      <div class="w-1/2">
-        <h2 class="text-2xl font-bold">Our Tabz: $<%= @user.house.total_charge.to_f.ceil(2) %></h2>
-        <% @user.house.bills.each do |bill| %>
-          <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
-        <% end %>
+    </div>
+
+    <div class="w-1/2 ml-4 mr-4"> <!-- Adjusted the margin for "Our Tabz" section -->
+      <div class="flex flex-col items-center"> <!-- Center-align the content within the section -->
+        <h2 class="text-2xl font-bold mb-4">Our Tabz:$ <%= @user.house.total_charge.to_f.ceil(2) %></h2>
+
+        <div class="flex flex-col space-y-2">
+          <% @user.house.bills.each do |bill| %>
+            <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
+          <% end %>
+        </div>
+        
       </div>
     </div>
   </div>
-  
 <% else %>
   <div class="text-center">
     <h1 class="text-4xl font-bold mb-4">Not yet a member of a house?</h1>
