@@ -30,8 +30,13 @@ get '/payment', to: 'payments#show', as: 'make_payment'
 
 get '/checkout', to: 'checkout#new'
 post '/create_checkout_session', to: 'checkout#create_checkout_session'
-get '/success', to: 'checkout#success', as: 'checkout_success'
-get '/cancel', to: 'checkout#cancel', as: 'checkout_cancel'
+
+get 'checkout_cancel', to: 'checkout#checkout_cancel'
+get 'checkout_success', to: 'checkout#checkout_success'
+
+
+
+
 end
 
 

@@ -82,3 +82,5 @@ gem 'sassc'
 gem 'turbolinks'
 
 gem 'stripe'
+
+gem 'rack-cors', require: 'rack/cors'
