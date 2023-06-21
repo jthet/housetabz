@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_one :profile
   has_one :member
+  has_many :charges
   belongs_to :house, optional: true
   
   validates :username, presence: true, uniqueness: true

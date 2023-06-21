@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_17_173502) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_21_172332) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -75,6 +75,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_173502) do
     t.index ["house_id"], name: "index_bills_on_house_id"
   end
 
+  create_table "charges", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "amount"
+    t.boolean "paid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "bill_id", null: false
+    t.index ["bill_id"], name: "index_charges_on_bill_id"
+    t.index ["user_id"], name: "index_charges_on_user_id"
+  end
+
   create_table "house_memberships", force: :cascade do |t|
     t.integer "house_id", null: false
     t.integer "user_id", null: false
@@ -127,6 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_173502) do
     t.float "divided_amount"
     t.boolean "admin", default: false
     t.string "username"
+    t.boolean "paid_status", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["house_id"], name: "index_users_on_house_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -136,6 +148,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_17_173502) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bills", "houses"
+  add_foreign_key "charges", "bills"
+  add_foreign_key "charges", "users"
   add_foreign_key "house_memberships", "houses"
   add_foreign_key "house_memberships", "users"
   add_foreign_key "members", "houses"

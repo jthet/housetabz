@@ -21,7 +21,7 @@
             <canvas id="donutChart" style="max-width: 300px;"></canvas>
           </div>
           <div class="w-1/2">
-            <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) %></h2>
+            <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= current_user.charges.sum(:amount).ceil(2) %></h2>
             <canvas id="billsChart" style="max-width: 300px;"></canvas>
           </div>
         </div>
