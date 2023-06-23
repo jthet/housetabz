@@ -30,9 +30,15 @@ class WebhooksController < ApplicationController
 
   def webhook_secret
     # Replace this with your actual webhook secret
+<<<<<<< HEAD
     
     ENV['WEBHOOK_SECRET'].to_s
   
+=======
+    # 'whsec_gXf09BxaIyJ4YUqzsQWrQXUfo4mWjnQT'
+    ENV['WEBHOOK_SECRET'].to_s
+    # 'whsec_T7RPRmkrQWg9SuVCCudUFQZP7qg5BkVY'
+>>>>>>> 891eaaf40111eec2bbf8366df4a336f5a03b4b0e
   end
 
   def extract_user_id_from_payment_intent(event)
