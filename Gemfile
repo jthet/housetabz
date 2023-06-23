@@ -84,3 +84,5 @@ gem 'turbolinks'
 gem 'stripe'
 
 gem 'rack-cors', require: 'rack/cors'
+
+gem 'dotenv', '~> 2.7', '>= 2.7.6'

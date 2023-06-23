@@ -59,11 +59,16 @@
           </div>
         </div>
 
-        <form action="/create_checkout_session" method="POST" class="mt-4 flex justify-center">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-        <input type="number" id="price" name="price" step="0.01" placeholder="Verify your Tab amount" class="border border-gray-400 rounded px-4 py-2 mr-2" required>
-        <button type="submit" id="checkout-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded">Checkout</button>
-        </form>
+  <form action="/checkout_sessions" method="POST" class="mt-4 flex justify-center">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <%= hidden_field_tag :user_id, current_user.id %>
+  <input type="number" id="price" name="price" step="0.01" placeholder="Verify your Tab amount" class="border border-gray-400 rounded px-4 py-2 mr-2" required>
+  <button type="submit" id="checkout-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded">Checkout</button>
+</form>
+
+
+
+
 
       </section>
     </div>
