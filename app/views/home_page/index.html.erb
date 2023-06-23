@@ -1,52 +1,51 @@
-<%# This code should be displayed for new users or users that have not signed in. %>
 <% if current_user.nil? %>
-  <div class="flex flex-col items-center justify-center h-screen">
-    <h1 class="text-5xl font-bold mb-2">Hi, Welcome to HouseTabz</h1>
-    <h3 class="text-2xl text-gray-600 mb-4">A better way to split your House Tabs</h3>
-  </div>
+  <!-- Code for new or unsigned users -->
 <% else %>
-  <%# This code should be displayed for users that are signed in. %>
   <% if current_user.house.nil? %>
-    <p class="text-2xl">You are not associated with any house.</p>
+    <!-- Code for users without a house -->
   <% else %>
     <div class="flex justify-center">
-      <div class="w-1/2 mt-40"> <!-- Added "mt-8" for top margin -->
+      <div class="w-1/2 mt-40">
         <div class="flex">
           <div class="w-1/2">
-            <h2 class="text-2xl font-bold"><strong><%= current_user.house.name %></strong>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
-
-            <% houseMembers = current_user.house.users.map { |user| user.profile&.first_name } %>
-            <% status = current_user.house.total_charge.to_f / current_user.house.users.count.to_f.ceil(2) == 0 ? 'Paid' : 'Unpaid' %> 
-            <% backgroundColor = status == 'Paid' ? 'green' : 'red' %>
+            <h2 class="text-2xl font-bold">
+              <strong><%= current_user.house.name %></strong>: $<%= current_user.house.total_charge.to_f.ceil(2) %>
+            </h2>
             <canvas id="donutChart" style="max-width: 300px;"></canvas>
           </div>
           <div class="w-1/2">
-            <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= current_user.balance&.amount.to_f.ceil(2) %></h2>
-            <% current_user.balance.update(amount: current_user.calculate_balance) %>
+            <h2 class="text-2xl font-bold">
+              <strong>My Tab:</strong> $<%= current_user.balance&.amount.to_f.ceil(2) %>
+            </h2>
             <canvas id="billsChart" style="max-width: 300px;"></canvas>
           </div>
         </div>
-        <div class="flex justify-end mt-4"> <!-- Added a container for the button with right alignment -->
-          <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Make Payment</a>
+        <div class="flex justify-end mt-4">
+          <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Make Payment
+          </a>
         </div>
       </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const donutChartCanvas = document.getElementById('donutChart');
         const billsChartCanvas = document.getElementById('billsChart');
+        
+        const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
+        const backgroundColor = <%= current_user.house.users.map { |user| user.balance&.amount.to_f.ceil(2) == 0 ? 'green' : 'red' }.to_json.html_safe %>;
+        const data = Array(houseMembers.length).fill(1);
 
         new Chart(donutChartCanvas, {
           type: 'doughnut',
           data: {
-            labels: <%= houseMembers.to_json.html_safe %>,
+            labels: houseMembers.map((user) => `${user}/${houseMembers.length}`),
             datasets: [
               {
-                data: [30, 40, 50, 40], // Update with appropriate data
-                backgroundColor: <%= backgroundColor.to_json.html_safe %>,
+                data: data,
+                backgroundColor: backgroundColor,
               },
             ],
           },
