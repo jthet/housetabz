@@ -54,21 +54,27 @@
           },
         });
 
-        new Chart(billsChartCanvas, {
-          type: 'doughnut',
-          data: {
-            labels: ['Bill 1', 'Bill 2', 'Bill 3'], // Update with appropriate bill names
-            datasets: [
-              {
-                data: [10, 20, 30], // Update with appropriate data
-                backgroundColor: ['blue', 'orange', 'purple'], // Update with appropriate colors
-              },
-            ],
-          },
-          options: {
-            // Customize chart options and styling here
-          },
-        });
+        <% if current_user.house.bills.present? %>
+          const billNames = <%= current_user.house.bills.pluck(:name).to_json.html_safe %>;
+          const billAmounts = <%= current_user.house.bills.pluck(:amount).to_json.html_safe %>;
+          const backgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
+
+          new Chart(billsChartCanvas, {
+            type: 'doughnut',
+            data: {
+              labels: billNames,
+              datasets: [
+                {
+                  data: billAmounts,
+                  backgroundColor: backgroundColors,
+                },
+              ],
+            },
+            options: {
+              // Customize chart options and styling here
+            },
+          });
+        <% end %>
       });
     </script>
   <% end %>
