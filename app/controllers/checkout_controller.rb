@@ -48,4 +48,13 @@ class CheckoutController < ApplicationController
 
     render 'checkout/checkout_success'
   end
+  def checkout_success
+    user_id = params[:user_id].to_i
+    custom_price = params[:price].to_f
+    
+    webhooks_controller = WebhooksController.new
+    webhooks_controller.handle_successful_payment(user_id, custom_price)
+
+    render 'checkout/checkout_success'
+  end
 end
