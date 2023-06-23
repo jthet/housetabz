@@ -26,12 +26,12 @@ ActiveAdmin.register Bill do
     def destroy
       @bill = Bill.find(params[:id])
 
-      # Delete associated records
-   
-
+      # Delete associated charges
+      @bill.charges.destroy_all
+    
       # Delete the bill
       @bill.destroy
-
+    
       redirect_to admin_bills_path, notice: 'Bill successfully deleted.'
     end
 

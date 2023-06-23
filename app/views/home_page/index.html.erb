@@ -16,12 +16,13 @@
             <h2 class="text-2xl font-bold"><strong><%= current_user.house.name %></strong>: $<%= current_user.house.total_charge.to_f.ceil(2) %></h2>
 
             <% houseMembers = current_user.house.users.map { |user| user.profile&.first_name } %>
-            <% status = (current_user.house.total_charge.to_f / current_user.house.users.count.to_f).ceil(2) == 0 ? 'Paid' : 'Unpaid' %>
+            <% status = current_user.house.total_charge.to_f / current_user.house.users.count.to_f.ceil(2) == 0 ? 'Paid' : 'Unpaid' %> 
             <% backgroundColor = status == 'Paid' ? 'green' : 'red' %>
             <canvas id="donutChart" style="max-width: 300px;"></canvas>
           </div>
           <div class="w-1/2">
-            <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= current_user.charges.sum(:amount).ceil(2) %></h2>
+            <h2 class="text-2xl font-bold"><strong>My Tab:</strong> $<%= current_user.balance&.amount.to_f.ceil(2) %></h2>
+            <% current_user.balance.update(amount: current_user.calculate_balance) %>
             <canvas id="billsChart" style="max-width: 300px;"></canvas>
           </div>
         </div>
