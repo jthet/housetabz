@@ -6,7 +6,8 @@
   </head>
   <body>
     <h1>Payment Successful!</h1>
-    <p>Thank you for your payment. Your transaction was successful.</p>
+    <%# <p>You just paid <%= number_to_currency(@payment.amount) %></p> 
+    <%# <p>Your new balance <%= number_to_currency(current_user.charges.sum(:amount)) %></p> 
     <!-- Additional content or information you want to display -->
   </body>
 </html>
