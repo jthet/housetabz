@@ -6,4 +6,5 @@ class House < ApplicationRecord
     def total_charge
         bills.sum(:amount)
     end
+    
 end
