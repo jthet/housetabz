@@ -1,0 +1,95 @@
+nav {
+  transition: background-color 0.2s ease;
+  color: white;
+  
+}
+
+nav.bg-white {
+  background-color: white;
+  color: green;
+}
+
+nav.bg-green-500 {
+  background-color: #4ade80;
+  color: white;
+}
+
+/* ... */
+
+.nav-links a,
+.nav-links li {
+  text-decoration: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: medium;
+  transition: font-size 0.2s ease;
+}
+
+.nav-links a:hover,
+.name a:hover,
+.nav-links li:hover a {
+  color:#4a5568
+}
+
+/* ... */
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #4ade80;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #3cbe70;
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #4a5568;
+}
+
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4ade80;
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background-color: #4ade80;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #45c170;
+}

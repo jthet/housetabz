@@ -1,5 +1,64 @@
 <% if current_user.nil? %>
-  <!-- Code for new or unsigned users -->
+  <section class="bg-green-500">
+  <div class="flex flex-col items-center justify-center h-2/3">
+    <div class="w-full text-center">
+      <h1 class="text-7xl font-bold mb-2 wave-effect">Hi, Welcome to HouseTabz</h1>
+      <h3 class="text-5xl mt-5">The Best Way To Split Your House Tabs</h3>
+    </div>
+  </div>
+</section>
+<section class="bg-green-800 text-white py-80">
+  <div class="flex justify-center container mx-auto">
+    <div class="w-1/3">
+      <img src="/images/celebrate.png" alt="Roommates celebrating">
+    </div>
+    <div class="w-1/2 flex items-center justify-end">
+      <p class="text-3xl text-center font-bold text-gray-200">Never Worry<br>About Splitting<br> Bills With Roommates<br>Again</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-blue-600 text-white py-80">
+  <div class="flex justify-center container mx-auto">
+    <div class="w-1/3">
+      <img src="/images/makeitrain.png" alt="Roommate with a lot of money because he isn't covering the bills.">
+    </div>
+    <div class="w-1/2 flex items-center justify-end">
+      <p class="text-3xl text-center font-bold text-green-200">We Front The <br>Bills So You <br>Don't Have To  <br> <!-- Add a line break here -->
+      <a href="#" class="text-lg text-green-200 font-semibold">Learn More</a></p>
+     
+    </div>
+  </div>
+</section>
+
+<section class="bg-fuchsia-950 text-white py-80">
+  <div class="flex justify-center container mx-auto">
+    <div class="w-1/3">
+      <img src="/images/moneytrack.png" alt="Guy tracking his bills">
+    </div>
+    <div class="w-1/2 flex items-center justify-end">
+      <p class="text-3xl text-center font-bold text-yellow-400">Effortlessly Track<br>Payments and Bills</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+<style>
+.wave-effect {
+  animation: wave 2s infinite;
+}
+
+@keyframes wave {
+  0% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(-10px); }
+}
+</style>
+
 <% else %>
   <% if current_user.house.nil? %>
     <!-- Code for users without a house -->

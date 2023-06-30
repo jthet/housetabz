@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema[7.0].define(version: 2023_06_23_155119) do
-=======
-ActiveRecord::Schema[7.0].define(version: 2023_06_21_195135) do
->>>>>>> 891eaaf40111eec2bbf8366df4a336f5a03b4b0e
+ActiveRecord::Schema[7.0].define(version: 2023_06_30_180423) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -84,6 +80,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_195135) do
     t.integer "house_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "due_date"
+    t.date "date_issued"
     t.index ["house_id"], name: "index_bills_on_house_id"
   end
 
@@ -94,6 +92,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_195135) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bill_id", null: false
+    t.date "date_issued"
+    t.date "due_date"
     t.index ["bill_id"], name: "index_charges_on_bill_id"
     t.index ["user_id"], name: "index_charges_on_user_id"
   end
@@ -145,6 +145,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_195135) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "tabs", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "month"
+    t.boolean "paid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "total_charges"
+    t.decimal "total_payments"
+    t.integer "year"
+    t.index ["user_id"], name: "index_tabs_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -178,5 +190,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_195135) do
   add_foreign_key "members", "users"
   add_foreign_key "payments", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "tabs", "users"
   add_foreign_key "users", "houses"
 end
