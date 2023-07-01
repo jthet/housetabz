@@ -1,7 +1,7 @@
 class Bill < ApplicationRecord
   belongs_to :house
   has_many :charges
-
+  attribute :status, :string
   after_create :create_charges
 
 
@@ -10,7 +10,8 @@ class Bill < ApplicationRecord
     charge_amount = amount.to_f / total_users.to_f
   
     house.users.each do |user|
-      user.charges.create(amount: charge_amount, bill: self, paid: false)
+      charge = user.charges.create(amount: charge_amount, bill: self, paid: false)
+      self.charges << charge
     end
   end
   

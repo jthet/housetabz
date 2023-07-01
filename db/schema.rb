@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_29_202210) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_01_195704) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -82,7 +82,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_202210) do
     t.datetime "updated_at", null: false
     t.date "date_issued"
     t.date "due_date"
+    t.string "status"
     t.index ["house_id"], name: "index_bills_on_house_id"
+  end
+
+  create_table "charge_payments", force: :cascade do |t|
+    t.integer "charge_id", null: false
+    t.integer "payment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["charge_id"], name: "index_charge_payments_on_charge_id"
+    t.index ["payment_id"], name: "index_charge_payments_on_payment_id"
   end
 
   create_table "charges", force: :cascade do |t|
@@ -94,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_202210) do
     t.integer "bill_id"
     t.date "date_issued"
     t.date "due_date"
+    t.string "status"
     t.index ["bill_id"], name: "index_charges_on_bill_id"
     t.index ["user_id"], name: "index_charges_on_user_id"
   end
@@ -167,6 +178,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_202210) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "balances", "users"
   add_foreign_key "bills", "houses"
+  add_foreign_key "charge_payments", "charges"
+  add_foreign_key "charge_payments", "payments"
   add_foreign_key "charges", "bills"
   add_foreign_key "charges", "users"
   add_foreign_key "house_memberships", "houses"

@@ -57,12 +57,28 @@ class WebhooksController < ApplicationController
     puts "User ID: #{user_id}"
     puts "Custom Price: #{custom_price}"
     amount_paid = custom_price
-
-    Payment.create(user_id: user_id, amount: amount_paid)
+  
+    # Create the payment record
+    payment = Payment.create(user_id: user_id, amount: amount_paid)
+  
+    # Retrieve the charges to be covered by the payment
+    charges_to_cover = Charge.where(user_id: user_id, status: 'unpaid')
+  
+    # Associate the charges with the payment
+    puts "Number of charges to cover: #{charges_to_cover.length}"
+    charges_to_cover.each do |charge|
+      puts "Covering charge: #{charge.id}"
+      ChargePayment.create(payment: payment, charge: charge)
+    end
+  
+    # Update the status of the charges if all are covered by payments
+    if charges_to_cover.all? { |charge| charge.payments.sum(:amount) >= charge.amount }
+      charges_to_cover.update_all(status: 'paid')
+    end
+  
     puts "User: #{user_id}"
-    puts "Amount im a kitty: #{amount_paid}"
+    puts "Amount: #{amount_paid}"
   end
-
   # Make the handle_successful_payment method accessible from outside
   public :handle_successful_payment
 end
