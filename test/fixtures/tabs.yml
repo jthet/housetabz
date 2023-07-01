@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  month: 1
+  year: 1
+  total_charges: 9.99
+  total_payments: 9.99
+
+two:
+  user: two
+  month: 1
+  year: 1
+  total_charges: 9.99
+  total_payments: 9.99
