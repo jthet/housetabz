@@ -19,4 +19,19 @@ class User < ApplicationRecord
     charges_sum - payments_sum
   end
   
+  def update_paid_status
+    puts "Updating paid status for User ID: #{id}"
+    
+    charges_status = charges.reload.pluck(:status)
+    puts "Charges Status: #{charges_status}"
+    
+    unpaid_charges = charges.reload.where.not(status: 'paid')
+    puts "Unpaid Charges: #{unpaid_charges.inspect}"
+  
+    self.update(paid_status: unpaid_charges.empty?)
+    puts "Paid Status Updated: #{paid_status}"
+  end
+  
+  
+
 end

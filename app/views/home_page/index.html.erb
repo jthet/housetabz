@@ -100,7 +100,7 @@
         new Chart(donutChartCanvas, {
           type: 'doughnut',
           data: {
-            labels: houseMembers.map((user) => `${user}/${houseMembers.length}`),
+            labels: houseMembers.map((user) => `${user}`),
             datasets: [
               {
                 data: data,
@@ -113,27 +113,28 @@
           },
         });
 
-        <% if current_user.house.bills.present? %>
-          const billNames = <%= current_user.house.bills.pluck(:name).to_json.html_safe %>;
-          const billAmounts = <%= current_user.house.bills.pluck(:amount).to_json.html_safe %>;
-          const backgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
+        <% if current_user.charges.present? %>
+  const chargeNames = <%= current_user.charges.pluck(:name).to_json.html_safe %>;
+  const chargeAmounts = <%= current_user.charges.pluck(:amount).to_json.html_safe %>;
+  const backgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
 
-          new Chart(billsChartCanvas, {
-            type: 'doughnut',
-            data: {
-              labels: billNames,
-              datasets: [
-                {
-                  data: billAmounts,
-                  backgroundColor: backgroundColors,
-                },
-              ],
-            },
-            options: {
-              // Customize chart options and styling here
-            },
-          });
-        <% end %>
+  new Chart(billsChartCanvas, {
+    type: 'doughnut',
+    data: {
+      labels: chargeNames,
+      datasets: [
+        {
+          data: chargeAmounts,
+          backgroundColor: backgroundColors,
+        },
+      ],
+    },
+    options: {
+      // Customize chart options and styling here
+    },
+  });
+<% end %>
+
       });
     </script>
   <% end %>

@@ -1,5 +1,3 @@
-
-
 ActiveAdmin.register Charge do
     index do
       selectable_column
@@ -7,7 +5,7 @@ ActiveAdmin.register Charge do
         "#{charge.bill.name} $#{charge.amount}"
       end
       column :user
-      column :paid
+      column :status
       actions
     end
   end

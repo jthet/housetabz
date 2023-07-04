@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_01_195704) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_02_005718) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -98,13 +98,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_01_195704) do
   create_table "charges", force: :cascade do |t|
     t.integer "user_id", null: false
     t.decimal "amount"
-    t.boolean "paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "bill_id"
     t.date "date_issued"
     t.date "due_date"
     t.string "status"
+    t.string "name"
     t.index ["bill_id"], name: "index_charges_on_bill_id"
     t.index ["user_id"], name: "index_charges_on_user_id"
   end
