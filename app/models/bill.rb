@@ -18,11 +18,11 @@ class Bill < ApplicationRecord
   end
 
   def update_status
-    if house.users.all?(&:paid_status)
-      puts "All users have paid"
+    if charges.reload.where.not(status: 'paid').empty?
+      puts "All charges have been paid"
       self.status = 'paid'
     else
-      puts "Some users have not paid"
+      puts "Some charges are still unpaid"
       self.status = 'unpaid'
     end
 

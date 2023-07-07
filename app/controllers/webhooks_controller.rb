@@ -30,9 +30,7 @@ class WebhooksController < ApplicationController
 
   def webhook_secret
     # Replace this with your actual webhook secret
-    
     ENV['WEBHOOK_SECRET'].to_s
-  
   end
 
   def extract_user_id_from_payment_intent(event)
@@ -57,33 +55,38 @@ class WebhooksController < ApplicationController
     puts "User ID: #{user_id}"
     puts "Custom Price: #{custom_price}"
     amount_paid = custom_price
-  
-    # Retrieve the user and their charges
-    user = User.find(user_id)
-    charges_to_cover = user.charges.reload.where(status: 'unpaid')
-  
-    # Update the status of the charges if all charge payments have been made
-    charges_to_cover.each do |charge|
-      if charge.payments.count == charge.charge_payments.count
-        charge.update(status: 'paid')
+
+    begin
+      # Retrieve the user and their charges
+      user = User.find(user_id)
+      charges_to_cover = user.charges.reload.where(status: 'unpaid')
+
+      # Update the status of the charges if all charge payments have been made
+      charges_to_cover.each do |charge|
+        if charge.payments.count == charge.charge_payments.count
+          charge.update(status: 'paid')
+        end
       end
+
+      # Create the payment record
+      payment = Payment.create(user_id: user_id, amount: amount_paid)
+
+      # Associate the charges with the payment
+      charges_to_cover.each do |charge|
+        ChargePayment.create(payment: payment, charge: charge)
+      end
+
+      # Update the paid status of the user
+      user.update_paid_status
+
+      puts "User: #{user_id}"
+      puts "Amount: #{amount_paid}"
+    rescue ActiveRecord::RecordNotFound => e
+      puts "User not found with ID: #{user_id}"
+      # You can add additional error handling or logging here if needed
     end
-  
-    # Create the payment record
-    payment = Payment.create(user_id: user_id, amount: amount_paid)
-  
-    # Associate the charges with the payment
-    charges_to_cover.each do |charge|
-      ChargePayment.create(payment: payment, charge: charge)
-    end
-  
-    # Update the paid status of the user
-    user.update_paid_status
-  
-    puts "User: #{user_id}"
-    puts "Amount: #{amount_paid}"
   end
-  
+
   # Make the handle_successful_payment method accessible from outside
   public :handle_successful_payment
 end
