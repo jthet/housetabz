@@ -8,6 +8,7 @@ class Charge < ApplicationRecord
 
   before_save :set_name_from_bill
   after_save :update_user_paid_status
+  after_update :update_bill_status
 
   def set_name_from_bill
     self.name = bill.name
@@ -19,6 +20,15 @@ class Charge < ApplicationRecord
 
   def update_user_paid_status
     user.update(paid_status: user.charges.reload.where(status: 'unpaid').empty?)
+  end
+
+  def update_bill_status
+    logger.info "Updating bill status meow im a kitty..."
+    if bill.charges.all?(&:paid?)
+      bill.update(status: 'paid')
+    else
+      bill.update(status: 'unpaid')
+    end
   end
   
 end

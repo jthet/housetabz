@@ -87,55 +87,55 @@
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const donutChartCanvas = document.getElementById('donutChart');
-        const billsChartCanvas = document.getElementById('billsChart');
-        
-        const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
-        const backgroundColor = <%= current_user.house.users.map { |user| user.balance&.amount.to_f.ceil(2) == 0 ? 'green' : 'red' }.to_json.html_safe %>;
-        const data = Array(houseMembers.length).fill(1);
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const donutChartCanvas = document.getElementById('donutChart');
+    const billsChartCanvas = document.getElementById('billsChart');
 
-        new Chart(donutChartCanvas, {
-          type: 'doughnut',
-          data: {
-            labels: houseMembers.map((user) => `${user}`),
-            datasets: [
-              {
-                data: data,
-                backgroundColor: backgroundColor,
-              },
-            ],
+    const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
+    const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? 'green' : 'red' }.to_json.html_safe %>;
+    const donutData = Array(houseMembers.length).fill(1);
+
+    new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: {
+        labels: houseMembers.map((user) => `${user}`),
+        datasets: [
+          {
+            data: donutData,
+            backgroundColor: donutBackgroundColor,
           },
-          options: {
-            // Customize chart options and styling here
+        ],
+      },
+      options: {
+        // Customize donut chart options and styling here
+      },
+    });
+
+    <% if current_user.charges.present? %>
+    const chargeNames = <%= current_user.charges.pluck(:name).to_json.html_safe %>;
+    const chargeAmounts = <%= current_user.charges.pluck(:amount).to_json.html_safe %>;
+    const billChartBackgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
+
+    new Chart(billsChartCanvas, {
+      type: 'doughnut',
+      data: {
+        labels: chargeNames,
+        datasets: [
+          {
+            data: chargeAmounts,
+            backgroundColor: billChartBackgroundColors,
           },
-        });
-
-        <% if current_user.charges.present? %>
-  const chargeNames = <%= current_user.charges.pluck(:name).to_json.html_safe %>;
-  const chargeAmounts = <%= current_user.charges.pluck(:amount).to_json.html_safe %>;
-  const backgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
-
-  new Chart(billsChartCanvas, {
-    type: 'doughnut',
-    data: {
-      labels: chargeNames,
-      datasets: [
-        {
-          data: chargeAmounts,
-          backgroundColor: backgroundColors,
-        },
-      ],
-    },
-    options: {
-      // Customize chart options and styling here
-    },
+        ],
+      },
+      options: {
+        // Customize bills chart options and styling here
+      },
+    });
+    <% end %>
   });
-<% end %>
+</script>
 
-      });
-    </script>
   <% end %>
 <% end %>

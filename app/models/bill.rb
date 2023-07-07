@@ -13,19 +13,6 @@ class Bill < ApplicationRecord
       charge = user.charges.create(amount: charge_amount, bill: self)
       self.charges << charge
     end
-
-    update_status
   end
 
-  def update_status
-    if charges.reload.where.not(status: 'paid').empty?
-      puts "All charges have been paid"
-      self.status = 'paid'
-    else
-      puts "Some charges are still unpaid"
-      self.status = 'unpaid'
-    end
-
-    save
-  end
 end
