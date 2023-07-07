@@ -23,12 +23,10 @@ class Charge < ApplicationRecord
   end
 
   def update_bill_status
-    logger.info "Updating bill status meow im a kitty..."
     if bill.charges.all?(&:paid?)
       bill.update(status: 'paid')
     else
       bill.update(status: 'unpaid')
     end
   end
-  
 end

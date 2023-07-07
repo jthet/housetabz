@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_02_005718) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_07_212320) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -136,6 +136,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_005718) do
     t.index ["user_id"], name: "index_members_on_user_id"
   end
 
+  create_table "paid_bills", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "bill_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "house_id", null: false
+    t.index ["bill_id"], name: "index_paid_bills_on_bill_id"
+    t.index ["house_id"], name: "index_paid_bills_on_house_id"
+    t.index ["user_id"], name: "index_paid_bills_on_user_id"
+  end
+
   create_table "payments", force: :cascade do |t|
     t.decimal "amount"
     t.datetime "created_at", null: false
@@ -186,6 +197,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_02_005718) do
   add_foreign_key "house_memberships", "users"
   add_foreign_key "members", "profiles"
   add_foreign_key "members", "users"
+  add_foreign_key "paid_bills", "bills"
+  add_foreign_key "paid_bills", "houses"
+  add_foreign_key "paid_bills", "users"
   add_foreign_key "payments", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "users", "houses"

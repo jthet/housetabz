@@ -44,7 +44,11 @@
             </p>
             <p class="text-lg font-bold">$<%= payment.amount %></p>
           </div>
-          <!-- Add any additional details or formatting for each payment -->
+          <% payment.charges.each do |charge| %>
+            <p class="text-sm italic text-gray-500">
+              <%= charge.name %>
+            </p>
+          <% end %>
         </li>
       <% end %>
     </ul>
