@@ -36,17 +36,9 @@
 
         <div class="flex flex-col space-y-2">
           <h2 class="text-2xl font-bold mb-4">Paid Bills:</h2>
-          <% @user.house.paid_bills.each do |bill| %>
+          <% @user.house.paid_bills.each do |paid_bill| %>
+            <% bill = paid_bill.bill %>
             <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
-          <% end %>
-        </div>
-
-        <div class="flex flex-col space-y-2">
-          <h2 class="text-2xl font-bold mb-4">Unpaid Bills:</h2>
-          <% @user.house.bills.each do |bill| %>
-            <% unless bill.paid? %>
-              <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
-            <% end %>
           <% end %>
         </div>
       </div>
