@@ -68,10 +68,11 @@
         <div class="flex">
           <div class="w-1/2">
             <h2 class="text-2xl font-bold">
-              <strong><%= current_user.house.name %></strong>: $<%= current_user.house.total_charge.to_f.ceil(2) %>
+              <strong><%= current_user.house.name %></strong>: $<%= current_user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum(&:amount).to_f.ceil(2) %>
             </h2>
             <canvas id="donutChart" style="max-width: 300px;"></canvas>
           </div>
+          
           <div class="w-1/2">
             <h2 class="text-2xl font-bold">
               <strong>My Tab:</strong> $<%= current_user.balance&.amount.to_f.ceil(2) %>
@@ -113,27 +114,37 @@
       },
     });
 
-    <% if current_user.charges.present? %>
-    const chargeNames = <%= current_user.charges.pluck(:name).to_json.html_safe %>;
-    const chargeAmounts = <%= current_user.charges.pluck(:amount).to_json.html_safe %>;
+  <% if current_user.charges.present? %>
+  <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
+  <% if unpaid_charges.any? %>
+    <!-- Donut Chart Code Here -->
+    const chargeNames = <%= unpaid_charges.pluck(:name).to_json.html_safe %>;
+    const chargeAmounts = <%= unpaid_charges.pluck(:amount).to_json.html_safe %>;
     const billChartBackgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
+  <% else %>
+    <!-- Donut Chart Code Here -->
+    const chargeNames = ['You have no current charges!'];
+    const chargeAmounts = [100]; // Update with an appropriate value
+    const billChartBackgroundColors = ['green']; // Update with an appropriate color
+  <% end %>
 
-    new Chart(billsChartCanvas, {
-      type: 'doughnut',
-      data: {
-        labels: chargeNames,
-        datasets: [
-          {
-            data: chargeAmounts,
-            backgroundColor: billChartBackgroundColors,
-          },
-        ],
-      },
-      options: {
-        // Customize bills chart options and styling here
-      },
-    });
-    <% end %>
+  new Chart(billsChartCanvas, {
+    type: 'doughnut',
+    data: {
+      labels: chargeNames,
+      datasets: [
+        {
+          data: chargeAmounts,
+          backgroundColor: billChartBackgroundColors,
+        },
+      ],
+    },
+    options: {
+      // Customize bills chart options and styling here
+    },
+  });
+<% end %>
+
   });
 </script>
 

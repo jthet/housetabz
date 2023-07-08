@@ -30,15 +30,28 @@
       </div>
     </div>
 
-    <div class="w-1/2 ml-4 mr-4"> <!-- Adjusted the margin for "Our Tabz" section -->
-      <div class="flex flex-col items-center"> <!-- Center-align the content within the section -->
-        <h2 class="text-2xl font-bold mb-4">Our Tabz: $<%= @user.house.total_charge.to_f.ceil(2) %></h2>
+    <div class="w-1/2 ml-4 mr-4">
+      <div class="flex flex-col items-center">
+        <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
+          <h2 class="text-2xl font-bold mb-4">Balance:</h2>
+          <p class="text-4xl font-bold">$<%= @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum(&:amount).to_f.ceil(2) %></p>
+        </div>
 
         <div class="flex flex-col space-y-2">
           <h2 class="text-2xl font-bold mb-4">Paid Bills:</h2>
-          <% @user.house.paid_bills.each do |paid_bill| %>
-            <% bill = paid_bill.bill %>
-            <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
+          <% @user.house.paid_bills.group_by { |paid_bill| paid_bill.created_at.strftime("%B") }.each do |month, paid_bills| %>
+            <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
+              <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments(this)"><%= month %></h2>
+              <div class="hidden">
+                <% paid_bills.each do |paid_bill| %>
+                  <% bill = paid_bill.bill %>
+                  <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                    <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
+                    <p class="text-gray-500">Paid on <%= paid_bill.created_at.strftime('%B %d, %Y') %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           <% end %>
         </div>
       </div>
@@ -50,3 +63,10 @@
     <%= button_to 'Create House', create_house_path, method: :post, class: 'button' %>
   </div>
 <% end %>
+
+<script>
+  function togglePayments(element) {
+    const paymentsContainer = element.nextElementSibling;
+    paymentsContainer.classList.toggle('hidden');
+  }
+</script>
