@@ -44,7 +44,7 @@ Run `bin/dev` in the application's terminal and then access the ngrok link in a 
 
 ## Contributing
 
-We welcome contributions to improve the design and functionality of HouseTabz. Please refer to the project documentation for guidelines on how to contribute.
+We welcome contributions to improve the design and functionality of HouseTabz. Please refer to the project documentation for guidelines on how to contribute. I am looking for a new and SAFE way to process payments, that wont charge me a fee per transaction. So having my own payment processor would be awesome. 
 
 ## License
 
