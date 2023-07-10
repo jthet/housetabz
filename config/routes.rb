@@ -39,4 +39,7 @@ Rails.application.routes.draw do
 
   get 'checkout_cancel', to: 'checkout#checkout_cancel'
   get 'checkout_success', to: 'checkout#checkout_success', as: 'checkout_success'
+
+  get 'about', to: 'home_page#about', as: 'about'
+
 end

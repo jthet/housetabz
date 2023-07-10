@@ -23,15 +23,22 @@ nav.bg-green-500 {
   padding: 0;
   margin: 0;
   font-size: medium;
-  transition: font-size 0.2s ease;
 }
 
-.nav-links a:hover,
-.name a:hover,
-.nav-links li:hover a {
-  color:#4a5568
+.nav-links li a:hover {
+  color: #4a5568;
 }
 
+.nav-links li button.btn-logout:hover {
+  color: #4a5568;
+}
+
+
+
+.nav-link {
+  display: flex;
+  align-items: center;
+}
 /* ... */
 
 .btn {
@@ -61,6 +68,17 @@ nav.bg-green-500 {
 .btn-secondary:hover {
   background-color: #cbd5e1;
 }
+
+/* .btn-logout {
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+} */
+
 
 .form-input {
   display: block;
@@ -93,3 +111,16 @@ nav.bg-green-500 {
 .button:hover {
   background-color: #45c170;
 }
+
+.btn-logout {
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+

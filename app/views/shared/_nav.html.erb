@@ -1,4 +1,4 @@
-<nav class="sticky top-0 flex items-center justify-between py-4 px-6 w-full <%= current_user ? 'bg-white' : 'bg-green-500' %>">
+<nav class="sticky top-0 flex items-center justify-between py-4 px-6 w-full <%= current_user ? 'bg-white' : 'bg-slate-950' %>">
   <div class="name">
     <%= link_to 'HouseTabz', root_path, class: "#{current_user ? 'text-green-500' : 'text-white-800'} text-xl font-bold" %>
   </div>
@@ -7,18 +7,23 @@
     <div class="nav-links">
       <ul class="flex items-center space-x-4 px-6">
         <% if current_user.profile %>
-          <li><%= link_to 'Profile', user_profile_path(current_user), class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold" %></li>
+          <li><%= link_to 'Profile', user_profile_path(current_user), class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold nav-link" %></li>
         <% else %>
-          <li><%= link_to 'Profile', new_user_profile_path(current_user), class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold" %></li>
+          <li><%= link_to 'Profile', new_user_profile_path(current_user), class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold nav-link" %></li>
         <% end %>
 
         <% if current_user.house %>
-          <li><%= link_to 'My House', user_house_path(current_user, current_user.house), class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold" %></li>
+          <li><%= link_to 'My House', user_house_path(current_user, current_user.house), class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold nav-link" %></li>
         <% else %>
-          <li><%= link_to 'My House', house_options_path, class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold" %></li>
+          <li><%= link_to 'My House', house_options_path, class: "#{current_user ? 'text-green-500' : 'text-white'} font-bold nav-link" %></li>
         <% end %>
 
-        <li><%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-primary' %></li>
+<li style="position: relative; top: 8px;">
+  <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-logout', style: 'color: #10B981; font-weight: bold; position: static; padding: 0; margin: 0;' %>
+</li>
+
+
+
       </ul>
     </div>
   <% else %>

@@ -17,12 +17,13 @@
                 <% else %>
                   <%= image_tag 'profilepicplaceholder.png', alt: 'Placeholder Image', class: 'w-10 h-10 rounded-full' %>
                 <% end %>
-                <p class="text-lg">
-                  <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
-                  <% balance = user.balance&.amount.to_f.ceil(2) %>
-                  <% status = balance == 0 ? 'Paid' : 'Unpaid' %>
-                  <span class="<%= status == 'Paid' ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
-                </p>
+               <p class="text-lg">
+  <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
+  <% balance = user.balance&.amount.to_f.ceil(2) %>
+  <% status = user.paid_status ? 'Paid' : 'Unpaid' %>
+  <span class="<%= user.paid_status ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
+</p>
+
               </div>
             </div>
           <% end %>
