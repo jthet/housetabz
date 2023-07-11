@@ -52,9 +52,10 @@
           <img src="/images/smilinghouse.png" alt="Smiling House" class="w-64 mx-auto" />
           <div class="description text-center mt-4">
             <h3 class="text-2xl font-bold">Your Tab</h3>
-            <% current_user.house.bills.each do |bill| %>
-              <p class="text-lg text-gray-700"><%= bill.name %></p>
-            <% end %>
+            <% current_user.house.bills.where(status: 'unpaid').each do |bill| %>
+  <p class="text-lg text-gray-700"><%= bill.name %></p>
+<% end %>
+
             <strong><h5 class="text-gray-600 text-lg mt-2">$<%= current_user.balance&.amount.to_f.ceil(2) %></h5></strong>
           </div>
         </div>

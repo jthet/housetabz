@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.hosts << "406d-2600-1700-290-5680-fc39-85ff-2655-aa9f.ngrok-free.app"
+  config.hosts << "842d-2600-1700-290-5680-1982-f537-477e-be91.ngrok-free.app"
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -68,4 +68,16 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587,
+    domain: "gmail.com",
+    user_name: "waltboxwell@gmail.com",
+    password: "Waltbox2001!!@",
+    authentication: "plain",
+    enable_starttls_auto: true
+  }
+  
 end

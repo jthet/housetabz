@@ -42,4 +42,6 @@ Rails.application.routes.draw do
 
   get 'about', to: 'home_page#about', as: 'about'
 
+  resources :contacts, only: [:new, :create]
+
 end
