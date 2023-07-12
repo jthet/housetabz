@@ -17,13 +17,12 @@
                 <% else %>
                   <%= image_tag 'profilepicplaceholder.png', alt: 'Placeholder Image', class: 'w-10 h-10 rounded-full' %>
                 <% end %>
-               <p class="text-lg">
-  <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
-  <% balance = user.balance&.amount.to_f.ceil(2) %>
-  <% status = user.paid_status ? 'Paid' : 'Unpaid' %>
-  <span class="<%= user.paid_status ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
-</p>
-
+                <p class="text-lg">
+                  <%= link_to "#{user.profile.first_name} #{user.profile.last_name}", member_profile_path(user.profile), class: 'text-blue-500' %>
+                  <% balance = user.balance&.amount.to_f.ceil(2) %>
+                  <% status = user.paid_status ? 'Paid' : 'Unpaid' %>
+                  <span class="<%= user.paid_status ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
+                </p>
               </div>
             </div>
           <% end %>
@@ -34,22 +33,53 @@
     <div class="w-1/2 ml-4 mr-4">
       <div class="flex flex-col items-center">
         <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
-          <h2 class="text-2xl font-bold mb-4">Balance:</h2>
-         <p class="text-4xl font-bold">$<%= @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }.ceil(2) %></p>
-
+          <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="toggleUnpaidBills()">
+            <span class="text-2xl">Balance:</span>
+            <span class="text-2xl font-bold">$<%= format('%.2f', @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }) %></span>
+          </h2>
+          <div id="unpaidBillsContainer" class="hidden">
+            <% @user.house.bills.select { |bill| bill.status == 'unpaid' }.each do |bill| %>
+              <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                <p class="text-lg">
+                  <strong>
+                    <a href="javascript:void(0)" class="bill-link" onclick="toggleBillImage(this)">
+                      <%= bill.name %>
+                    </a>
+                  </strong>
+                  : $<%= format('%.2f', bill.amount.to_f) %>
+                </p>
+                <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
+                  <div class="bill-image-container">
+                    <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 100%; height: 400px;">
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
         </div>
 
         <div class="flex flex-col space-y-2">
           <h2 class="text-2xl font-bold mb-4">Paid Bills:</h2>
           <% @user.house.paid_bills.group_by { |paid_bill| paid_bill.created_at.strftime("%B") }.each do |month, paid_bills| %>
             <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
-              <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments(this)"><%= month %></h2>
-              <div class="hidden">
+              <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments()"><%= month %></h2>
+              <div id="paidBillsContainer" class="hidden">
                 <% paid_bills.each do |paid_bill| %>
                   <% bill = paid_bill.bill %>
                   <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
-                    <p class="text-lg"><strong><%= bill.name %>:</strong> $<%= bill.amount.to_f.ceil(2) %></p>
-                    <p class="text-gray-500">Paid on <%= paid_bill.created_at.strftime('%B %d, %Y') %></p>
+                    <p class="text-lg">
+                      <strong>
+                        <a href="javascript:void(0)" class="bill-link" onclick="toggleBillImage(this)">
+                          <%= bill.name %>
+                        </a>
+                      </strong>
+                      : $<%= format('%.2f', bill.amount.to_f) %>
+                    </p>
+                    <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
+                      <div class="bill-image-container">
+                        <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 100%; height: 400px;">
+                      </div>
+                    <% end %>
                   </div>
                 <% end %>
               </div>
@@ -59,6 +89,7 @@
       </div>
     </div>
   </div>
+
 <% else %>
   <div class="text-center">
     <h1 class="text-4xl font-bold mb-4">Not yet a member of a house?</h1>
@@ -67,8 +98,18 @@
 <% end %>
 
 <script>
-  function togglePayments(element) {
-    const paymentsContainer = element.nextElementSibling;
+  function togglePayments() {
+    const paymentsContainer = document.getElementById('paidBillsContainer');
     paymentsContainer.classList.toggle('hidden');
+  }
+  
+  function toggleUnpaidBills() {
+    const unpaidBillsContainer = document.getElementById('unpaidBillsContainer');
+    unpaidBillsContainer.classList.toggle('hidden');
+  }
+
+  function toggleBillImage(element) {
+    const billImageContainer = element.parentNode.nextElementSibling.querySelector('.bill-image-container');
+    billImageContainer.classList.toggle('hidden');
   }
 </script>

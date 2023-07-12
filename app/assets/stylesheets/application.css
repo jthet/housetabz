@@ -124,3 +124,8 @@ nav.bg-green-500 {
 }
 
 
+
+.bill-image-container.hidden {
+  display: none;
+}
+

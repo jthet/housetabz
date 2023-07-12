@@ -11,8 +11,8 @@ class CheckoutController < ApplicationController
       return
     end
 
-    cancel_url = 'https://842d-2600-1700-290-5680-1982-f537-477e-be91.ngrok-free.app/checkout'  # Replace with your cancel URL
-    success_url = "https://842d-2600-1700-290-5680-1982-f537-477e-be91.ngrok-free.app/checkout_success?user_id=#{user_id}&price=#{custom_price}"
+    cancel_url = 'https://cd01-2600-1700-290-5680-2db5-ca24-c628-fdea.ngrok-free.app/checkout'  # Replace with your cancel URL
+    success_url = "https://cd01-2600-1700-290-5680-2db5-ca24-c628-fdea.ngrok-free.app/checkout_success?user_id=#{user_id}&price=#{custom_price}"
     
     session = Stripe::Checkout::Session.create(
       success_url: success_url,

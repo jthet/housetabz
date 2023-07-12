@@ -18,18 +18,19 @@
     <h1 class="text-5xl font-bold mb-8">Easily Track Your Payments and Expenses</h1>
     <p class="text-2xl">With HouseTabz, you can effortlessly manage your shared expenses and stay on top of your payments. Take control of your financial game with our intuitive and user-friendly interface.</p>
     <div class="flex justify-center mt-8">
-      <div class="border border-gray-300 rounded-lg p-4">
+      <div class="border border-gray-300 rounded-lg p-4 hover:scale-105 transition-transform duration-300">
         <img src="/images/landingpage.png" alt="Application view of the home page" class="w-96 h-auto">
       </div>
-      <div class="border border-gray-300 rounded-lg p-4 ml-4">
+      <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
         <img src="/images/profileview.png" alt="Application view of the User Profile" class="w-96 h-auto">
       </div>
-      <div class="border border-gray-300 rounded-lg p-4 ml-4">
+      <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
         <img src="/images/houseview.png" alt="Application view of the house page" class="w-96 h-auto">
       </div>
     </div>
   </div>
 </section>
+
 
 <section class="bg-white text-green-500 py-40 border border-gray-300">
   <div class="flex justify-center container mx-auto">
@@ -96,7 +97,9 @@
           <div class="w-1/2">
             <% unpaid_bills_sum = current_user.house.bills.where(status: 'unpaid').sum(:amount) %>
             <h2 class="text-2xl font-bold">
-              <strong><%= current_user.house.name %></strong>: $<%= unpaid_bills_sum.to_f.ceil(2) %>
+             <strong><%= current_user.house.name %></strong>: $<%= format('%.2f', unpaid_bills_sum.to_f) %>
+
+
             </h2>
             <canvas id="donutChart" style="max-width: 300px;"></canvas>
           </div>

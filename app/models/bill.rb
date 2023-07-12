@@ -1,6 +1,7 @@
 class Bill < ApplicationRecord
   belongs_to :house
   has_many :charges
+  has_one_attached :bill_image
   attribute :status, :string
 
   after_create :create_charges

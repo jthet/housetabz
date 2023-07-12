@@ -10,14 +10,18 @@
       <% end %>
       
       <% if @profile %>
-        <div class="text-center">
+        <div class="">
           <p class="text-lg"><strong>First Name:</strong> <%= @profile.first_name %></p>
           <p class="text-lg"><strong>Last Name:</strong> <%= @profile.last_name %></p>
           <p class="text-lg"><strong>Bio:</strong> <%= @profile.bio %></p>
           
           <%= button_to 'Edit Profile', edit_user_profile_path(user_id: current_user.id), method: :get, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8' %>
           
-          <p class="text-lg mt-6"><strong>Current Tab:</strong> $<%= current_user.balance&.amount.to_f.ceil(2) %></p>
+          <p class="text-lg mt-6"><strong>Current Tab:</strong> $<%balance=current_user.balance&.amount.to_f.ceil(2)%>
+              <% balance = 0 if balance < 0 %> <!-- Set balance to 0 if it's negative -->
+                <%= format('%.2f', balance.abs) %> <!-- Display the absolute value of the balance -->
+      
+          
     
           <% if @user.house %>
             <p class="text-lg"><strong>My House:</strong> <%= @user.house.name %></p>
