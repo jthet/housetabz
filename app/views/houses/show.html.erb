@@ -33,24 +33,21 @@
     <div class="w-1/2 ml-4 mr-4">
       <div class="flex flex-col items-center">
         <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
-          <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="toggleUnpaidBills()">
-            <span class="text-2xl">Balance:</span>
-            <span class="text-2xl font-bold">$<%= format('%.2f', @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }) %></span>
-          </h2>
+          <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="toggleUnpaidBills()">Balance: $<%= format('%.2f', @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }) %></h2>
           <div id="unpaidBillsContainer" class="hidden">
             <% @user.house.bills.select { |bill| bill.status == 'unpaid' }.each do |bill| %>
               <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
                 <p class="text-lg">
                   <strong>
-                    <a href="javascript:void(0)" class="bill-link" onclick="toggleBillImage(this)">
+                    <a href="javascript:void(0)" class="bill-link hover:text-blue-500" onclick="toggleBillImage(this)">
                       <%= bill.name %>
                     </a>
                   </strong>
                   : $<%= format('%.2f', bill.amount.to_f) %>
                 </p>
                 <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
-                  <div class="bill-image-container">
-                    <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 100%; height: 400px;">
+                  <div class="bill-image-container hidden">
+                    <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />
                   </div>
                 <% end %>
               </div>
@@ -62,22 +59,22 @@
           <h2 class="text-2xl font-bold mb-4">Paid Bills:</h2>
           <% @user.house.paid_bills.group_by { |paid_bill| paid_bill.created_at.strftime("%B") }.each do |month, paid_bills| %>
             <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
-              <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments()"><%= month %></h2>
-              <div id="paidBillsContainer" class="hidden">
+              <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments(this)"><%= month %></h2>
+              <div class="hidden">
                 <% paid_bills.each do |paid_bill| %>
                   <% bill = paid_bill.bill %>
                   <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
                     <p class="text-lg">
                       <strong>
-                        <a href="javascript:void(0)" class="bill-link" onclick="toggleBillImage(this)">
+                        <a href="javascript:void(0)" class="bill-link hover:text-blue-500" onclick="toggleBillImage(this)">
                           <%= bill.name %>
                         </a>
                       </strong>
                       : $<%= format('%.2f', bill.amount.to_f) %>
                     </p>
                     <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
-                      <div class="bill-image-container">
-                        <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 100%; height: 400px;">
+                      <div class="bill-image-container hidden">
+                        <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />
                       </div>
                     <% end %>
                   </div>
@@ -89,7 +86,31 @@
       </div>
     </div>
   </div>
+    <script>
+     function togglePayments(element) {
+    const paidBillsContainer = element.nextElementSibling;
+    paidBillsContainer.classList.toggle('hidden');
+  }
 
+  function toggleUnpaidBills() {
+    const unpaidBillsContainer = document.getElementById('unpaidBillsContainer');
+    unpaidBillsContainer.classList.toggle('hidden');
+  }
+
+  function toggleBillImage(element) {
+  const billImageContainer = element.closest('.bg-white').querySelector('.bill-image-container');
+  if (billImageContainer) {
+    billImageContainer.classList.toggle('hidden');
+  }
+}
+
+  function displayBillImage(element) {
+    const billImageContainer = element.parentNode.nextElementSibling.querySelector('.bill-image-container');
+    if (billImageContainer) {
+      billImageContainer.classList.remove('hidden');
+    }
+  }
+  </script>
 <% else %>
   <div class="text-center">
     <h1 class="text-4xl font-bold mb-4">Not yet a member of a house?</h1>
@@ -97,19 +118,4 @@
   </div>
 <% end %>
 
-<script>
-  function togglePayments() {
-    const paymentsContainer = document.getElementById('paidBillsContainer');
-    paymentsContainer.classList.toggle('hidden');
-  }
-  
-  function toggleUnpaidBills() {
-    const unpaidBillsContainer = document.getElementById('unpaidBillsContainer');
-    unpaidBillsContainer.classList.toggle('hidden');
-  }
 
-  function toggleBillImage(element) {
-    const billImageContainer = element.parentNode.nextElementSibling.querySelector('.bill-image-container');
-    billImageContainer.classList.toggle('hidden');
-  }
-</script>
