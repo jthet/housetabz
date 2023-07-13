@@ -28,7 +28,66 @@ ActiveAdmin.register User do
   filter :house
   filter :charges
 
+# Delete action
+# Delete action
+# Delete action
+# Delete action
+# Delete action
+# Delete action
+# Delete action
+member_action :destroy, method: :delete do
+  user = User.find(params[:id])
+  profile = user.profile
 
-  # Permit the necessary attributes for mass assignment
-  permit_params :email, :house_id
+  if current_admin_user != user
+    # Delete associated charge_payments
+    ChargePayment.where(charge_id: user.charges.pluck(:id)).delete_all
+
+    # Destroy associated charges
+    user.charges.destroy_all
+
+    # Destroy associated payments
+    user.payments.destroy_all
+
+    user.balance&.destroy
+
+    # Store user data in deleted_users table
+    charges_sum = user.charges.sum(:amount)
+    payments_sum = user.payments.sum(:amount)
+    DeletedUser.create!(
+     
+      user_id: user.id,
+      username: user.username,
+      first_name: profile&.first_name,
+      last_name: profile&.last_name,
+      charges_sum: user.charges.sum(:amount),
+      payments_sum: user.payments.sum(:amount),
+      balance: user.balance&.amount
+    )
+
+    # Destroy associated records before deleting the user
+    profile&.destroy
+    user.destroy
+
+    redirect_to admin_users_path, notice: "User has been deleted."
+  else
+    redirect_to admin_users_path, alert: "Admin users cannot be deleted."
+  end
+end
+
+  
+
+
+
+
+
+
+
+action_item :destroy, only: :show do
+  link_to "Destroy User", destroy_admin_user_path(user),
+          method: :delete,
+          data: { confirm: "Are you sure you want to delete this user?" },
+          authenticity_token: form_authenticity_token(request.env['HTTP_HOST'])
+end
+
 end

@@ -4,10 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :profile
+  has_one :profile, dependent: :destroy
   has_one :member
   has_one :balance
-  has_many :charges
+  has_many :charges, dependent: :destroy
   has_many :payments
   belongs_to :house, optional: true
   
@@ -32,6 +32,19 @@ class User < ApplicationRecord
     puts "Paid Status Updated: #{paid_status}"
   end
   
-  
+  def soft_delete
+    charges_sum = user.charges.sum(:amount)
+    payments_sum = user.payments.sum(:amount)
+    DeletedUser.create(
+      username: username,
+      first_name: profile&.first_name,
+      last_name: profile&.last_name,
+      charges_sum: charges.sum(:amount),
+      payments_sum: payments.sum(:amount),
+      balance_sum: balance&.amount.to_f
+    )
 
+    charges.destroy_all # Delete associated charges
+    destroy
+  end
 end
