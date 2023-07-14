@@ -40,6 +40,10 @@ member_action :destroy, method: :delete do
   profile = user.profile
 
   if current_admin_user != user
+    # Calculate the sums before destroying associated records
+    charges_sum = user.charges.sum(:amount)
+    payments_sum = user.payments.sum(:amount)
+
     # Delete associated charge_payments
     ChargePayment.where(charge_id: user.charges.pluck(:id)).delete_all
 
@@ -49,23 +53,21 @@ member_action :destroy, method: :delete do
     # Destroy associated payments
     user.payments.destroy_all
 
+    # Destroy associated balance
     user.balance&.destroy
 
     # Store user data in deleted_users table
-    charges_sum = user.charges.sum(:amount)
-    payments_sum = user.payments.sum(:amount)
     DeletedUser.create!(
-     
       user_id: user.id,
       username: user.username,
       first_name: profile&.first_name,
       last_name: profile&.last_name,
-      charges_sum: user.charges.sum(:amount),
-      payments_sum: user.payments.sum(:amount),
+      charges_sum: charges_sum,
+      payments_sum: payments_sum,
       balance: user.balance&.amount
     )
 
-    # Destroy associated records before deleting the user
+    # Destroy the user
     profile&.destroy
     user.destroy
 
@@ -74,6 +76,7 @@ member_action :destroy, method: :delete do
     redirect_to admin_users_path, alert: "Admin users cannot be deleted."
   end
 end
+
 
   
 
