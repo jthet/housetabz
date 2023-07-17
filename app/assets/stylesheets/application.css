@@ -129,3 +129,28 @@ nav.bg-green-500 {
   display: none;
 }
 
+
+/* Styles for the incoming messages box */
+.incoming-messages-box {
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.messages-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.message-item {
+  margin-bottom: 10px;
+}
+
+.message-sender {
+  font-weight: bold;
+}
+
+.message-content {
+  margin-top: 5px;
+}

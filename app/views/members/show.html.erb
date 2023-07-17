@@ -9,4 +9,23 @@
 
   <h2 class="text-2xl font-bold"><%= @member.first_name %> <%= @member.last_name %></h2>
   <p class="text-xl text-gray-700"><%= @member.bio %></p>
-</div>
+
+<% if current_user != @user && @user.has_unpaid_charges? %>
+  <div class="text-center mt-4">
+    <%= form_with(model: @notification, url: send_notification_user_path(@user), method: :post) do |form| %>
+      <div class="mb-4">
+        <%= form.label :message, class: 'block font-bold' %>
+        <%= form.text_area :message, class: 'form-textarea mt-1' %>
+      </div>
+
+      <!-- Add hidden fields for message and recipient_id -->
+      <%= form.hidden_field :recipient_id, value: @user.id %>
+
+      <div class="text-center">
+        <%= form.submit 'Send Notification', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+

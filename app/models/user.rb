@@ -13,6 +13,10 @@ class User < ApplicationRecord
   
   validates :username, presence: true, uniqueness: true
   
+  def has_unpaid_charges?
+    charges.unpaid.any?
+  end
+
   def calculate_balance
     charges_sum = charges.sum(:amount)
     payments_sum = payments.sum(:amount)

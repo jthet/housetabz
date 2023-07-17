@@ -10,6 +10,8 @@ class Charge < ApplicationRecord
   after_save :update_user_paid_status
   after_update :update_bill_status
 
+  scope :unpaid, -> { where(status: 'unpaid') }
+  
   def set_name_from_bill
     self.name = bill.name
   end

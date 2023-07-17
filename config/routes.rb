@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :houses, only: [:show]
   end
 
+  resources :profiles, only: [:new, :create]
+  
   resources :houses, only: [:show, :new] do
     post 'join', on: :collection, to: 'houses#join_process'
   end
@@ -44,5 +46,10 @@ Rails.application.routes.draw do
 
   resources :contacts, only: [:new, :create]
 
+  resources :users do
+    member do
+      post 'send_notification'
+    end
+  end
   
 end
