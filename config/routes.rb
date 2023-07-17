@@ -51,5 +51,9 @@ Rails.application.routes.draw do
       post 'send_notification'
     end
   end
+
+  put '/notifications/:id/mark_as_read', to: 'notifications#mark_as_read', as: 'mark_as_read_notification'
+
+  
   
 end

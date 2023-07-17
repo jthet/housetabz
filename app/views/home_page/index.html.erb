@@ -191,81 +191,97 @@
       </div>
     </div>
     
-    <% if @incoming_messages.any? %>
-  <div class="mt-8 incoming-messages-box">
-    <h2 class="text-2xl font-bold">Incoming Messages:</h2>
-    <ul class="messages-list">
-      <% @incoming_messages.each do |message| %>
-        <li class="message-item">
-          <strong class="message-sender">From: <%= message.sender.username %></strong>
-          <p class="message-content"><%= message.message %></p>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+   <% if @incoming_messages.any? %>
+  <div class="mt-8 w-1/2 mx-auto bg-white rounded-lg shadow-lg p-6">
+  <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
+  <ul class="space-y-4">
+    <% @incoming_messages.each do |message| %>
+      <li class="<%= message.read ? 'text-gray-600' : 'text-black' %>">
+        <strong class="text-blue-600">From: <%= message.sender.username %></strong>
+        <p class="text-gray-800"><%= message.message %></p>
+        <% unless message.read %>
+      <%= button_to "Mark as Read", mark_as_read_notification_path(message), method: :put, class: 'text-blue-600' %>
+    <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
 <% else %>
   <p class="mt-8">You have no incoming messages.</p>
 <% end %>
 
 
+ 
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const donutChartCanvas = document.getElementById('donutChart');
-        const billsChartCanvas = document.getElementById('billsChart');
+  document.addEventListener('DOMContentLoaded', () => {
+    const donutChartCanvas = document.getElementById('donutChart');
+    const billsChartCanvas = document.getElementById('billsChart');
 
-        const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
-        const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? 'green' : 'red' }.to_json.html_safe %>;
-        const donutData = Array(houseMembers.length).fill(1);
+    const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
+    const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? 'green' : 'red' }.to_json.html_safe %>;
+    const donutData = Array(houseMembers.length).fill(1);
 
-        new Chart(donutChartCanvas, {
-          type: 'doughnut',
-          data: {
-            labels: houseMembers.map((user) => `${user}`),
-            datasets: [
-              {
-                data: donutData,
-                backgroundColor: donutBackgroundColor,
-              },
-            ],
+    new Chart(donutChartCanvas, {
+      type: 'doughnut',
+      data: {
+        labels: houseMembers.map((user) => `${user}`),
+        datasets: [
+          {
+            data: donutData,
+            backgroundColor: donutBackgroundColor,
           },
-          options: {
-            // Customize donut chart options and styling here
-          },
-        });
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+    }
+   }
+  },
+});
 
-        <% if current_user.charges.present? %>
-          <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
-          <% if unpaid_charges.any? %>
-            <!-- Donut Chart Code Here -->
-            const chargeNames = <%= unpaid_charges.pluck(:name).to_json.html_safe %>;
-            const chargeAmounts = <%= unpaid_charges.pluck(:amount).to_json.html_safe %>;
-            const billChartBackgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
-          <% else %>
-            <!-- Donut Chart Code Here -->
-            const chargeNames = ['You have no current charges!'];
-            const chargeAmounts = [100]; // Update with an appropriate value
-            const billChartBackgroundColors = ['green']; // Update with an appropriate color
-          <% end %>
+    <% if current_user.charges.present? %>
+      <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
+      <% if unpaid_charges.any? %>
+        <!-- Donut Chart Code Here -->
+        const chargeNames = <%= unpaid_charges.pluck(:name).to_json.html_safe %>;
+        const chargeAmounts = <%= unpaid_charges.pluck(:amount).to_json.html_safe %>;
+        const billChartBackgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
+      <% else %>
+        <!-- Donut Chart Code Here -->
+        const chargeNames = ['You have no current charges!'];
+        const chargeAmounts = [100]; // Update with an appropriate value
+        const billChartBackgroundColors = ['green']; // Update with an appropriate color
+      <% end %>
 
-          new Chart(billsChartCanvas, {
-            type: 'doughnut',
-            data: {
-              labels: chargeNames,
-              datasets: [
-                {
-                  data: chargeAmounts,
-                  backgroundColor: billChartBackgroundColors,
-                },
-              ],
+      new Chart(billsChartCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: chargeNames,
+          datasets: [
+            {
+              data: chargeAmounts,
+              backgroundColor: billChartBackgroundColors,
             },
-            options: {
-              // Customize bills chart options and styling here
-            },
-          });
-        <% end %>
-      });
-    </script>
+          ],
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: false
+      }
+    }
+  },
+});
+    <% end %>
+  });
+</script>
+
 
   <% end %>
 <% end %>

@@ -13,6 +13,13 @@ class NotificationsController < ApplicationController
       render :new
     end
   end
+
+  def mark_as_read
+    @notification = Notification.find(params[:id])
+    @notification.update(read: true)
+    redirect_to root_path, notice: "Notification marked as read."
+
+  end
   
   private
   

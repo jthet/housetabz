@@ -154,3 +154,7 @@ nav.bg-green-500 {
 .message-content {
   margin-top: 5px;
 }
+
+.chart-legend-hidden + div {
+  display: none;
+}

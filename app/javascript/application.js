@@ -4,3 +4,4 @@
 import "controllers"
 
 
+//= require rails-ujs
