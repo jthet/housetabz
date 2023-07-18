@@ -158,3 +158,60 @@ nav.bg-green-500 {
 .chart-legend-hidden + div {
   display: none;
 }
+
+/* Add this CSS to your stylesheet */
+/* Add this CSS to your stylesheet */
+/* Add this CSS to your stylesheet */
+.user-initials {
+  position: relative;
+  display: inline-flex; /* Use flexbox to center the content */
+  justify-content: center;
+  align-items: center;
+  width: 30px; /* Adjust the size of the circle */
+  height: 30px; /* Adjust the size of the circle */
+  font-size: 16px; /* Change the font size as needed */
+  border: 2px solid #10B981; /* Green color for the circle */
+  border-radius: 50%;
+  box-sizing: border-box;
+  cursor: pointer; /* Add cursor pointer to indicate hover effect */
+}
+
+/* Add a hover effect for the entire circle */
+.user-initials:hover {
+  background-color: #10B981;
+  color: white; /* Change the text color to white on hover */
+}
+
+.dropdown-menu {
+  /* Add your dropdown menu styles here */
+  position: absolute;
+  top: 100%;
+  left: 50%; /* Adjust the left position to center the dropdown */
+  transform: translateX(-50%); /* Center the dropdown horizontally */
+  display: none;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  padding: 8px;
+  z-index: 1; /* Ensure the dropdown appears above other elements */
+}
+
+/* Style the individual items in the dropdown */
+.dropdown-menu a {
+  display: block;
+  padding: 6px 12px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Add a hover effect for the dropdown items */
+.dropdown-menu a:hover {
+  background-color: #f9f9f9;
+}
+
+/* Display the dropdown when hovering over the initials */
+.user-initials:hover .dropdown-menu {
+  display: block;
+}

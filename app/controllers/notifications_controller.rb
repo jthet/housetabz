@@ -4,6 +4,14 @@ class NotificationsController < ApplicationController
     @recipient_id = params[:user_id]
   end
 
+  def index
+    @incoming_messages = current_user.notifications.where(read: false)
+  end
+
+  def show
+    @read_messages = current_user.notifications.where(read: true)
+  end
+
   def create
     @notification = Notification.new(notification_params)
   

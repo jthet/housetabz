@@ -1,0 +1,16 @@
+<!-- app/views/notifications/show.html.erb -->
+<div class="mt-8 w-1/2 mx-auto bg-white rounded-lg shadow-lg p-6">
+  <h2 class="text-2xl font-bold mb-4">Your Messages:</h2>
+  <ul class="space-y-4">
+    <% if @read_messages.any? %>
+      <% @read_messages.each do |message| %>
+        <li class="text-gray-600">
+          <strong class="text-blue-600">From: <%= message.sender.username %></strong>
+          <p class="text-gray-800"><%= message.message %></p>
+        </li>
+      <% end %>
+    <% else %>
+      <li class="text-gray-600">You have no read messages.</li>
+    <% end %>
+  </ul>
+</div>

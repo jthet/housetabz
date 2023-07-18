@@ -54,6 +54,7 @@ Rails.application.routes.draw do
 
   put '/notifications/:id/mark_as_read', to: 'notifications#mark_as_read', as: 'mark_as_read_notification'
 
+  get '/notifications/show', to: 'notifications#show', as: 'notifications_show'
   
   
 end

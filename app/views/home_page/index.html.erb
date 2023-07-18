@@ -191,24 +191,25 @@
       </div>
     </div>
     
-   <% if @incoming_messages.any? %>
+    <% if @incoming_messages.any? %>
   <div class="mt-8 w-1/2 mx-auto bg-white rounded-lg shadow-lg p-6">
-  <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
-  <ul class="space-y-4">
-    <% @incoming_messages.each do |message| %>
-      <li class="<%= message.read ? 'text-gray-600' : 'text-black' %>">
-        <strong class="text-blue-600">From: <%= message.sender.username %></strong>
-        <p class="text-gray-800"><%= message.message %></p>
+    <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
+    <ul class="space-y-4">
+      <% @incoming_messages.each do |message| %>
         <% unless message.read %>
-      <%= button_to "Mark as Read", mark_as_read_notification_path(message), method: :put, class: 'text-blue-600' %>
-    <% end %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+          <li class="text-black">
+            <strong class="text-blue-600">From: <%= message.sender.username %></strong>
+            <p class="text-gray-800"><%= message.message %></p>
+            <%= button_to "Mark as Read", mark_as_read_notification_path(message), method: :put, class: 'text-blue-600' %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
 <% else %>
   <p class="mt-8">You have no incoming messages.</p>
 <% end %>
+
 
 
  

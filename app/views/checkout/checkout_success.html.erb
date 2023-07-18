@@ -5,9 +5,14 @@
     <!-- Your CSS and JavaScript includes here -->
   </head>
   <body>
-    <h1>Payment Successful!</h1>
-    <%# <p>You just paid <%= number_to_currency(@payment.amount) %></p> 
-    <%# <p>Your new balance <%= number_to_currency(current_user.charges.sum(:amount)) %></p> 
-    <!-- Additional content or information you want to display -->
+    <div class="text-center">
+      <h1 class="text-4xl font-bold mt-8">Payment Successful!</h1>
+      <p class="mt-4">Thank you, we just received your payment for $<%= params[:price] %>.</p>
+    </div>
+    
+    <div class="mt-8">
+      <img src="/images/payment.gif" alt="Envelope flying" class="w-64 h-auto mx-auto">
+    </div>
+
   </body>
 </html>
