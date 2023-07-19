@@ -15,7 +15,7 @@ class HomePageController < ApplicationController
         current_user.balance.update(amount: current_user.calculate_balance)
   
         # Initialize the contact variable
-        @incoming_messages = Notification.where(recipient_id: current_user.id)
+        @incoming_messages = Message.where(recipient_id: current_user.id)
       end
 
       # Render the view

@@ -78,13 +78,6 @@ member_action :destroy, method: :delete do
 end
 
 
-  
-
-
-
-
-
-
 
 action_item :destroy, only: :show do
   link_to "Destroy User", destroy_admin_user_path(user),

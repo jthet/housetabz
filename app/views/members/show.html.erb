@@ -12,7 +12,7 @@
 
 <% if current_user != @user && @user.has_unpaid_charges? %>
   <div class="text-center mt-4">
-    <%= form_with(model: @notification, url: send_notification_user_path(@user), method: :post) do |form| %>
+    <%= form_with(model: @message, url: send_message_user_path(@user), method: :post) do |form| %>
       <div class="mb-4">
         <%= form.label :message, class: 'block font-bold' %>
         <%= form.text_area :message, class: 'form-textarea mt-1' %>
@@ -22,7 +22,7 @@
       <%= form.hidden_field :recipient_id, value: @user.id %>
 
       <div class="text-center">
-        <%= form.submit 'Send Notification', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+        <%= form.submit 'Send Message', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
       </div>
     <% end %>
   </div>

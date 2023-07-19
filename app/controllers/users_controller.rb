@@ -1,32 +1,32 @@
 class UsersController < ApplicationController
-  before_action :check_params, only: :send_notification
+  before_action :check_params, only: :send_message
   # Other actions...
 
   def show
     @user = User.find(params[:id])
-    @notification = Notification.new
+    @message = Message.new
   end
 
-  def send_notification
+  def send_message
     @user = User.find(params[:id])
-    logger.debug("Notification Params: #{params.inspect}")
-    @notification = Notification.new(notification_params)
-    @notification.sender_id = current_user.id
-    @notification.recipient_id = @user.id
-    @notification.read = false
+    logger.debug("messageParams: #{params.inspect}")
+    @message= Message.new(message_params)
+    @message.sender_id = current_user.id
+    @message.recipient_id = @user.id
+    @message.read = false
 
-    if @notification.save
-      redirect_to @user, notice: 'Notification sent successfully.'
+    if @message.save
+      redirect_to @user, notice: 'message sent successfully.'
     else
-      logger.error("Notification failed to save: #{@notification}")
-      logger.error(@notification.errors.full_messages.join(', '))
+      logger.error("message failed to save: #{@message}")
+      logger.error(@message.errors.full_messages.join(', '))
       render :show
     end
   end
 
   private
 
-  def notification_params
+  def message_params
     params.permit(:message, :recipient_id)
   end
   def check_params

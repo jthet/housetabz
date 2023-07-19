@@ -200,14 +200,15 @@
           <li class="text-black">
             <strong class="text-blue-600">From: <%= message.sender.username %></strong>
             <p class="text-gray-800"><%= message.message %></p>
-            <%= button_to "Mark as Read", mark_as_read_notification_path(message), method: :put, class: 'text-blue-600' %>
+            <%= button_to "Mark as Read", mark_as_read_message_path(message), method: :put, class: 'text-blue-600' %>
           </li>
         <% end %>
       <% end %>
     </ul>
   </div>
 <% else %>
-  <p class="mt-8">You have no incoming messages.</p>
+<div class="mt-8 w-1/2 mx-auto bg-white rounded-lg shadow-lg p-6">
+    <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
 <% end %>
 
 
@@ -223,7 +224,7 @@
     const billsChartCanvas = document.getElementById('billsChart');
 
     const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
-    const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? 'green' : 'red' }.to_json.html_safe %>;
+    const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? '#48bb78' : 'red' }.to_json.html_safe %>;
     const donutData = Array(houseMembers.length).fill(1);
 
     new Chart(donutChartCanvas, {
@@ -252,12 +253,12 @@
         <!-- Donut Chart Code Here -->
         const chargeNames = <%= unpaid_charges.pluck(:name).to_json.html_safe %>;
         const chargeAmounts = <%= unpaid_charges.pluck(:amount).to_json.html_safe %>;
-        const billChartBackgroundColors = ['blue', 'orange', 'purple']; // Update with appropriate colors
+        const billChartBackgroundColors = ['#f97316', '#ef4444', '#06b6d4', '#d946ef']; // Update with appropriate colors
       <% else %>
         <!-- Donut Chart Code Here -->
         const chargeNames = ['You have no current charges!'];
         const chargeAmounts = [100]; // Update with an appropriate value
-        const billChartBackgroundColors = ['green']; // Update with an appropriate color
+        const billChartBackgroundColors = ['#48bb78']; // Update with an appropriate color
       <% end %>
 
       new Chart(billsChartCanvas, {

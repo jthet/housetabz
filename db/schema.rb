@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_17_182958) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_19_183844) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -158,13 +158,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_17_182958) do
     t.index ["user_id"], name: "index_members_on_user_id"
   end
 
-  create_table "notifications", force: :cascade do |t|
+  create_table "messages", force: :cascade do |t|
     t.text "message"
     t.integer "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sender_id"
     t.boolean "read"
+    t.boolean "admin_message", default: false
   end
 
   create_table "paid_bills", force: :cascade do |t|

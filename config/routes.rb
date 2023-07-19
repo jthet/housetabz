@@ -48,13 +48,16 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      post 'send_notification'
+      post 'send_message'
     end
   end
+  
+  put '/messages/:id/mark_as_read', to: 'messages#mark_as_read', as: 'mark_as_read_message'
+  get '/messages/show', to: 'messages#show', as: 'messages_show'
 
-  put '/notifications/:id/mark_as_read', to: 'notifications#mark_as_read', as: 'mark_as_read_notification'
 
-  get '/notifications/show', to: 'notifications#show', as: 'notifications_show'
+
+  
   
   
 end

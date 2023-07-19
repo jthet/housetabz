@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_one :balance
   has_many :charges, dependent: :destroy
   has_many :payments
-  has_many :notifications, foreign_key: :recipient_id
+  has_many :messages, foreign_key: :recipient_id
   belongs_to :house, optional: true
   
   validates :username, presence: true, uniqueness: true

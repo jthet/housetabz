@@ -4,22 +4,23 @@
 
 <h2><%= @user.username %></h2>
 
-<% if @house %>
-  <h3>House: <%= @house.name %></h3>
+<% if @user.house %>
+  <h3>House: <%= @user.house.name %></h3>
 <% else %>
   <p>No house associated.</p>
 <% end %>
 
 <h3>Payments:</h3>
-<% @payments.each do |payment| %>
+<% @user.payments.each do |payment| %>
   <p>Payment Amount: <%= payment.amount %></p>
-  <!-- Add more payment details as needed -->
+  
 <% end %>
 
 <h3>Charges:</h3>
-<% @charges.each do |charge| %>
+<% @user.charges.each do |charge| %>
   <p>Charge Amount: <%= charge.amount %></p>
   <!-- Add more charge details as needed -->
 <% end %>
 
-<h3>Balance: <%= @balance.amount %></h3>
+<h3>Balance: <%= @user.balance.amount %></h3>
+

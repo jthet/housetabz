@@ -22,8 +22,7 @@
   <!-- Replace the next line with your logic to display the user's initials -->
   <%= "#{current_user.profile.first_name&.chr || ''}#{current_user.profile.last_name&.chr || ''}".upcase %>
   <ul class="dropdown-menu" id="dropdownMenu">
-    <li><%= link_to 'Messages', notifications_show_path, class: 'text-white font-bold nav-link' %></li>
-    
+    <li><%= link_to 'Messages', messages_show_path, class: 'text-white font-bold nav-link' %></li>
     <li>
       <%= form_tag destroy_user_session_path, method: :delete, class: "logout-form" do %>
         <%= submit_tag 'Logout', class: 'btn-logout', style: 'color: rgb(34 197 94);; font-weight: bold; padding: 0; margin: 0;' %>
