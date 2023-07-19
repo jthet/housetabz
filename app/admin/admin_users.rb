@@ -25,4 +25,12 @@ ActiveAdmin.register AdminUser do
     f.actions
   end
 
+  show do
+    # ...
+    panel "Send Message" do
+      render partial: 'admin/messages/send_message_form', locals: { recipient_id: resource.id }
+    end
+  end
+
+
 end

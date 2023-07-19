@@ -55,7 +55,13 @@ Rails.application.routes.draw do
   put '/messages/:id/mark_as_read', to: 'messages#mark_as_read', as: 'mark_as_read_message'
   get '/messages/show', to: 'messages#show', as: 'messages_show'
 
-
+  resources :users do
+    member do
+      put 'mark_as_read', to: 'users#mark_as_read'
+    end
+  end
+  
+  
 
   
   

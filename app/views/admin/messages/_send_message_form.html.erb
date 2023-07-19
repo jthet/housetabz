@@ -1,0 +1,16 @@
+<h3>Send Message</h3>
+<%= form_with(model: [@message, @admin_message], url: admin_admin_messages_path, method: :post) do |form| %>
+  <%= form.fields_for :message do |message_fields| %>
+    <div class="field">
+  <%= form.label :message %>
+  <%= form.text_area :message, name: 'admin_message[message]' %>
+</div>
+  <% end %>
+
+  <%= form.fields_for :admin_message do |admin_message_fields| %>
+    <!-- Additional fields for the admin message, if needed -->
+  <% end %>
+
+  <%= form.submit "Send Message" %>
+<% end %>
+

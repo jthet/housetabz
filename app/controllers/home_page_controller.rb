@@ -1,7 +1,7 @@
 class HomePageController < ApplicationController
   def index
     @contact = Contact.new
-
+    @admin_messages = AdminMessage.all
     if current_user.nil?
       # Display code for new users or users that have not signed in
       # ...

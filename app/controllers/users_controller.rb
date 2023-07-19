@@ -24,6 +24,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def mark_as_read
+       @admin_message = AdminMessage.find(params[:id])
+       @admin_message.update(read: true)
+       redirect_to root_path, notice: "Message marked as read."
+      end
+
   private
 
   def message_params
