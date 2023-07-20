@@ -10,6 +10,7 @@ class MessagesController < ApplicationController
 
   def show
     @read_messages = current_user.messages.where(read: true)
+    @read_admin_messages = current_user.admin_messages.where(read: true)
   end
 
   def create

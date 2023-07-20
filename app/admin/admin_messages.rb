@@ -23,5 +23,6 @@ ActiveAdmin.register AdminMessage do
   
 
     end
+    
   end
   

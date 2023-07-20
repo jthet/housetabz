@@ -1,22 +1,19 @@
 <div class="mt-8 w-1/2 mx-auto bg-white rounded-lg shadow-lg p-6">
   <h2 class="text-2xl font-bold mb-4">Your Messages:</h2>
   <ul class="space-y-4">
-    <% if @read_messages.any? %>
-      <% @read_messages.each do |message| %>
-        <% if message.admin_message %>
-          <% if message.read %>
-            <li class="text-gray-600">
-              <strong class="text-blue-600">From: Admin</strong>
-              <p class="text-gray-800"><%= message.message %></p>
-            </li>
-          <% end %>
+    <% all_messages = (@read_messages + @read_admin_messages).sort_by(&:created_at).reverse %>
+    <% if all_messages.any? %>
+      <% all_messages.each do |message| %>
+        <% if message.is_a?(AdminMessage) %>
+          <li class="text-gray-600">
+            <strong class="text-blue-600">From: HouseTabz</strong>
+            <p class="text-gray-800"><%= message.message %></p>
+          </li>
         <% else %>
-          <% if message.read %>
-            <li class="text-gray-600">
-              <strong class="text-blue-600">From: <%= message.sender.username %></strong>
-              <p class="text-gray-800"><%= message.message %></p>
-            </li>
-          <% end %>
+          <li class="text-gray-600">
+            <strong class="text-blue-600">From: <%= message.sender.username %></strong>
+            <p class="text-gray-800"><%= message.message %></p>
+          </li>
         <% end %>
       <% end %>
     <% else %>

@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :charges, dependent: :destroy
   has_many :payments
   has_many :messages, foreign_key: :recipient_id
+  has_many :admin_messages, foreign_key: :recipient_id, class_name: 'AdminMessage'
+
   belongs_to :house, optional: true
   
   validates :username, presence: true, uniqueness: true
