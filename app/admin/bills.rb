@@ -29,14 +29,14 @@ ActiveAdmin.register Bill do
   controller do
     def create
       @bill = Bill.new(bill_params)
-      @bill.house = House.find(params[:bill][:house_id])
-
+  
       if @bill.save
-        flash[:notice] = "Thank you! A bill from #{@bill[:name]} has been sent to #{@bill.house[:name]} for a total of #{@bill[:amount]}."
-        redirect_to admin_bills_path
+        redirect_to admin_bills_path, notice: 'Bill was successfully created.'
       else
         render :new
       end
+  
+      # Ensure that the bill has a valid user associated with it before calculating the house tab fee
     end
 
     def destroy

@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :messages, foreign_key: :recipient_id
   has_many :admin_messages, foreign_key: :recipient_id, class_name: 'AdminMessage'
 
+
+  has_many :house_tab_fees
   belongs_to :house, optional: true
   
   validates :username, presence: true, uniqueness: true
