@@ -3,44 +3,51 @@
     <title>Buy cool new product</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://js.stripe.com/v3/"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const stripe = Stripe("pk_test_51NK4ivCh7Bf0jit7LcAU4oNYeHQ5Oy2IGNSWdbdNP56LJ7Hwh6Cu7aDGRIDRkDRhOPIGXfLhf0utUhAi67KvBbO900PnrZ4MBE"); // Replace with your own publishable key
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const stripe = Stripe("pk_test_51NK4ivCh7Bf0jit7LcAU4oNYeHQ5Oy2IGNSWdbdNP56LJ7Hwh6Cu7aDGRIDRkDRhOPIGXfLhf0utUhAi67KvBbO900PnrZ4MBE"); // Replace with your own publishable key
 
-        const checkoutButton = document.getElementById("checkout-button");
-        checkoutButton.addEventListener("click", async (event) => {
-          event.preventDefault();
+    const checkoutButton = document.getElementById("checkout-button");
+    checkoutButton.addEventListener("click", async (event) => {
+      event.preventDefault();
 
-          const priceInput = document.getElementById("price");
-          const price = parseFloat(priceInput.value);
+      const priceInput = document.getElementById("price");
+      const price = parseFloat(priceInput.value);
 
-          if (isNaN(price) || price <= 0) {
-            console.error('Invalid price. Please enter a valid price greater than zero.');
-            return;
-          }
+      const balanceElement = document.getElementById("balance");
+      const balance = parseFloat(balanceElement.textContent.replace('$', ''));
 
-          const response = await fetch("/create_checkout_session", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-Token": "<%= form_authenticity_token %>",
-            },
-            body: JSON.stringify({ price: price }),
-          });
+      if (isNaN(price) || price <= 0 || price !== balance) {
+        console.error('Invalid price. Please enter a valid price that matches your balance.');
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.classList.remove("hidden");
+        return;
+      }
 
-          const session = await response.json();
-
-          const { error } = await stripe.redirectToCheckout({
-            sessionId: session.id,
-          });
-
-          if (error) {
-            // Handle any errors that occur during redirect to Stripe Checkout
-            console.error(error);
-          }
-        });
+      const response = await fetch("/create_checkout_session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": "<%= form_authenticity_token %>",
+        },
+        body: JSON.stringify({ price: price }),
       });
-    </script>
+
+      const session = await response.json();
+
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+
+      if (error) {
+        // Handle any errors that occur during redirect to Stripe Checkout
+        console.error(error);
+      }
+    });
+  });
+</script>
+
+
   </head>
   <body>
     <nav>
@@ -52,14 +59,16 @@
           <img src="/images/smilinghouse.png" alt="Smiling House" class="w-64 mx-auto" />
           <div class="description text-center mt-4">
             <h3 class="text-2xl font-bold">Your Tab</h3>
-            <% current_user.house.bills.where(status: 'unpaid').each do |bill| %>
+            <% current_user.charges.where(status: 'unpaid').each do |bill| %>
   <p class="text-lg text-gray-700"><%= bill.name %></p>
 <% end %>
 
-            <strong><h5 class="text-gray-600 text-lg mt-2">$<%balance=current_user.balance&.amount.to_f.ceil(2)%>
-              <% balance = 0 if balance < 0 %> <!-- Set balance to 0 if it's negative -->
-                <%= format('%.2f', balance.abs) %> <!-- Display the absolute value of the balance -->
-      </h5></strong>
+           <strong>
+  <h5 id="balance" class="text-gray-600 text-lg mt-2">$<%balance=current_user.balance&.amount.to_f.ceil(2)%>
+    <% balance = 0 if balance < 0 %> <!-- Set balance to 0 if it's negative -->
+    <%= format('%.2f', balance.abs) %> <!-- Display the absolute value of the balance -->
+  </h5>
+</strong>
           </div>
         </div>
 
@@ -69,6 +78,8 @@
   <input type="number" id="price" name="price" step="0.01" placeholder="Verify your Tab amount" class="border border-gray-400 rounded px-4 py-2 mr-2" required>
   <button type="submit" id="checkout-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded">Checkout</button>
 </form>
+<div id="error-message" class="text-red-500 text-sm mt-2 hidden">Entered amount must match your balance.</div>
+
 
 
 

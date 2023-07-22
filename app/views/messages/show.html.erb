@@ -1,23 +1,82 @@
-<div class="mt-8 w-1/2 mx-auto bg-white rounded-lg shadow-lg p-6">
-  <h2 class="text-2xl font-bold mb-4">Your Messages:</h2>
-  <ul class="space-y-4">
-    <% all_messages = (@read_messages + @read_admin_messages).sort_by(&:created_at).reverse %>
-    <% if all_messages.any? %>
+<div class="mt-8 mx-auto bg-white rounded-lg shadow-lg p-6 md:w-1/2">
+  <h2 class="text-3xl font-bold mb-6">Your Messages:</h2>
+  <% all_messages = (@read_messages + @read_admin_messages).sort_by(&:created_at).reverse %>
+  <% if all_messages.any? %>
+    <div class="space-y-4">
       <% all_messages.each do |message| %>
-        <% if message.is_a?(AdminMessage) %>
-          <li class="text-gray-600">
-            <strong class="text-blue-600">From: HouseTabz</strong>
-            <p class="text-gray-800"><%= message.message %></p>
-          </li>
-        <% else %>
-          <li class="text-gray-600">
-            <strong class="text-blue-600">From: <%= message.sender.username %></strong>
-            <p class="text-gray-800"><%= message.message %></p>
-          </li>
-        <% end %>
+        <div class="border border-gray-300 p-4 rounded-lg">
+          <% if message.is_a?(AdminMessage) %>
+            <p class="text-green-500 font-bold">From: <b>HouseTabz</b></p>
+          <% else %>
+            <p class="text-green-500 font-bold">From: <%= message.sender.username %></p>
+          <% end %>
+          <p class="text-gray-800"><%= message.message %></p>
+          <p class="text-gray-500"><%= message.created_at.strftime('%B %e, %Y at %l:%M %p') %></p>
+        </div>
       <% end %>
-    <% else %>
-      <li class="text-gray-600">You have no read messages.</li>
-    <% end %>
-  </ul>
+    </div>
+  <% else %>
+    <p class="text-gray-600">You have no read messages.</p>
+  <% end %>
 </div>
+
+<style>
+  /* Mobile view (max-width: 767px) */
+  @media (max-width: 767px) {
+    /* Add green horizontal lines between sections in phone view */
+    .section-divider {
+      position: relative;
+    }
+    
+    .section-divider::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #48bb78;
+    }
+    
+    .md\:w-1\/2 {
+      width: 95%; /* Make the container wider on mobile */
+    }
+
+    .text-3xl {
+      font-size: 2rem; /* Increase font size for section heading */
+    }
+
+    .mb-6 {
+      margin-bottom: 1.5rem; /* Add more spacing below the section heading */
+    }
+
+    .p-6 {
+      padding: 1.5rem; /* Keep the existing padding for content area */
+    }
+
+    .rounded-lg {
+      border-radius: 16px; /* Slightly round the corners for a softer look */
+    }
+
+    .space-y-4 {
+      margin-top: 1.5rem; /* Add some space between message cards */
+    }
+
+    /* Add some fun animation */
+    .border-gray-300 {
+      animation: border-pulse 2s infinite;
+    }
+
+    @keyframes border-pulse {
+      0% {
+        border-color: #48bb78;
+      }
+      50% {
+        border-color: #9ae6b4;
+      }
+      100% {
+        border-color: #48bb78;
+      }
+    }
+  }
+</style>
