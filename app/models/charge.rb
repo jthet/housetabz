@@ -1,4 +1,3 @@
-# app/models/charge.rb
 class Charge < ApplicationRecord
   belongs_to :user
   belongs_to :bill, optional: true
