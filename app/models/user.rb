@@ -24,6 +24,7 @@ class User < ApplicationRecord
 
   def calculate_balance
     charges_sum = charges.sum(:amount)
+    house_tab_fees_sum = house_tab_fees.sum(:amount)
     payments_sum = payments.sum(:amount)
     charges_sum - payments_sum
   end

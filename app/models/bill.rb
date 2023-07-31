@@ -9,10 +9,11 @@ class Bill < ApplicationRecord
 
   def create_charges
     total_users = house.users.count
-    charge_amount = amount.to_f / total_users.to_f
+    charge_amount = BigDecimal(amount.to_s) / BigDecimal(total_users.to_s)
+    rounded_charge_amount = charge_amount.ceil(2)
 
     house.users.each do |user|
-      charge = user.charges.create(amount: charge_amount, bill: self)
+      charge = user.charges.create(amount: rounded_charge_amount, bill: self)
       self.charges << charge
     end
   end

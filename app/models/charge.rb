@@ -68,4 +68,4 @@ class Charge < ApplicationRecord
       )
     end
   end
-end
+end # app/controllers/charges_controller.rb

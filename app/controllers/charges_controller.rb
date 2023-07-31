@@ -1,10 +1,13 @@
-# app/controllers/charges_controller.rb
 class ChargesController < ApplicationController
   def calculate_charges
     @bills = Bill.all
 
     current_user.house.users.each do |user|
-      user_charge = @bills.sum { |bill| bill.calculate_charge / current_user.house.users.count }
+      user_bills = @bills.select { |bill| bill.user_id == user.id }
+
+      total_charge_in_cents = user_bills.sum { |bill| (bill.calculate_charge * 100 / current_user.house.users.count).round }
+      user_charge = total_charge_in_cents / 100.0
+
       user.charges.create(amount: user_charge, status: 'unpaid')
       calculate_and_create_house_tab_fee(user)
     end
@@ -15,7 +18,7 @@ class ChargesController < ApplicationController
   def calculate_and_create_house_tab_fee(user)
     # Calculate HouseTab fee (3% of total 'unpaid' charges sum)
     total_unpaid_charges = user.charges.unpaid.sum(:amount)
-    house_tab_fee_amount = total_unpaid_charges * 0.03
+    house_tab_fee_amount = (total_unpaid_charges * 0.03 * 100).round / 100.0
 
     # Find or create the HouseTabFee record for the user
     house_tab_fee = user.house_tab_fees.find_or_create_by(status: 'unpaid')
