@@ -1,3 +1,4 @@
+# app/controllers/charges_controller.rb
 class ChargesController < ApplicationController
   def calculate_charges
     @bills = Bill.all
@@ -8,7 +9,12 @@ class ChargesController < ApplicationController
       total_charge_in_cents = user_bills.sum { |bill| (bill.calculate_charge * 100 / current_user.house.users.count).round }
       user_charge = total_charge_in_cents / 100.0
 
+      # Round up user_charge to the nearest cent using BigDecimal
+      user_charge = BigDecimal(user_charge.to_s).ceil(2).to_f
+
       user.charges.create(amount: user_charge, status: 'unpaid')
+
+      # Calculate and create HouseTab fee for each user
       calculate_and_create_house_tab_fee(user)
     end
   end
@@ -18,28 +24,30 @@ class ChargesController < ApplicationController
   def calculate_and_create_house_tab_fee(user)
     # Calculate HouseTab fee (3% of total 'unpaid' charges sum)
     total_unpaid_charges = user.charges.unpaid.sum(:amount)
-    house_tab_fee_amount = (total_unpaid_charges * 0.03 * 100).round / 100.0
+    house_tab_fee_amount = (total_unpaid_charges * 0.03).ceil(2)
+
+    # Convert the house_tab_fee_amount to BigDecimal with two decimal places
+    house_tab_fee_amount = BigDecimal(house_tab_fee_amount.to_s)
 
     # Find or create the HouseTabFee record for the user
-    house_tab_fee = user.house_tab_fees.find_or_create_by(status: 'unpaid')
+    house_tab_fee = HouseTabFee.find_or_create_by(status: 'unpaid', user: user)
 
     # Update the amount of the HouseTabFee
     house_tab_fee.update(amount: house_tab_fee_amount)
 
-    # Check if a Charge record already exists for the HouseTabFee
-    house_tab_fee_charge = Charge.find_by(name: 'HouseTab Fee', bill_id: nil, user_id: user.id)
+    # Find the HouseTab Fee charge for the user (if it exists)
+    house_tab_fee_charge = Charge.find_by(user: user, name: 'HouseTab Fee', bill: nil)
 
     if house_tab_fee_charge
-      # If a Charge record exists, update the amount
+      # Update the HouseTab Fee charge amount and status
       house_tab_fee_charge.update(amount: house_tab_fee_amount, status: 'unpaid')
     else
-      # If no Charge record exists, create a new Charge record for the HouseTabFee
-      Charge.create(
-        user: user,
+      # Create a new Charge record for the HouseTab Fee if it doesn't exist
+      user.charges.create(
         amount: house_tab_fee_amount,
         status: 'unpaid',
         name: 'HouseTab Fee',
-        bill: nil # Since this is not related to a specific bill, set bill to nil
+        bill: nil
       )
     end
   end

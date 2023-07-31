@@ -1,3 +1,4 @@
+# app/models/charge.rb
 class Charge < ApplicationRecord
   belongs_to :user
   belongs_to :bill, optional: true
@@ -8,8 +9,8 @@ class Charge < ApplicationRecord
 
   before_save :set_name_from_bill
   after_save :update_user_paid_status
-  after_create :calculate_and_create_house_tab_fee
   after_update :update_user_paid_status
+  after_create :calculate_and_create_house_tab_fee
 
   scope :unpaid, -> { where(status: 'unpaid') }
 
@@ -37,13 +38,14 @@ class Charge < ApplicationRecord
   end
 
   private
+
   def calculate_and_create_house_tab_fee
     # Find the user associated with the house that the bill belongs to
     user = self.user
 
     # Calculate HouseTab fee (3% of total 'unpaid' charges sum)
     total_unpaid_charges = user.charges.unpaid.sum(:amount)
-    house_tab_fee_amount = total_unpaid_charges * 0.03
+    house_tab_fee_amount = (total_unpaid_charges * 0.03).ceil(2)
 
     # Find or create the HouseTabFee record for the user
     house_tab_fee = HouseTabFee.find_or_create_by(user: user, status: 'unpaid')
@@ -51,14 +53,14 @@ class Charge < ApplicationRecord
     # Update the amount of the HouseTabFee
     house_tab_fee.update(amount: house_tab_fee_amount)
 
-    # Check if a Charge record already exists for the HouseTabFee
-    house_tab_fee_charge = Charge.find_by(name: 'HouseTab Fee', bill_id: nil, user_id: user.id)
+    # Find the HouseTab Fee charge for the user (if it exists)
+    house_tab_fee_charge = Charge.find_by(user: user, name: 'HouseTab Fee', bill: nil)
 
     if house_tab_fee_charge
-      # If a Charge record exists, update the amount
+      # Update the HouseTab Fee charge amount and status
       house_tab_fee_charge.update(amount: house_tab_fee_amount, status: 'unpaid')
     else
-      # If no Charge record exists, create a new Charge record for the HouseTabFee
+      # Create a new Charge record for the HouseTab Fee if it doesn't exist
       Charge.create(
         user: user,
         amount: house_tab_fee_amount,
@@ -68,4 +70,4 @@ class Charge < ApplicationRecord
       )
     end
   end
-end # app/controllers/charges_controller.rb
+end
