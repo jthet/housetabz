@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   resources :profiles, only: [:new, :create]
   
+  get '/my_profile', to: 'profiles#show', as: :my_profile
+  
   resources :houses, only: [:show, :new] do
     post 'join', on: :collection, to: 'houses#join_process'
   end

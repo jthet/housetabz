@@ -256,7 +256,7 @@
       const billsDonutChartCanvas = document.getElementById('billsDonutChart');
 
       const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
-      const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? '#48bb78' : 'red' }.to_json.html_safe %>;
+      const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? '#48bb78' : '#ef4444' }.to_json.html_safe %>;
       const donutData = Array(houseMembers.length).fill(1);
 
       new Chart(houseDonutChartCanvas, {

@@ -1,7 +1,8 @@
 class HomePageController < ApplicationController
+  before_action :authenticate_user!
   def index
     @contact = Contact.new
-    @admin_messages = AdminMessage.all
+    @admin_messages = current_user.admin_messages.where(recipient_id: current_user.id)
     if current_user.nil?
       # Display code for new users or users that have not signed in
       # ...

@@ -23,10 +23,8 @@ class User < ApplicationRecord
   end
 
   def calculate_balance
-    charges_sum = charges.sum(:amount)
-    house_tab_fees_sum = house_tab_fees.sum(:amount)
-    payments_sum = payments.sum(:amount)
-    charges_sum - payments_sum
+    unpaid_charges_sum = charges.where(status: 'unpaid').sum(:amount)
+    
   end
   
   def update_paid_status

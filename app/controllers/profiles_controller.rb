@@ -25,7 +25,7 @@ class ProfilesController < ApplicationController
   def update
     @profile = current_user.profile
     if @profile.update(profile_params)
-      redirect_to house_option_path, notice: 'Profile updated successfully.' # Redirect to create/join house page after updating the profile
+      redirect_to my_profile_path, notice: 'Profile updated successfully.' # Redirect to create/join house page after updating the profile
     else
       render :edit
     end
