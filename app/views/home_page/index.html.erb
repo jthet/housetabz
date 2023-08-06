@@ -150,6 +150,7 @@
   </script>
 
 <% else %>
+
   <% if current_user.house.nil? %>
     <div class="flex justify-center items-center h-screen">
       <div class="w-full md:w-1/2 bg-white p-8 shadow-md rounded flex flex-col md:flex-row justify-center items-center">
@@ -161,15 +162,15 @@
       </div>
     </div>
 <% else %>
-  <div class="mt-10">
+ <div class="mt-10">
     <div class="w-full md:w-1/2 mx-auto">
-      <div class="flex flex-col md:flex-row md:justify-center"> <!-- Added md:justify-center -->
+      <div class="flex flex-col md:flex-row md:justify-between"> <!-- Updated md:justify-between -->
         <div class="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0 text-center">
           <% unpaid_bills_sum = current_user.house.bills.where(status: 'unpaid').sum(:amount) %>
           <h2 class="text-2xl font-bold">
             <strong><%= current_user.house.name %></strong>: $<%= format('%.2f', unpaid_bills_sum.to_f) %>
           </h2>
-          <div class="flex justify-center"> <!-- Added flex justify-center -->
+          <div class="flex justify-center" style="height: 300px;"> <!-- Added fixed height -->
             <canvas id="houseDonutChart" style="max-width: 300px;"></canvas>
           </div>
         </div>
@@ -177,28 +178,23 @@
         <div class="w-full md:w-1/2 md:ml-2 text-center">
           <h2 class="text-2xl font-bold">
             <strong>My Tab:</strong> $
-            <% balance=current_user.balance&.amount.to_f.ceil(2) %>
+            <% balance = current_user.balance&.amount.to_f.ceil(2) %>
             <% balance = 0 if balance < 0 %>
             <%= format('%.2f', balance.abs).strip %>
           </h2>
-          <div class="flex justify-center"> <!-- Added flex justify-center -->
+          <div class="flex justify-center" style="height: 300px;"> <!-- Added fixed height -->
             <canvas id="billsDonutChart" style="max-width: 300px;"></canvas>
           </div>
         </div>
       </div>
-
-      <div class="flex justify-end mt-4">
-        <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Make Payment
-        </a>
-      </div>
     </div>
   </div>
 
- <div class="mt-8 mx-auto max-w-xl"> <!-- Added max-w-md -->
-  <div class="bg-white rounded-lg shadow-lg p-6"> <!-- Added padding and rounded corners -->
-    <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
-    <ul class="space-y-4">
+  <div class="mt-8 mx-auto max-w-xl"> <!-- Added max-w-md -->
+    <div class="bg-white rounded-lg shadow-lg p-6"> <!-- Added padding and rounded corners -->
+      <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
+      <ul class="space-y-4" style="max-height: 400px; overflow-y: auto;"> <!-- Added padding and rounded corners -->
+    
        <% @incoming_messages.order(created_at: :desc).each do |message| %> 
         <% unless message.read %>
           <li class="border-l-4 border-blue-500 pl-4"> <!-- Added a border on the left side -->
