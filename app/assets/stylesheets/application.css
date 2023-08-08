@@ -1,6 +1,9 @@
+
+
 nav {
   transition: background-color 0.2s ease;
   color: white;
+  z-index:10000
   
 }
 
@@ -215,3 +218,4 @@ nav.bg-green-500 {
 .user-initials:hover .dropdown-menu {
   display: block;
 }
+

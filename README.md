@@ -12,7 +12,27 @@ There are no specific system dependencies required for this application.
 
 ## Configuration
 
-No additional configurations are needed for this project.
+Steps to operating the application. 
+
+Clone the repository. Run Bundle Install in the terminal. Run gem install bundler. Run rails db:migrate. Add a stripe.rb file in config/initializers. That file should look like this - 
+
+Rails.configuration.stripe = {
+    publishable_key: '',
+    secret_key: ''
+  }
+  
+  include Stripe::Webhook
+
+  Stripe.api_key = Rails.configuration.stripe[:secret_key]
+
+  Go to Stripe.com, click on developers and then API keys to get the nessecary keys for the code above. 
+
+  Add a .env file to the main folder of the application. Add WEBHOOK_SECRET=(webhook secret will go here). 
+
+  I have been using ngrok to create a tunnel for my localhost. So usually its somelink.ngrok-free.app, and I create an webhook endpoint called somelink.ngrok-free.app/webhooks/stripe and use the webhook_secret key it gives me. 
+Keep in mind the webhook secret stuff is only necessary if you want to see the functionality of completing payments via Stripe. 
+
+Make sure to have a database communicating with the application. RN I am using TablePlus. To set it up run rails db:create, then rails db:migrate. To set up the database go to TablePlus or if you have some other way, im sure that works. Click the + at the top then click SQLite, name it and select the developement file in the db folder of your application.
 
 ## Database Creation
 

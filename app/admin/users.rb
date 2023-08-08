@@ -7,6 +7,7 @@ ActiveAdmin.register User do
     column :email
     column :house
     column :charges
+    column :paid_status
   
     actions
   end

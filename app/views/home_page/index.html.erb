@@ -1,61 +1,211 @@
 <% if current_user.nil? %>
-  <section class="bg-white text-green-500 py-16 md:py-60" style="margin-top: -150px;">
-    <div class="flex justify-center container mx-auto">
-      <div class="w-1/2">
+<style>
+  /* Styles for phone view */
+  @media (max-width: 767px) {
+    section.py-16 {
+      padding-top: 120px; /* Increase top padding to push content down further */
+    }
+    div.md\:hidden.w-full.text-center {
+      padding-top: 30px; /* Add padding to center content properly */
+    }
+    div.md\:hidden.w-full.text-center p.text-2xl {
+      padding: 0 20px; /* Add padding to prevent text from being hidden behind navbar */
+    }
+    img.w-full.mx-auto.mb-4 {
+      max-width: 80%; /* Reduce the image size in the phone view */
+    }
+    /* Hide computer view section */
+    .computer-view {
+      display: none;
+    }
+
+.carousel {
+  position: relative;
+  overflow: hidden;
+  text-align: center; /* Center the images */
+}
+
+.carousel-inner {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  padding: 10px; /* Add padding to create a border effect */
+  border: 1px solid #ccc; /* Add border */
+  border-radius: 5px; /* Add border radius */
+}
+
+.carousel-slide img {
+  max-width: 100%;
+  height: auto;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+ .large-image {
+    width: 100%; /* Adjust the percentage as needed */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+   .border-tan {
+    border: 2px solid tan;
+  }
+  }
+
+
+  /* Styles for computer view */
+  @media (min-width: 768px) {
+    div.hidden.md\:w-1/2.md\:flex.justify-center {
+      max-width: 25%; /* Limit the width of the button container */
+    }
+    div.hidden.md\:w-1/2.md\:flex.justify-center a.btn-primary {
+      max-width: 150px; /* Set the maximum width for the button */
+      width: 100%; /* Set the button width to fill the available space */
+      margin: 0 auto; /* Center the button */
+    }
+    /* Hide phone view section */
+    .phone-view {
+      display: none;
+    }
+  }
+</style>
+
+<section class="bg-white text-green-500 py-16 md:py-60" style="margin-top: -150px;">
+  <div class="flex justify-center container mx-auto">
+    <%# Phone View %>
+    <div class="md:hidden w-full text-center">
+      <h1 class="text-5xl font-bold mb-8">Say goodbye to fighting with Roommates...<br><br>Over Splitting The Bill</h1>
+      <img src="/images/landing.png" alt="Roommate with a lot of money because he isn't covering the bills." class="w-full mx-auto mb-4">
+      <div class="mt-8 text-center">
+        <a href="/about" class="btn-primary inline-block px-6 py-3 text-lg font-semibold rounded-full bg-green-500 text-white">Learn More</a>
+      </div>
+    </div>
+
+    <%# Computer View %>
+    <div class="hidden md:flex justify-center items-center w-1/2">
+      <div class="max-w-sm mx-auto">
         <h1 class="text-5xl font-bold mb-8">Say goodbye to fighting with Roommates...<br><br>Over Splitting The Bill</h1>
         <p class="text-2xl">HouseTabz is the ultimate tool to manage shared expenses. Say goodbye to financial chaos and hello to easy bill splitting.</p>
-        <a href="/about" class="btn-primary inline-block px-6 py-3 mt-8 text-lg font-semibold rounded-full bg-green-500 text-white">Learn More</a>
-      </div>
-      <div class="w-1/2">
-        <img src="/images/landing.png" alt="Roommate with a lot of money because he isn't covering the bills.">
+        <a href="/about" class="btn-primary block mt-8 text-lg font-semibold rounded-full bg-green-500 text-white px-6 py-3 w-40">Learn More</a>
       </div>
     </div>
-  </section>
+    <div class="hidden md:w-1/2 md:flex justify-center">
+      <img src="/images/landing.png" alt="Roommate with a lot of money because he isn't covering the bills." class="w-full">
+    </div>
+  </div>
+</section>
 
-  <section class="bg-white text-green-500 py-40 border border-gray-300">
-    <div class="container mx-auto">
-      <h1 class="text-5xl font-bold mb-8">Easily Track Your Payments and Expenses</h1>
-      <p class="text-2xl">With HouseTabz, you can effortlessly manage your shared expenses and stay on top of your payments. Take control of your financial game with our intuitive and user-friendly interface.</p>
-      <div class="flex justify-center mt-8">
-        <div class="border border-gray-300 rounded-lg p-4 hover:scale-105 transition-transform duration-300">
-          <img src="/images/landingpage.png" alt="Application view of the home page" class="w-96 h-auto">
-        </div>
-        <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
-          <img src="/images/profileview.png" alt="Application view of the User Profile" class="w-96 h-auto">
-        </div>
-        <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
-          <img src="/images/houseview.png" alt="Application view of the house page" class="w-96 h-auto">
-        </div>
+<!-- Computer View -->
+<section class="bg-white text-green-500 py-40 border border-gray-300 computer-view">
+  <div class="container mx-auto">
+    <h1 class="text-5xl font-bold mb-8">Easily Track Your Payments and Expenses</h1>
+    <p class="text-2xl">With HouseTabz, you can effortlessly manage your shared expenses and stay on top of your payments. Take control of your financial game with our intuitive and user-friendly interface.</p>
+    <div class="flex justify-center mt-8">
+      <div class="border border-gray-300 rounded-lg p-4 hover:scale-105 transition-transform duration-300">
+        <img src="/images/landingpage.png" alt="Application view of the home page" class="w-96 h-auto">
+      </div>
+      <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
+        <img src="/images/profileview.png" alt="Application view of the User Profile" class="w-96 h-auto">
+      </div>
+      <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
+        <img src="/images/houseview.png" alt="Application view of the house page" class="w-96 h-auto">
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="bg-white text-green-500 py-40 border border-gray-300">
-    <div class="flex justify-center container mx-auto">
-      <div class="w-1/2">
-        <img src="/images/accountability.png" alt="Accountability" class="mx-auto">
-      </div>
-      <div class="w-1/2 flex justify-start">
-        <div class="max-w-md">
-          <h1 class="text-5xl font-bold mb-8">Earn Lower Rates, With Accountability</h1>
-          <p class="text-2xl">At HouseTabz, we believe in rewarding houses that establish a reputation for paying their bills on time. Through our accountability system, houses with a track record of timely payments enjoy lower transaction fees, saving them money and promoting responsible financial behavior.</p>
+<section class="phone-view bg-white text-green-500 py-40 border border-gray-300">
+  <div class="flex justify-center container mx-auto flex-col items-center mt-20"> <!-- Add mt-20 here -->
+    <h1 class="text-5xl font-bold mb-8">Easily Track Your Payments and Expenses</h1>
+    <div class="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-slide">
+          <img src="/images/HomeviewPhone.png" alt="Application view of the home page" class="w-64 h-auto border border-gray-300 rounded-lg mx-auto">
+        </div>
+        <div class="carousel-slide">
+          <img src="/images/profilephoneview.png" alt="Application view of the User Profile" class="w-64 h-auto border border-gray-300 rounded-lg mx-auto">
+        </div>
+        <div class="carousel-slide">
+          <img src="/images/HouseviewPhone.png" alt="Application view of the house page" class="w-64 h-auto border border-gray-300 rounded-lg mx-auto">
         </div>
       </div>
+      <button class="carousel-arrow carousel-prev">&#9664;</button>
+      <button class="carousel-arrow carousel-next">&#9654;</button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="bg-white text-green-500 py-40">
-    <div class="flex justify-center container mx-auto">
-      <div class="w-1/2">
-        <h1 class="text-5xl font-bold mb-8">Secure Payment Processing</h1>
-        <p class="text-2xl">At HouseTabz, we prioritize the security of your transactions. That's why we partner with Stripe, a leading payment processor trusted by millions worldwide. With Stripe, you can rest assured that your payments are processed securely and your sensitive information is protected.</p>
-        <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-6 py-3 mt-8 text-lg font-semibold rounded-full bg-green-500 text-white">Stripe</a>
+<section class="bg-white text-green-500 py-40 border border-gray-300">
+  <div class="flex justify-center container mx-auto">
+    <!-- Computer View -->
+    <div class="hidden md:flex md:w-1/8 border border-gray-300 shadow-lg p-4 ml-4">
+      <img src="/images/accountability.png" alt="Accountability" class="mx-auto">
+      <div class="max-w-md ml-8">
+        <h1 class="text-5xl font-bold mb-8">Earn Lower Rates, With Accountability</h1>
+        <p class="text-2xl">At HouseTabz, we believe in rewarding houses that establish a reputation for paying their bills on time. Through our accountability system, houses with a track record of timely payments enjoy lower transaction fees, saving them money and promoting responsible financial behavior.</p>
       </div>
-      <div class="w-1/2">
+    </div>
+    <!-- Phone View -->
+    <div class="md:hidden w-full text-center">
+      <img src="/images/accountability.png" alt="Accountability" class="mx-auto">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold mb-8">Earn Lower Rates, With Accountability</h1>
+        <p class="text-2xl">HouseTabz rewards timely bill payments with lower transaction fees, fostering responsible financial behavior and saving users money.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white text-green-500 py-40 border border-gray-300">
+  <div class="flex justify-center container mx-auto ">
+    <!-- Computer View -->
+    <div class="hidden md:flex md:w-1/2 items-center border border-gray-300 shadow-md p-4 ml-4">
+      <div class="w-3/4">
+        <h1 class="text-5xl font-bold mb-6">Secure Payment Processing</h1>
+        <p class="text-xl">At HouseTabz, we prioritize the security of your transactions. That's why we partner with Stripe, a leading payment processor trusted by millions worldwide. With Stripe, you can rest assured that your payments are processed securely and your sensitive information is protected.</p>
+        <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-6 py-3 mt-4 text-lg font-semibold rounded-full bg-green-500 text-white">Stripe</a>
+      </div>
+      <div class="pl-8">
+        <img src="/images/stripe.png" alt="Stripe Payment Processing" class="mx-auto h-auto max-w-full">
+      </div>
+    </div>
+    <!-- Phone View -->
+    <div class="md:hidden w-full text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold mb-8">We Prioritize Transaction Safety</h1>
+        <p class="text-2xl">At HouseTabz, we partner with trusted organizations to ensure the safety of your transactions.</p>
+      </div>
+      <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer" class="block mt-8 mx-auto">
         <img src="/images/stripe.png" alt="Stripe Payment Processing" class="mx-auto">
-      </div>
+      </a>
     </div>
-  </section>
+  </div>
+</section>
+
+
+
+
+
 
   <footer class="bg-gray-900 text-white py-8">
     <div class="md:w-1/2">
@@ -79,6 +229,38 @@
       <% end %>
     </div>
   </footer>
+<script>
+
+// Add this script to your HTML, preferably at the bottom of the <body> tag
+const carouselInner = document.querySelector('.carousel-inner');
+const prevButton = document.querySelector('.carousel-prev');
+const nextButton = document.querySelector('.carousel-next');
+let currentSlide = 0;
+
+prevButton.addEventListener('click', () => {
+  showSlide(currentSlide - 1);
+});
+
+nextButton.addEventListener('click', () => {
+  showSlide(currentSlide + 1);
+});
+
+function showSlide(index) {
+  if (index < 0) {
+    currentSlide = carouselInner.children.length - 1;
+  } else if (index >= carouselInner.children.length) {
+    currentSlide = 0;
+  } else {
+    currentSlide = index;
+  }
+
+  const offset = -currentSlide * carouselInner.offsetWidth;
+  carouselInner.style.transform = `translateX(${offset}px)`;
+}
+</script>
+  
+
+
 
 <% elsif current_user.profile.nil? %>
    <div class="flex justify-center items-center h-screen">
@@ -187,6 +369,13 @@
           </div>
         </div>
       </div>
+      <div class="flex justify-end mt-4">
+        <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Make Payment
+        </a>
+      </div>
+    </div>
+  </div>
     </div>
   </div>
 
