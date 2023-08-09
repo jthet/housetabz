@@ -105,7 +105,7 @@
     <div class="hidden md:flex justify-center items-center w-1/2">
       <div class="max-w-sm mx-auto">
         <h1 class="text-5xl font-bold mb-8">Say goodbye to fighting with Roommates...<br><br>Over Splitting The Bill</h1>
-        <p class="text-2xl">HouseTabz is the ultimate tool to manage shared expenses. Say goodbye to financial chaos and hello to easy bill splitting.</p>
+        <p class="text-2xl text-black">HouseTabz is the ultimate tool to manage shared expenses. Say goodbye to financial chaos and hello to easy bill splitting.</p>
         <a href="/about" class="btn-primary block mt-8 text-lg font-semibold rounded-full bg-green-500 text-white px-6 py-3 w-40">Learn More</a>
       </div>
     </div>
@@ -115,20 +115,54 @@
   </div>
 </section>
 
+<section class="bg-white text-green-500 py-16 md:py-60 border border-gray-300" style="margin-top: -150px;">
+  <div class="flex justify-center container mx-auto">
+    <!-- Phone View -->
+    <div class="md:hidden w-full text-center">
+      <h1 class="text-5xl font-bold mb-8">No One Wants To Be Like Teddy</h1>
+      <div class="flex flex-wrap justify-center items-center">
+        <% (1..21).each do |i| %>
+          <img src="/images/teddy<%= i %>.png" alt="Teddy's text messages" class="w-full mx-auto mb-4">
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Computer View -->
+    <div class="hidden md:flex justify-center items-center w-1/2">
+      <div class="max-w-sm mx-auto">
+        <h1 class="text-5xl font-bold mb-8">No One Wants To Be Like Teddy</h1>
+       <p class="text-2xl text-black">We cover the expenses and handle all the reminders for you. You're welcome Teddy 😉 </p>
+
+      </div>
+    </div>
+    <div class="hidden md:w-1/2 md:flex justify-center">
+      <div class="flex flex-wrap justify-center items-center">
+        <div class="w-full h-96 overflow-y-scroll">
+          <% (1..21).each do |i| %>
+            <img src="/images/teddy<%= i %>.png" alt="Teddy's text messages" class="w-full">
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
 <!-- Computer View -->
 <section class="bg-white text-green-500 py-40 border border-gray-300 computer-view">
   <div class="container mx-auto">
     <h1 class="text-5xl font-bold mb-8">Easily Track Your Payments and Expenses</h1>
-    <p class="text-2xl">With HouseTabz, you can effortlessly manage your shared expenses and stay on top of your payments. Take control of your financial game with our intuitive and user-friendly interface.</p>
+    <p class="text-2xl text-black">With HouseTabz, you can effortlessly manage your shared expenses and stay on top of your payments. Take control of your financial game with our intuitive and user-friendly interface.</p>
     <div class="flex justify-center mt-8">
       <div class="border border-gray-300 rounded-lg p-4 hover:scale-105 transition-transform duration-300">
-        <img src="/images/landingpage.png" alt="Application view of the home page" class="w-96 h-auto">
+        <img src="/images/homecomputer.png" alt="Application view of the home page" class="w-96 h-auto">
       </div>
       <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
-        <img src="/images/profileview.png" alt="Application view of the User Profile" class="w-96 h-auto">
+        <img src="/images/profilecomputer.png" alt="Application view of the User Profile" class="w-96 h-auto">
       </div>
       <div class="border border-gray-300 rounded-lg p-4 ml-4 hover:scale-105 transition-transform duration-300">
-        <img src="/images/houseview.png" alt="Application view of the house page" class="w-96 h-auto">
+        <img src="/images/housecomputer.png" alt="Application view of the house page" class="w-96 h-auto">
       </div>
     </div>
   </div>
@@ -162,7 +196,7 @@
       <img src="/images/accountability.png" alt="Accountability" class="mx-auto">
       <div class="max-w-md ml-8">
         <h1 class="text-5xl font-bold mb-8">Earn Lower Rates, With Accountability</h1>
-        <p class="text-2xl">At HouseTabz, we believe in rewarding houses that establish a reputation for paying their bills on time. Through our accountability system, houses with a track record of timely payments enjoy lower transaction fees, saving them money and promoting responsible financial behavior.</p>
+        <p class="text-2xl text-black">At HouseTabz, we believe in rewarding houses that establish a reputation for paying their bills on time. Through our accountability system, houses with a track record of timely payments enjoy lower transaction fees, saving them money and promoting responsible financial behavior.</p>
       </div>
     </div>
     <!-- Phone View -->
@@ -170,7 +204,7 @@
       <img src="/images/accountability.png" alt="Accountability" class="mx-auto">
       <div class="max-w-md">
         <h1 class="text-5xl font-bold mb-8">Earn Lower Rates, With Accountability</h1>
-        <p class="text-2xl">HouseTabz rewards timely bill payments with lower transaction fees, fostering responsible financial behavior and saving users money.</p>
+        <p class="text-2xl text-black">HouseTabz rewards timely bill payments with lower transaction fees, fostering responsible financial behavior and saving users money.</p>
       </div>
     </div>
   </div>
@@ -182,7 +216,7 @@
     <div class="hidden md:flex md:w-1/2 items-center border border-gray-300 shadow-md p-4 ml-4">
       <div class="w-3/4">
         <h1 class="text-5xl font-bold mb-6">Secure Payment Processing</h1>
-        <p class="text-xl">At HouseTabz, we prioritize the security of your transactions. That's why we partner with Stripe, a leading payment processor trusted by millions worldwide. With Stripe, you can rest assured that your payments are processed securely and your sensitive information is protected.</p>
+        <p class="text-xl text-black">At HouseTabz, we prioritize the security of your transactions. That's why we partner with Stripe, a leading payment processor trusted by millions worldwide. With Stripe, you can rest assured that your payments are processed securely and your sensitive information is protected.</p>
         <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-6 py-3 mt-4 text-lg font-semibold rounded-full bg-green-500 text-white">Stripe</a>
       </div>
       <div class="pl-8">
@@ -193,7 +227,7 @@
     <div class="md:hidden w-full text-center">
       <div class="max-w-md">
         <h1 class="text-5xl font-bold mb-8">We Prioritize Transaction Safety</h1>
-        <p class="text-2xl">At HouseTabz, we partner with trusted organizations to ensure the safety of your transactions.</p>
+        <p class="text-2xl text-black">At HouseTabz, we partner with trusted organizations to ensure the safety of your transactions.</p>
       </div>
       <a href="https://stripe.com/" target="_blank" rel="noopener noreferrer" class="block mt-8 mx-auto">
         <img src="/images/stripe.png" alt="Stripe Payment Processing" class="mx-auto">
