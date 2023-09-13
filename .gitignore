@@ -40,3 +40,5 @@
 stripe.rb
 
 /.env
+
+/config/enviroments/developement.rb
