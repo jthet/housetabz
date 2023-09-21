@@ -11,13 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
@@ -76,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
 
   create_table "balances", force: :cascade do |t|
     t.decimal "amount"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_balances_on_user_id"
@@ -86,20 +89,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
     t.string "name"
     t.string "amount"
     t.string "decimal"
-    t.integer "house_id", null: false
+    t.bigint "house_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_issued"
     t.date "due_date"
     t.string "status"
     t.string "bill_image"
-    t.boolean "estimated"
+    t.boolean "estimated", default: false
     t.index ["house_id"], name: "index_bills_on_house_id"
   end
 
   create_table "charge_payments", force: :cascade do |t|
-    t.integer "charge_id", null: false
-    t.integer "payment_id", null: false
+    t.bigint "charge_id", null: false
+    t.bigint "payment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["charge_id"], name: "index_charge_payments_on_charge_id"
@@ -107,11 +110,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
   end
 
   create_table "charges", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "bill_id"
+    t.bigint "bill_id"
     t.date "date_issued"
     t.date "due_date"
     t.string "status"
@@ -143,8 +146,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
   end
 
   create_table "house_memberships", force: :cascade do |t|
-    t.integer "house_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "house_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["house_id"], name: "index_house_memberships_on_house_id"
@@ -152,7 +155,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
   end
 
   create_table "house_tab_fees", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.decimal "amount"
     t.string "status"
     t.datetime "created_at", null: false
@@ -172,8 +175,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
   create_table "members", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.integer "profile_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "profile_id", null: false
     t.index ["profile_id"], name: "index_members_on_profile_id"
     t.index ["user_id"], name: "index_members_on_user_id"
   end
@@ -189,11 +192,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
   end
 
   create_table "paid_bills", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "bill_id"
+    t.bigint "user_id"
+    t.bigint "bill_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "house_id", null: false
+    t.bigint "house_id", null: false
     t.index ["bill_id"], name: "index_paid_bills_on_bill_id"
     t.index ["house_id"], name: "index_paid_bills_on_house_id"
     t.index ["user_id"], name: "index_paid_bills_on_user_id"
@@ -203,12 +206,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "first_name"
     t.string "last_name"
     t.text "bio"
@@ -225,7 +228,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "house_id"
+    t.bigint "house_id"
     t.string "first_name"
     t.float "divided_amount"
     t.boolean "admin", default: false
