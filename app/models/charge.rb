@@ -12,6 +12,8 @@ class Charge < ApplicationRecord
   after_update :update_user_paid_status
   after_create :calculate_and_create_house_tab_fee
 
+  validates :estimated, inclusion: { in: [true, false] }
+
   scope :unpaid, -> { where(status: 'unpaid') }
 
   def set_name_from_bill
@@ -66,7 +68,8 @@ class Charge < ApplicationRecord
         amount: house_tab_fee_amount,
         status: 'unpaid',
         name: 'HouseTab Fee',
-        bill: nil # Since this is not related to a specific bill, set bill to nil
+        bill: nil, # Since this is not related to a specific bill, set bill to nil
+        estimated: false
       )
     end
   end

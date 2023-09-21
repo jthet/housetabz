@@ -6,17 +6,18 @@ class Bill < ApplicationRecord
   attribute :estimated, :boolean, default: false
   after_create :create_charges
   before_save :update_bill_status
+  validates :estimated, inclusion: { in: [true, false] }
 
   def create_charges
-    total_users = house.users.count
-    charge_amount = BigDecimal(amount.to_s) / BigDecimal(total_users.to_s)
-    rounded_charge_amount = charge_amount.ceil(2)
+  total_users = house.users.count
+  charge_amount = BigDecimal(amount.to_s) / BigDecimal(total_users.to_s)
+  rounded_charge_amount = charge_amount.ceil(2)
 
-    house.users.each do |user|
-      charge = user.charges.create(amount: rounded_charge_amount, bill: self)
-      self.charges << charge
-    end
+  house.users.each do |user|
+    charge = user.charges.create(amount: rounded_charge_amount, bill: self, estimated: estimated)
+    self.charges << charge
   end
+end
 
   def update_bill_status
     if status_changed? && status_was == 'unpaid' && status == 'paid'

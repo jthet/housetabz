@@ -501,40 +501,39 @@ function showSlide(index) {
         },
       });
 
-      <% if current_user.charges.present? %>
-        <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
-        <% if unpaid_charges.any? %>
-          <!-- Donut Chart Code Here -->
-          const chargeNames = <%= unpaid_charges.pluck(:name).to_json.html_safe %>;
-          const chargeAmounts = <%= unpaid_charges.pluck(:amount).to_json.html_safe %>;
-          const billChartBackgroundColors = ['#f97316', '#ef4444', '#06b6d4', '#d946ef']; // Update with appropriate colors
-        <% else %>
-          <!-- Donut Chart Code Here -->
-          const chargeNames = ['You have no current charges!'];
-          const chargeAmounts = [100]; // Update with an appropriate value
-          const billChartBackgroundColors = ['#48bb78']; // Update with an appropriate color
-        <% end %>
+     <% if current_user.charges.present? %>
+  <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
+  <% if unpaid_charges.any? %>
+    const chargeData = <%= unpaid_charges.map { |charge| { name: charge.estimated ? 'Estimated ' + charge.name : charge.name, amount: charge.amount } }.to_json.html_safe %>;
+    const billChartBackgroundColors = ['#f97316', '#ef4444', '#06b6d4', '#d946ef']; // Update with appropriate colors
+  <% else %>
+    const chargeData = [{ name: 'You have no current charges!', amount: 100 }]; // Update with an appropriate value
+    const billChartBackgroundColors = ['#48bb78']; // Update with an appropriate color
+  <% end %>
 
-        new Chart(billsDonutChartCanvas, {
-          type: 'doughnut',
-          data: {
-            labels: chargeNames,
-            datasets: [
-              {
-                data: chargeAmounts,
-                backgroundColor: billChartBackgroundColors,
-              },
-            ],
-          },
-          options: {
-            plugins: {
-              legend: {
-                display: false
-              }
-            },
-          },
-        });
-      <% end %>
+  const chargeNames = chargeData.map(charge => charge.name);
+  const chargeAmounts = chargeData.map(charge => charge.amount);
+
+  new Chart(billsDonutChartCanvas, {
+    type: 'doughnut',
+    data: {
+      labels: chargeNames,
+      datasets: [
+        {
+          data: chargeAmounts,
+          backgroundColor: billChartBackgroundColors,
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+    },
+  });
+<% end %>
     });
   </script>
 <% end %>

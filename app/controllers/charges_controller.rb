@@ -1,4 +1,3 @@
-# app/controllers/charges_controller.rb
 class ChargesController < ApplicationController
   def calculate_charges
     @bills = Bill.all
@@ -6,16 +5,19 @@ class ChargesController < ApplicationController
     current_user.house.users.each do |user|
       user_bills = @bills.select { |bill| bill.user_id == user.id }
 
-      total_charge_in_cents = user_bills.sum { |bill| (bill.calculate_charge * 100 / current_user.house.users.count).round }
-      user_charge = total_charge_in_cents / 100.0
+      user_bills.each do |bill|
+        total_charge_in_cents = (bill.calculate_charge * 100 / current_user.house.users.count).round
+        user_charge = total_charge_in_cents / 100.0
 
-      # Round up user_charge to the nearest cent using BigDecimal
-      user_charge = BigDecimal(user_charge.to_s).ceil(2).to_f
+        user_charge = BigDecimal(user_charge.to_s).ceil(2).to_f
 
-      user.charges.create(amount: user_charge, status: 'unpaid')
+        # Check if the associated bill is estimated and set the charge's estimated attribute accordingly
+        estimated = bill.estimated
 
-      # Calculate and create HouseTab fee for each user
-      calculate_and_create_house_tab_fee(user)
+        user.charges.create(amount: user_charge, status: 'unpaid', estimated: estimated)
+
+        calculate_and_create_house_tab_fee(user)
+      end
     end
   end
 
@@ -47,8 +49,10 @@ class ChargesController < ApplicationController
         amount: house_tab_fee_amount,
         status: 'unpaid',
         name: 'HouseTab Fee',
-        bill: nil
+        bill: nil,
+        estimated: false
       )
     end
   end
+  
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_210827) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -116,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_210827) do
     t.date "due_date"
     t.string "status"
     t.string "name"
+    t.boolean "estimated"
     t.index ["bill_id"], name: "index_charges_on_bill_id"
     t.index ["user_id"], name: "index_charges_on_user_id"
   end
