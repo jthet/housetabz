@@ -3,7 +3,7 @@ class Bill < ApplicationRecord
   has_many :charges
   has_one_attached :bill_image
   attribute :status, :string
-
+  attribute :estimated, :boolean, default: false
   after_create :create_charges
   before_save :update_bill_status
 

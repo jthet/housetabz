@@ -7,6 +7,7 @@ ActiveAdmin.register Bill do
       f.input :amount
       f.input :house_id, as: :select, collection: House.pluck(:name, :id)
       f.input :bill_image, as: :file
+      f.input :estimated, as: :boolean
     end
     f.actions
   end
@@ -54,7 +55,7 @@ ActiveAdmin.register Bill do
     private
 
     def bill_params
-      params.require(:bill).permit(:name, :amount, :house_id, :bill_image)
+      params.require(:bill).permit(:name, :amount, :house_id, :bill_image, :estimated)
     end
   end
 end
