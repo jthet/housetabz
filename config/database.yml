@@ -30,5 +30,5 @@ test:
 production:
   <<: *default
   database: housetabz_production
-  username: housetabz
+  # username: housetabz
   # password: <%= ENV["HOUSETABZ_DATABASE_PASSWORD"] %>
