@@ -11,7 +11,7 @@ class CheckoutController < ApplicationController
       return
     end
 
-    cancel_url = 'https://salty-sierra-05335-bfc9793be84d.herokuapp.com/checkout'  # Replace with your cancel URL
+    cancel_url = 'https://salty-sierra-05335-bfc9793be84d.herokuapp.com//checkout'  # Replace with your cancel URL
     success_url = "https://salty-sierra-05335-bfc9793be84d.herokuapp.com/checkout_success?user_id=#{user_id}&price=#{custom_price}"
     
     session = Stripe::Checkout::Session.create(
