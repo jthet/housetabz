@@ -15,10 +15,10 @@
 # gem "pg"
 #
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
+  timeout: 5000
+  
 development:
   <<: *default
   database: housetabz_development
