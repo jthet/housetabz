@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+     ()
     actioncable (7.0.5)
       actionpack (= 7.0.5)
       activesupport (= 7.0.5)
@@ -246,10 +247,6 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
-    sqlite3 (1.6.6)
-      mini_portile2 (~> 2.8.0)
-    sqlite3 (1.6.6-x86_64-darwin)
-    sqlite3 (1.6.6-x86_64-linux)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     stripe (8.5.0)
@@ -310,7 +307,6 @@ DEPENDENCIES
   sassc
   selenium-webdriver
   sprockets-rails
-  sqlite3
   stimulus-rails
   stripe
   tailwindcss-rails (~> 2.0)
