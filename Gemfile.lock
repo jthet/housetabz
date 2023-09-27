@@ -248,6 +248,7 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (9.3.0)
     tailwindcss-rails (2.0.29)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.29-x86_64-darwin)
@@ -306,6 +307,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
+  stripe
   tailwindcss-rails (~> 2.0)
   turbo-rails
   turbolinks
