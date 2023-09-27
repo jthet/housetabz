@@ -1,18 +1,18 @@
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def stripe
-    payload = request.body.read
-    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
-    event = nil
+  # def stripe
+  #   payload = request.body.read
+  #   sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+  #   event = nil
 
-    # Verify the signature
-    begin
-      event = Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
-    rescue JSON::ParserError, Stripe::SignatureVerificationError => e
-      # Invalid payload or signature
-      return head :bad_request
-    end
+  #   # Verify the signature
+  #   begin
+  #     event = Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
+  #   rescue JSON::ParserError, Stripe::SignatureVerificationError => e
+  #     # Invalid payload or signature
+  #     return head :bad_request
+  #   end
 
     # Process the event
     case event.type
