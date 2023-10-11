@@ -1,26 +1,23 @@
-<!-- app/views/admin/users/show.html.erb -->
+<div class="user-details-container">
+  <h1>User Details</h1>
 
-<h1>User Details</h1>
+  <h2><%= @user.username %></h2>
 
-<h2><%= @user.username %></h2>
+  <% if @user.house %>
+    <h3>House: <%= @user.house.name %></h3>
+  <% else %>
+    <p>No house associated.</p>
+  <% end %>
 
-<% if @user.house %>
-  <h3>House: <%= @user.house.name %></h3>
-<% else %>
-  <p>No house associated.</p>
-<% end %>
+  <h3>Payments:</h3>
+  <% @user.payments.each do |payment| %>
+    <p class="payment">Payment Amount: <%= payment.amount %></p>
+  <% end %>
 
-<h3>Payments:</h3>
-<% @user.payments.each do |payment| %>
-  <p>Payment Amount: <%= payment.amount %></p>
-  
-<% end %>
+  <h3>Charges:</h3>
+  <% @user.charges.each do |charge| %>
+    <p class="charge"><strong><%= charge.name %>:</strong> $<%= charge.amount %></p>
+  <% end %>
 
-<h3>Charges:</h3>
-<% @user.charges.each do |charge| %>
-  <p>Charge Amount: <%= charge.amount %></p>
-  <!-- Add more charge details as needed -->
-<% end %>
-
-<h3>Balance: <%= @user.balance.amount %></h3>
-
+  <h3 class="balance">Balance: <%= @user.balance.amount %></h3>
+</div>

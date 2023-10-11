@@ -219,3 +219,35 @@ nav.bg-green-500 {
   display: block;
 }
 
+
+/* Admin View of Users */
+
+.user-details-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for headers */
+h1, h2, h3 {
+  color: #333;
+}
+
+/* Style for payments and charges */
+.payment, .charge {
+  margin-bottom: 10px;
+}
+
+.payment strong, .charge strong {
+  font-weight: bold;
+}
+
+/* Style for balance */
+.balance {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #28a745; /* Green color */
+}

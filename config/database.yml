@@ -21,7 +21,10 @@ default: &default
 
 development:
   <<: *default
-  database: housetabz_development
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
 
 test:
   <<: *default
