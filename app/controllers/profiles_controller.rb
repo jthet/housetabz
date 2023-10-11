@@ -2,8 +2,12 @@ class ProfilesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @profile = current_user.profile
-    @user = @profile.user
+    if current_user.profile
+      @profile = current_user.profile
+      @user = @profile.user
+    else
+      redirect_to new_user_profile_path(current_user), alert: "Profile not found, please create one."
+    end
   end
   def new
     @profile = current_user.build_profile
