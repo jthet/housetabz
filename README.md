@@ -68,4 +68,4 @@ We welcome contributions to improve the design and functionality of HouseTabz. P
 
 ## License
 
-This project is distributed under no specific license.
+GPL-3.0

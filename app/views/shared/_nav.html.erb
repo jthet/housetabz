@@ -19,8 +19,9 @@
     <% end %>
 
    <li class="user-initials" id="userInitials">
-  <!-- Replace the next line with your logic to display the user's initials -->
-  <%= "#{current_user.profile.first_name&.chr || ''}#{current_user.profile.last_name&.chr || ''}".upcase %>
+    <!-- Replace the next line with your logic to display the user's initials -->
+  <!-- app/views/shared/_nav.html.erb -->
+<%= user_initials(current_user) %>
   <ul class="dropdown-menu" id="dropdownMenu">
     <li><%= link_to 'Messages', messages_show_path, class: 'text-white font-bold nav-link' %></li>
     <li>
