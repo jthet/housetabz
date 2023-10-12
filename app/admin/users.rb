@@ -12,6 +12,7 @@ ActiveAdmin.register User do
     actions
   end
 
+ 
   # Customize the show page
   show do
     attributes_table do
@@ -29,12 +30,7 @@ ActiveAdmin.register User do
   filter :house
   filter :charges
 
-# Delete action
-# Delete action
-# Delete action
-# Delete action
-# Delete action
-# Delete action
+
 # Delete action
 member_action :destroy, method: :delete do
   user = User.find(params[:id])
