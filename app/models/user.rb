@@ -17,6 +17,14 @@ class User < ApplicationRecord
   belongs_to :house, optional: true
   
   validates :username, presence: true, uniqueness: true
+
+  def self.ransackable_associations(auth_object = nil)
+    ["admin_messages", "balance", "charges", "house", "house_tab_fees", "member", "messages", "payments", "profile"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["admin", "created_at", "divided_amount", "email", "encrypted_password", "first_name", "house_id", "id", "paid_status", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at", "username"]
+  end
   
   def has_unpaid_charges?
     charges.unpaid.any?

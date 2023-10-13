@@ -16,6 +16,14 @@ class Charge < ApplicationRecord
 
   scope :unpaid, -> { where(status: 'unpaid') }
 
+  def self.ransackable_attributes(auth_object = nil)
+    ['amount', 'name', 'status', 'estimated', 'bill_id', "admin", "created_at", "divided_amount", "email", "first_name", "house_id", "id", "paid_status", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at", "username"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["bill", "charge_payments", "payments", "user"]
+  end
+
   def set_name_from_bill
     self.name = bill&.name || 'HouseTab Fee'
   end
