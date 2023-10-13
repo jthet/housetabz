@@ -38,6 +38,8 @@
 !/app/assets/builds/.keep
 
 stripe.rb
+Gemfile.lock
+db/schema.rb
 
 /.env
 
