@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_15_034450) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -84,7 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_212043) do
 
   create_table "bills", force: :cascade do |t|
     t.string "name"
-    t.string "amount"
+    t.integer "amount"
     t.string "decimal"
     t.integer "house_id", null: false
     t.datetime "created_at", null: false
