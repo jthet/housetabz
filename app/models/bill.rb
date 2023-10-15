@@ -7,7 +7,8 @@ class Bill < ApplicationRecord
   after_create :create_charges
   before_save :update_bill_status
   validates :estimated, inclusion: { in: [true, false] }
-
+  validates :amount, numericality: true
+  
   def self.ransackable_attributes(auth_object = nil)
     ["amount", "bill_image", "house_id", "name", "estimated", 'decimal', 'status']
   end
