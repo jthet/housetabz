@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_11_030839) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.0].define(version: 2023_10_15_035930) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -87,8 +84,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_030839) do
 
   create_table "bills", force: :cascade do |t|
     t.string "name"
-    t.decimal "amount"
-    t.string "decimal"
+    t.decimal "amount", precision: 10, scale: 2
+    t.decimal "decimal"
     t.integer "house_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

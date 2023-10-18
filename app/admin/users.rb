@@ -24,6 +24,7 @@ ActiveAdmin.register User do
     active_admin_comments
   end
 
+  
   # Filters for the index page
   filter :username
   filter :email

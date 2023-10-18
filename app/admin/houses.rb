@@ -25,6 +25,19 @@ ActiveAdmin.register House do
           # Add any other bill attributes you want to display here
         end
       end
+
+      panel "Tabs" do
+        table_for house.tabs do
+          column :id
+          column :amount
+          column :status
+          column :updated_at
+          column "Associated Bills" do |tab|
+            tab.bills.map { |bill| "Name: #{bill.name}, Amount: #{bill.amount}" }.join("<br>").html_safe
+          end
+          # Add any other bill attributes you want to display here
+        end
+      end
     end
   
     form do |f|

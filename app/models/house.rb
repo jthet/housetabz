@@ -7,7 +7,7 @@ class House < ApplicationRecord
     has_many :paid_bills
 
     def self.ransackable_attributes(auth_object = nil)
-        ["address", "created_at", "id", "joinable", "name", "password_digest", "updated_at", "bills_id"]
+        ["address", "created_at", "id", "joinable", "name", "password_digest", "updated_at", "bills_id", "tabs_id"]
       end
 
       def self.ransackable_associations(auth_object = nil)
