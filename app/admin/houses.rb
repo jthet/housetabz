@@ -21,6 +21,7 @@ ActiveAdmin.register House do
           column :name
           column :amount
           column :status
+          column :created_at
           # Add any other bill attributes you want to display here
         end
       end
