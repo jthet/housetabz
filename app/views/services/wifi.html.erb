@@ -1,0 +1,18 @@
+<!-- app/views/services/wifi.html.erb -->
+
+<%# This is the view template for Wifi service %>
+
+<h1 class="text-3xl font-bold mb-4 text-center">Wifi</h1>
+
+<%= form_for @wifi_service, url: create_wifi_service_path, method: :post do |f| %>
+  <div class="mb-4 text-center">
+    <%= f.label :network_name, class: 'block font-bold' %>
+    <%= f.text_field :network_name, class: 'form-input mt-1 mx-auto', style: 'width: 50%' %>
+  </div>
+
+  <!-- Add more fields for Wifi-specific information as needed -->
+
+  <div class="text-center">
+    <%= f.submit 'Submit', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+  </div>
+<% end %>

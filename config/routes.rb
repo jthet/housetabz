@@ -32,6 +32,17 @@ Rails.application.routes.draw do
 
   get 'house_options', to: 'houses#house_options'
 
+  get 'add_services', to: 'houses#add_services', as: 'add_services_house'
+
+  get 'city_of_austin_utilities', to: 'services#city_of_austin_utilities'
+  post 'create_city_of_austin_utilities_service', to: 'services#create_city_of_austin_utilities_service'
+
+  get 'texas_gas', to: 'services#texas_gas'
+  post 'create_texas_gas_service', to: 'services#create_texas_gas_service'
+  
+  get 'wifi', to: 'services#wifi'
+  post 'create_wifi_service', to: 'services#create_wifi_service'
+
   get '/members/:id', to: 'members#show', as: 'member_profile'
 
   get '/payment', to: 'payments#show', as: 'make_payment'
