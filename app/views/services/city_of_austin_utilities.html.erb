@@ -1,0 +1,17 @@
+<!-- app/views/services/city_of_austin_utilities.html.erb -->
+
+
+<h1 class="text-3xl font-bold mb-4 text-center">City of Austin Utilities</h1>
+
+<%= form_for @city_of_austin_utilities_service, url: create_city_of_austin_utilities_service_path, method: :post do |f| %>
+  <div class="mb-4 text-center">
+    <%= f.label :account_number, class: 'block font-bold' %>
+    <%= f.text_field :account_number, class: 'form-input mt-1 mx-auto', style: 'width: 50%' %>
+  </div>
+
+  <!-- Add more fields for City of Austin Utilities-specific information as needed -->
+  <div class="text-center">
+    <%= f.submit 'Submit', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+  </div>
+
+<% end %>

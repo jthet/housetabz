@@ -174,6 +174,24 @@
     <h1 class="text-4xl font-bold mb-4"><%= @user.house.name %></h1>
   </div>
 
+  <% if flash[:success] %>
+    <!-- Display success flash message -->
+    <div class="green-box flash-success">
+      <%= flash[:success] %>
+    </div>
+  <% end %>
+
+  <% if flash[:error] %>
+    <!-- Display error flash message -->
+    <div class="red-box flash-error">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-4">
+    <%= link_to 'Add New Services', add_services_house_path, class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+  </div>
+
   <div class="section-divider flex flex-col md:flex-row justify-center">
     <div class="w-full md:w-1/2 mt-10 mr-10">
       <div class="profile-container">
@@ -274,6 +292,17 @@
       </div>
     </div>
   </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const flashMessages = document.querySelectorAll(".flash-success, .flash-error");
+
+      flashMessages.forEach(function (message) {
+        setTimeout(function () {
+          message.style.display = "none";
+        }, 8000); 
+      });
+    });
+  </script>
   <script>
     function togglePayments(element) {
       const paidBillsContainer = element.nextElementSibling;
