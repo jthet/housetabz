@@ -245,6 +245,9 @@
                     </strong>
                     : $<%= format('%.2f', bill.amount.to_f) %>
                   </p>
+                   <% if bill.due_date.present? %>
+      <p class="text-gray-400 italic">This bill is due on <%= bill.due_date.strftime('%B %d, %Y') %></p>
+    <% end %>
                   <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
                     <div class="bill-image-container hidden">
                       <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />

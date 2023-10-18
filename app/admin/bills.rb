@@ -1,11 +1,12 @@
 ActiveAdmin.register Bill do
-  permit_params :name, :amount, :house_id, :bill_image
+  permit_params :name, :amount, :house_id, :bill_image, :due_date
 
   form do |f|
     f.inputs do
       f.input :name
       f.input :amount
       f.input :house_id, as: :select, collection: House.pluck(:name, :id)
+      f.input :due_date
       f.input :bill_image, as: :file
       f.input :estimated, as: :boolean
     end
@@ -68,7 +69,7 @@ ActiveAdmin.register Bill do
     end
   
     def bill_params
-      params.require(:bill).permit(:name, :amount, :house_id, :bill_image, :estimated, :tab_id)
+      params.require(:bill).permit(:name, :amount, :house_id, :bill_image, :estimated, :due_date, :tab_id)
     end
   
     def update_tab_amount(tab)
