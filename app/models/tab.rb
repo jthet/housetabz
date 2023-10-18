@@ -8,7 +8,7 @@ class Tab < ApplicationRecord
     attribute :paid, :boolean, default: false
   
     def self.ransackable_attributes(auth_object = nil)
-        ["amount", "created_at", "house_id", "id", "month", "paid", "updated_at", "year",'bills_id']
+        ["amount", "created_at", "house_id", "id", "month", "paid", "updated_at", "year",'bills_id', "charges_id"]
       end
 
     def self.ransackable_associations(auth_object = nil)
