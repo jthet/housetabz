@@ -73,5 +73,9 @@ Rails.application.routes.draw do
       put 'mark_as_read', to: 'users#mark_as_read'
     end
   end
+
+  resources :houses do
+    resources :bills, only: [:show] # This will create a route for viewing a specific bill
+  end
   
 end

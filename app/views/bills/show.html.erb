@@ -1,0 +1,69 @@
+<style>
+  .embed-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .embed-container embed {
+    width: 100%;
+    height: 100%;
+  }
+
+  .reminder-button {
+    background-color: #4caf50; /* Green */
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  .reminder-button:hover {
+    background-color: white;
+    color: black;
+    border: 1px solid #4caf50;
+  }
+</style>
+
+<div class="flex justify-center items-center h-full">
+  <div class="bg-white rounded-lg shadow-lg p-8 w-[600px]">
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold mb-2"><%= @bill.name %></h1>
+      <p class="text-lg mb-2">Amount: $<%= format('%.2f', @bill.amount) %></p>
+      <p class="text-gray-400 italic mb-4">Due: <%= @bill.due_date.strftime('%B %d, %Y') %></p>
+
+      <% if @bill.bill_image.attached? && @bill.bill_image.content_type == 'image/png' %>
+        <div class="embed-container rounded overflow-hidden shadow-lg mb-4">
+          <%= image_tag @bill.bill_image, style: "max-width: 100%; height: auto; max-height: 500px;" %>
+        </div>
+      <% end %>
+    </div>
+
+    <h2 class="text-xl font-bold mb-2">Users who have not paid:</h2>
+    <ul>
+      <% @bill.charges.where(status: 'unpaid').each do |charge| %>
+        <li class="flex items-center justify-between mb-2">
+          <%= charge.user.username %> <!-- Assuming you have a profile association -->
+          <%= button_to 'Send Reminder','',class: 'reminder-button' %>
+        </li>
+      <% end %>
+    </ul>
+
+    <h2 class="text-xl font-bold mt-4 mb-2">Users who have Paid:</h2>
+    <ul>
+      <% @bill.charges.where(status: 'paid').each do |charge| %>
+        <li>
+          <%= charge.user.username %> <!-- Assuming you have a profile association -->
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -59,6 +59,8 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  config.active_storage.content_types_allowed_in_base64 = ['image/png']
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

@@ -1,174 +1,3 @@
-<style>
-  /* Global Styles */
-  body {
-    font-family: "Roboto", sans-serif;
-    color: #333333;
-  }
-
-  /* Custom styles for the mobile view (max-width: 767px) */
-  @media (max-width: 767px) {
-    /* Add green horizontal lines between sections */
-    .section-divider {
-      position: relative;
-    }
-
-    .section-divider::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 1px;
-      background-color: #48bb78;
-    }
-
-    /* Profile section */
-    .profile-container {
-      padding: 1rem;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-    }
-
-    .profile-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .profile-picture {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .profile-info {
-      text-align: center;
-    }
-
-    .profile-info p {
-      margin-bottom: 0.5rem;
-    }
-
-    .edit-profile-button {
-      background-color: #3498db;
-      color: #ffffff;
-      font-weight: bold;
-      border: none;
-      border-radius: 4px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .edit-profile-button:hover {
-      background-color: #2ecc71;
-    }
-
-    .balance-container {
-      text-align: center;
-      margin-top: 1rem;
-    }
-
-    .balance {
-      background-color: #48bb78;
-      color: #ffffff;
-      font-weight: bold;
-      border-radius: 4px;
-      padding: 0.5rem 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .house-info {
-      text-align: center;
-      margin-top: 1rem;
-    }
-
-    /* Previous Payments section */
-    .previous-payments-container {
-      padding: 1rem;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-    }
-
-    .previous-payment {
-      padding: 1rem;
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-    }
-
-    .payment-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .payment-date {
-      font-size: 1rem;
-    }
-
-    .payment-amount {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #3498db;
-    }
-
-    .charge-info {
-      font-size: 0.9rem;
-      color: #888888;
-    }
-  }
-
-  /* Custom styles for the desktop view (min-width: 768px) */
-  @media (min-width: 768px) {
-    /* Profile section */
-    .profile-container {
-      padding: 2rem;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .profile-info {
-      text-align: left;
-    }
-
-    .balance-container {
-      text-align: right;
-    }
-
-    .house-info {
-      text-align: right;
-    }
-
-    /* Previous Payments section */
-    .previous-payments-container {
-      padding: 2rem;
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin-bottom: 1rem;
-    }
-
-    /* ... (the previous desktop view styles) ... */
-  }
-</style>
-
 <% if @user.house %>
   <div class="section-divider text-center">
     <h1 class="text-4xl font-bold mb-4"><%= @user.house.name %></h1>
@@ -213,6 +42,7 @@
                     <% status = user.paid_status ? 'Paid' : 'Unpaid' %>
                     <span class="<%= user.paid_status ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
                   </p>
+                  <p class="text-gray-400 italic">Balance: $<%= balance %></p> <!-- New line added -->
                 </div>
               </div>
             <% end %>
@@ -231,30 +61,25 @@
               Balance: $<%= format('%.2f', @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }) %>
             <% end %>
           </h2>
+
           <div id="unpaidBillsContainer" class="hidden">
-            <% if @user.house.bills.select { |bill| bill.status == 'unpaid' }.empty? %>
-              <p class="text-gray-500 italic"><%= @user.house.name %> is currently up to date on bills, thank you.</p>
-            <% else %>
-              <% @user.house.bills.select { |bill| bill.status == 'unpaid' }.each do |bill| %>
-                <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
-                  <p class="text-lg">
-                    <strong>
-                      <a href="javascript:void(0)" class="bill-link hover:text-blue-500" onclick="toggleBillImage(this)">
-                        <%= bill.name %>
-                      </a>
-                    </strong>
-                    : $<%= format('%.2f', bill.amount.to_f) %>
-                  </p>
-                   <% if bill.due_date.present? %>
-      <p class="text-gray-400 italic">This bill is due on <%= bill.due_date.strftime('%B %d, %Y') %></p>
-    <% end %>
-                  <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
-                    <div class="bill-image-container hidden">
-                      <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />
-                    </div>
-                  <% end %>
-                </div>
-              <% end %>
+            <% @user.house.bills.select { |bill| bill.status == 'unpaid' }.each do |bill| %>
+              <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+                <p class="text-lg">
+                  <strong>
+                    <%= link_to bill.name, house_bill_path(@user.house, bill), class: 'bill-link hover:text-blue-500' %>
+                  </strong>
+                  : $<%= format('%.2f', bill.amount.to_f) %>
+                </p>
+                <% if bill.due_date.present? %>
+                  <p class="text-gray-400 italic">This bill is due on <%= bill.due_date.strftime('%B %d, %Y') %></p>
+                <% end %>
+                <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
+                  <div class="bill-image-container hidden">
+                    <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />
+                  </div>
+                <% end %>
+              </div>
             <% end %>
           </div>
         </div>
@@ -281,11 +106,7 @@
                         Final payment received on <%= paid_bill.created_at.strftime("%B %d, %Y") %>
                       </p>
                     <% end %>
-                    <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
-                      <div class="bill-image-container hidden">
-                        <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />
-                      </div>
-                    <% end %>
+                   
                   </div>
                 <% end %>
               </div>
@@ -317,19 +138,19 @@
       unpaidBillsContainer.classList.toggle('hidden');
     }
 
-    function toggleBillImage(element) {
-      const billImageContainer = element.closest('.bg-white').querySelector('.bill-image-container');
-      if (billImageContainer) {
-        billImageContainer.classList.toggle('hidden');
-      }
-    }
+    // function toggleBillImage(element) {
+    //   const billImageContainer = element.closest('.bg-white').querySelector('.bill-image-container');
+    //   if (billImageContainer) {
+    //     billImageContainer.classList.toggle('hidden');
+    //   }
+    // }
 
-    function displayBillImage(element) {
-      const billImageContainer = element.parentNode.nextElementSibling.querySelector('.bill-image-container');
-      if (billImageContainer) {
-        billImageContainer.classList.remove('hidden');
-      }
-    }
+    // function displayBillImage(element) {
+    //   const billImageContainer = element.parentNode.nextElementSibling.querySelector('.bill-image-container');
+    //   if (billImageContainer) {
+    //     billImageContainer.classList.remove('hidden');
+    //   }
+    // }
   </script>
 <% else %>
   <div class="text-center">
