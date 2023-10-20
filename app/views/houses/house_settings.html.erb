@@ -1,11 +1,18 @@
 <!-- House Information Button -->
+<style>
+  .nav-link.active {
+    color: green; /* Change the color to green or your desired highlight color */
+  }
+</style>
+
+
 <div class="bottom-4 right-4">
-  <a href="#" id="open-house-info">House Information</a>
+  <a href="#" id="open-house-info" class="nav-link">House Information</a>
 </div>
 
 <!-- Add Services Button -->
 <div class="bottom-4 right-4">
-  <a href="#" id="open-services">Add Services</a>
+  <a href="#" id="open-services" class="nav-link">Add Services</a>
 </div>
 
 <!-- House Information Modal -->
@@ -59,5 +66,29 @@ document.addEventListener('DOMContentLoaded', function() {
       servicesModal.classList.add('hidden');
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('.nav-link');
+  const closeHouseInfoModalButton = document.getElementById('close-house-info-modal');
+  const closeServicesModalButton = document.getElementById('close-services-modal');
+  const houseInfoModal = document.getElementById('house-info-modal');
+  const servicesModal = document.getElementById('services-modal');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      navLinks.forEach(link => link.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  closeHouseInfoModalButton.addEventListener('click', function() {
+    houseInfoModal.classList.add('hidden');
+  });
+
+  closeServicesModalButton.addEventListener('click', function() {
+    servicesModal.classList.add('hidden');
+  });
+});
+
 </script>
 

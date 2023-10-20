@@ -1,1 +1,29 @@
-<p>House Information</p>
+<% if current_user.house %>
+  <h2 class="text-xl font-bold mb-4">House Information</h2>
+
+<h3 class="text-lg font-bold mb-2">Name:</h3>
+<%=current_user.house.name%>
+  <h3 class="text-lg font-bold mb-2">Users:</h3>
+  <ul>
+    <% current_user.house.users.each do |user| %>
+      <li><%= user.username %></li>
+    <% end %>
+  </ul>
+
+  <h3 class="text-lg font-bold mb-2">Bills:</h3>
+  <ul>
+    <% current_user.house.bills.each do |bill| %>
+      <li>
+        Name: <%= bill.name %>, 
+        Amount: $<%= format('%.2f', bill.amount) %>, 
+        Created At: <%= bill.created_at.strftime('%B %d, %Y') %>, 
+        Due Date: <%= bill.due_date.present? ? bill.due_date.strftime('%B %d, %Y') : 'N/A' %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h3 class="text-lg font-bold mb-2">Address:</h3>
+  <p><%= current_user.house.address %></p>
+<% else %>
+  <p>No house information available.</p>
+<% end %>
