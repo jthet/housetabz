@@ -53,7 +53,6 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'web-console'
 
   gem 'bundler-audit'
 
@@ -79,6 +78,11 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+end
+
+group :development do
+  gem 'web-console'
+  # ... any other development gems
 end
 
 gem 'tailwindcss-rails', '~> 2.0'
