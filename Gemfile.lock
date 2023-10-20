@@ -94,6 +94,9 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     capybara (3.39.2)
       addressable
       matrix
@@ -194,6 +197,8 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.4-x86_64-darwin)
       racc (~> 1.4)
+    nokogiri (1.15.4-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.23.0)
     parser (3.2.2.4)
@@ -290,11 +295,14 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.6.7-x86_64-darwin)
+    sqlite3 (1.6.7-x86_64-linux)
     stimulus-rails (1.2.2)
       railties (>= 6.0.0)
     stringio (3.0.8)
     stripe (9.4.0)
     tailwindcss-rails (2.0.31-x86_64-darwin)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.31-x86_64-linux)
       railties (>= 6.0.0)
     thor (1.2.2)
     timeout (0.4.0)
@@ -335,6 +343,7 @@ PLATFORMS
 DEPENDENCIES
   activeadmin
   bootsnap
+  bundler-audit
   capybara
   debug
   devise (~> 4.9)

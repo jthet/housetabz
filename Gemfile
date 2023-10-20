@@ -95,3 +95,5 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'dotenv', '~> 2.7', '>= 2.7.6'
 
 gem 'sqlite3', '~> 1.4'
+
+gem 'bundler-audit'
