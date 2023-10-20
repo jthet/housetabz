@@ -519,11 +519,11 @@ function showSlide(index) {
         },
       });
 
-     <% if current_user.charges.present? %>
-  <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
-  <% if unpaid_charges.any? %>
-    const chargeData = <%= unpaid_charges.map { |charge| { name: charge.estimated ? "Estimated #{charge.name}" : charge.name, amount: charge.amount } }.to_json.html_safe %>;
-    const billChartBackgroundColors = ['#f97316', '#ef4444', '#06b6d4', '#d946ef']; // Update with appropriate colors
+    <% if current_user.charges.present? %>
+      <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
+      <% if unpaid_charges.any? %>
+        const chargeData = <%= unpaid_charges.map { |charge| { name: charge.estimated ? "Estimated #{charge.name}" : charge.name, amount: charge.amount } }.to_json.html_safe %>;
+        const billChartBackgroundColors = ['#f97316', '#ef4444', '#06b6d4', '#d946ef']; // Update with appropriate colors
   <% else %>
     const chargeData = [{ name: 'You have no current charges!', amount: 100 }]; // Update with an appropriate value
     const billChartBackgroundColors = ['#48bb78']; // Update with an appropriate color
