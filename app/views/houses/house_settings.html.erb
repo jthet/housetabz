@@ -1,30 +1,63 @@
-<p>Walt</p>
-<div>House Information</div>
+<!-- House Information Button -->
 <div class="bottom-4 right-4">
-  <a href="#" id="open-modal">Add services</a>
+  <a href="#" id="open-house-info">House Information</a>
 </div>
 
-<!-- Modal -->
+<!-- Add Services Button -->
+<div class="bottom-4 right-4">
+  <a href="#" id="open-services">Add Services</a>
+</div>
+
+<!-- House Information Modal -->
+<div id="house-info-modal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+  <div class="modal-container bg-white w-1/2 p-8 shadow-md rounded">
+    <!-- Render the house information content here -->
+    <%= render 'houses/house_information' %>
+    <!-- House Information Content Ends Here -->
+
+    <!-- Close Button -->
+    <button id="close-house-info-modal" class="mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Close</button>
+  </div>
+</div>
+
+<!-- Add Services Modal -->
 <div id="services-modal" class="hidden fixed inset-0 flex items-center justify-center z-50">
   <div class="modal-container bg-white w-1/2 p-8 shadow-md rounded">
+    <!-- Render the add services content here -->
     <%= render 'houses/add_services' %>
-    <button id="close-modal" class="mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Close</button>
+    <!-- Add Services Content Ends Here -->
+
+    <!-- Close Button -->
+    <button id="close-services-modal" class="mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Close</button>
   </div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const openModalButton = document.getElementById('open-modal');
-    const closeModalButton = document.getElementById('close-modal');
-    const modal = document.getElementById('services-modal');
-  
-    openModalButton.addEventListener('click', function() {
-      modal.classList.remove('hidden');
-    });
-  
-    closeModalButton.addEventListener('click', function() {
-      modal.classList.add('hidden');
-    });
-  });
+    const openHouseInfoButton = document.getElementById('open-house-info');
+    const openServicesButton = document.getElementById('open-services');
+    const closeHouseInfoModalButton = document.getElementById('close-house-info-modal');
+    const closeServicesModalButton = document.getElementById('close-services-modal');
+    const houseInfoModal = document.getElementById('house-info-modal');
+    const servicesModal = document.getElementById('services-modal');
 
-  </script>
+    openHouseInfoButton.addEventListener('click', function() {
+      houseInfoModal.classList.remove('hidden');
+      servicesModal.classList.add('hidden'); // Close services modal
+    });
+
+    openServicesButton.addEventListener('click', function() {
+      servicesModal.classList.remove('hidden');
+      houseInfoModal.classList.add('hidden'); // Close house info modal
+    });
+  
+    closeHouseInfoModalButton.addEventListener('click', function() {
+      houseInfoModal.classList.add('hidden');
+    });
+
+    closeServicesModalButton.addEventListener('click', function() {
+      servicesModal.classList.add('hidden');
+    });
+});
+</script>
+
