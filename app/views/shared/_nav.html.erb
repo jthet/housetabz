@@ -25,7 +25,7 @@
   <ul class="dropdown-menu" id="dropdownMenu">
     <li><%= link_to 'Messages', messages_show_path, class: 'text-white font-bold nav-link' %></li>
     <li>
-      <%= form_tag destroy_user_session_path, method: :delete, class: "logout-form" do %>
+      <%= form_tag destroy_user_session_path, method: :delete, class: 'logout-form' do %>
         <%= submit_tag 'Logout', class: 'btn-logout', style: 'color: rgb(34 197 94);; font-weight: bold; padding: 0; margin: 0;' %>
       <% end %>
     </li>

@@ -38,13 +38,12 @@
   </div>
 </div>
 
-
 <script>
   // Image preview function
   function previewProfilePicture() {
     var preview = document.getElementById('profile-picture-preview');
     var fileInput = document.getElementById('profile-picture-input');
-    
+
     fileInput.addEventListener('change', function(event) {
       var file = event.target.files[0];
       var reader = new FileReader();
@@ -53,7 +52,7 @@
         var image = document.createElement('img');
         image.src = event.target.result;
         image.classList.add('w-40', 'h-40', 'object-cover', 'rounded');
-        
+
         preview.innerHTML = '';
         preview.appendChild(image);
       }

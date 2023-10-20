@@ -15,7 +15,7 @@
   <h3>Payments:</h3>
   <% @user.payments.each do |payment| %>
     <p class="payment">Payment Amount: <%= payment.amount %></p>
-    <p class="payment-date"><%= payment.created_at.strftime("%B %d, %Y") %></p>
+    <p class="payment-date"><%= payment.created_at.strftime('%B %d, %Y') %></p>
   <% end %>
 
   <h3>Charges:</h3>

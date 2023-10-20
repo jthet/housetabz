@@ -10,34 +10,35 @@ class ServicesController < ApplicationController
     @city_of_austin_utilities_service = CityOfAustinUtilitiesService.new(city_of_austin_utilities_params)
 
     if @city_of_austin_utilities_service.save
-            flash[:success] = 'Your service has been successfully added.' 
-            redirect_to user_house_path(current_user, current_user.house) # Redirect to the main house page
-        else
-            flash[:error] = 'Failed to add the service.'
-            render :city_of_austin_utilities
+      flash[:success] = 'Your service has been successfully added.'
+      redirect_to user_house_path(current_user, current_user.house) # Redirect to the main house page
+    else
+      flash[:error] = 'Failed to add the service.'
+      render :city_of_austin_utilities
     end
-    end
+  end
 
-    def city_of_austin_utilities_params
+  def city_of_austin_utilities_params
     params.require(:city_of_austin_utilities_service).permit(:account_number, :house_id)
-    end
+  end
 
   # Action to display the Texas Gas form
   def texas_gas
     @texas_gas_service = TexasGasService.new
   end
+
   # Action to create Texas Gas service
   def create_texas_gas_service
     @texas_gas_service = TexasGasService.new(texas_gas_params)
 
     if @texas_gas_service.save
-        flash[:success] = 'Your service has been successfully added.' 
-        redirect_to user_house_path(current_user, current_user.house) # Redirect to the main house page
+      flash[:success] = 'Your service has been successfully added.'
+      redirect_to user_house_path(current_user, current_user.house) # Redirect to the main house page
     else
-        flash[:error] = 'Failed to add the service.'
-        render :city_of_austin_utilities
+      flash[:error] = 'Failed to add the service.'
+      render :city_of_austin_utilities
     end
-    end
+  end
 
   # Action to display the Wifi form
   def wifi
@@ -49,11 +50,11 @@ class ServicesController < ApplicationController
     @wifi_service = WifiService.new(wifi_params)
 
     if @wifi_service.save
-        flash[:success] = 'Your service has been successfully added.' 
-        redirect_to user_house_path(current_user, current_user.house)
+      flash[:success] = 'Your service has been successfully added.'
+      redirect_to user_house_path(current_user, current_user.house)
     else
-        flash[:error] = 'Failed to add the service.'
-        render :city_of_austin_utilities
+      flash[:error] = 'Failed to add the service.'
+      render :city_of_austin_utilities
     end
   end
 

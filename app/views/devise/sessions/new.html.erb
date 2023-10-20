@@ -4,17 +4,17 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
     <div class="mb-4">
-      <%= f.label :email, class: "block font-bold" %>
-      <%= f.email_field :email, class: "form-input mt-1 block w-full", autofocus: true %>
+      <%= f.label :email, class: 'block font-bold' %>
+      <%= f.email_field :email, class: 'form-input mt-1 block w-full', autofocus: true %>
     </div>
 
     <div class="mb-4">
-      <%= f.label :password, class: "block font-bold" %>
-      <%= f.password_field :password, class: "form-input mt-1 block w-full" %>
+      <%= f.label :password, class: 'block font-bold' %>
+      <%= f.password_field :password, class: 'form-input mt-1 block w-full' %>
     </div>
 
     <div class="text-center">
-      <%= f.submit "Log in", class: "px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700" %>
+      <%= f.submit 'Log in', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
     </div>
 
   <% end %>

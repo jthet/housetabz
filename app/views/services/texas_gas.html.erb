@@ -5,9 +5,8 @@
 <%= form_for @texas_gas_service, url: create_texas_gas_service_path, method: :post do |f| %>
   <div class="mb-4 text-center">
     <%= f.label :account_number, class: 'block font-bold' %>
-    <%= f.text_field :account_number, class: 'form-input mt-1 mx-auto', style: 'width: 50%'%>
+    <%= f.text_field :account_number, class: 'form-input mt-1 mx-auto', style: 'width: 50%' %>
   </div>
-
 
   <div class="text-center">
     <%= f.submit 'Submit', class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>

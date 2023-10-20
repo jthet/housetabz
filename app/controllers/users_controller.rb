@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def send_message
     @user = User.find(params[:id])
     logger.debug("messageParams: #{params.inspect}")
-    @message= Message.new(message_params)
+    @message = Message.new(message_params)
     @message.sender_id = current_user.id
     @message.recipient_id = @user.id
     @message.read = false
@@ -25,18 +25,18 @@ class UsersController < ApplicationController
   end
 
   def mark_as_read
-       @admin_message = AdminMessage.find(params[:id])
-       @admin_message.update(read: true)
-       redirect_to root_path, notice: "Message marked as read."
-      end
+    @admin_message = AdminMessage.find(params[:id])
+    @admin_message.update(read: true)
+    redirect_to root_path, notice: 'Message marked as read.'
+  end
 
   private
 
   def message_params
     params.permit(:message, :recipient_id)
   end
+
   def check_params
     logger.debug("All Params: #{params.inspect}")
   end
 end
-

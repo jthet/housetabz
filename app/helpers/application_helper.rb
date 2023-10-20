@@ -3,7 +3,7 @@ module ApplicationHelper
     if user.profile
       "#{user.profile.first_name&.chr || 'A'}#{user.profile.last_name&.chr || 'Z'}".upcase
     else
-      "AZ"
+      'AZ'
     end
   end
 end

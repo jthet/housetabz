@@ -17,8 +17,6 @@
     </div>
   <% end %>
 
-  
-
   <div class="section-divider flex flex-col md:flex-row justify-center">
     <div class="w-full md:w-1/2 mt-10 mr-10">
       <div class="profile-container">
@@ -40,7 +38,7 @@
                     <% status = user.paid_status ? 'Paid' : 'Unpaid' %>
                     <span class="<%= user.paid_status ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
                   </p>
-                 
+
                 </div>
               </div>
             <% end %>
@@ -81,18 +79,18 @@
                 <% end %>
                 <% if bill.bill_image.attached? && bill.bill_image.content_type == 'application/pdf' %>
                   <div class="bill-image-container hidden">
-                    <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;" />
+                    <embed src="<%= url_for(bill.bill_image) %>" type="application/pdf" class="bill-image" style="width: 50%;">
                   </div>
                 <% end %>
               </div>
             <% end %>
-            <%end%>
+            <% end %>
           </div>
         </div>
 
         <div class="flex flex-col space-y-2">
           <h2 class="text-2xl font-bold mb-4">Paid Tabz:</h2>
-          <% @user.house.paid_bills.group_by { |paid_bill| paid_bill.created_at.strftime("%B") }.each do |month, paid_bills| %>
+          <% @user.house.paid_bills.group_by { |paid_bill| paid_bill.created_at.strftime('%B') }.each do |month, paid_bills| %>
             <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
               <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments(this)"><%= month %></h2>
               <div class="hidden">
@@ -109,15 +107,15 @@
                     </p>
                     <% if paid_bill.created_at %>
                       <p class="text-sm italic text-gray-500">
-                        Final payment received on <%= paid_bill.created_at.strftime("%B %d, %Y") %>
+                        Final payment received on <%= paid_bill.created_at.strftime('%B %d, %Y') %>
                       </p>
                     <% end %>
-                   
+
                   </div>
                 <% end %>
               </div>
             </div>
-            
+
           <% end %>
           <div class="bottom-4 right-4">
   <%= link_to 'House Settings', house_settings_houses_path, class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
@@ -134,7 +132,7 @@
       flashMessages.forEach(function (message) {
         setTimeout(function () {
           message.style.display = "none";
-        }, 8000); 
+        }, 8000);
       });
     });
   </script>
