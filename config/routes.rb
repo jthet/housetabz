@@ -8,28 +8,26 @@ Rails.application.routes.draw do
     registrations: 'registrations'
   }
 
-  root "home_page#index"
+  root 'home_page#index'
 
   resources :users do
-    resource :profile, only: [:new, :create, :show, :edit, :update]
+    resource :profile, only: %i[new create show edit update]
     resources :houses, only: [:show]
   end
 
-  resources :profiles, only: [:new, :create]
-  
+  resources :profiles, only: %i[new create]
+
   get '/my_profile', to: 'profiles#show', as: :my_profile
-  
-  resources :houses, only: [:show, :new] do
+
+  resources :houses, only: %i[show new] do
     post 'join', on: :collection, to: 'houses#join_process'
     get 'house_settings', on: :collection
     get 'add_services', on: :collection
   end
-  
 
   resources :charges do
     post 'send_reminder', on: :member
   end
-  
 
   get 'house/join', to: 'houses#join', as: 'join_house'
   post 'house/join', to: 'houses#join_process'
@@ -47,7 +45,7 @@ Rails.application.routes.draw do
 
   get 'texas_gas', to: 'services#texas_gas'
   post 'create_texas_gas_service', to: 'services#create_texas_gas_service'
-  
+
   get 'wifi', to: 'services#wifi'
   post 'create_wifi_service', to: 'services#create_wifi_service'
 
@@ -65,14 +63,14 @@ Rails.application.routes.draw do
 
   get 'about', to: 'home_page#about', as: 'about'
 
-  resources :contacts, only: [:new, :create]
+  resources :contacts, only: %i[new create]
 
   resources :users do
     member do
       post 'send_message'
     end
   end
-  
+
   put '/messages/:id/mark_as_read', to: 'messages#mark_as_read', as: 'mark_as_read_message'
   get '/messages/show', to: 'messages#show', as: 'messages_show'
 
@@ -85,5 +83,4 @@ Rails.application.routes.draw do
   resources :houses do
     resources :bills, only: [:show] # This will create a route for viewing a specific bill
   end
-  
 end

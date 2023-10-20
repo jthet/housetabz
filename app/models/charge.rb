@@ -16,12 +16,13 @@ class Charge < ApplicationRecord
 
   scope :unpaid, -> { where(status: 'unpaid') }
 
-  def self.ransackable_attributes(auth_object = nil)
-    ['amount', 'name', 'status', 'estimated', 'bill_id', "admin", "created_at", "divided_amount", "email", "first_name", "house_id", "id", "paid_status", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at", "username", "tab_id"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[amount name status estimated bill_id admin created_at divided_amount email
+       first_name house_id id paid_status remember_created_at reset_password_sent_at reset_password_token updated_at username tab_id]
   end
 
-  def self.ransackable_associations(auth_object = nil)
-    ["bill", "charge_payments", "payments", "user"]
+  def self.ransackable_associations(_auth_object = nil)
+    %w[bill charge_payments payments user]
   end
 
   def set_name_from_bill
@@ -58,13 +59,13 @@ class Charge < ApplicationRecord
     house_tab_fee_amount = (total_unpaid_charges * 0.03).ceil(2)
 
     # Find or create the HouseTabFee record for the user
-    house_tab_fee = HouseTabFee.find_or_create_by(user: user, status: 'unpaid')
+    house_tab_fee = HouseTabFee.find_or_create_by(user:, status: 'unpaid')
 
     # Update the amount of the HouseTabFee
     house_tab_fee.update(amount: house_tab_fee_amount)
 
     # Find the HouseTab Fee charge for the user (if it exists)
-    house_tab_fee_charge = Charge.find_by(user: user, name: 'HouseTab Fee', bill: nil)
+    house_tab_fee_charge = Charge.find_by(user:, name: 'HouseTab Fee', bill: nil)
 
     if house_tab_fee_charge
       # Update the HouseTab Fee charge amount and status
@@ -72,7 +73,7 @@ class Charge < ApplicationRecord
     else
       # Create a new Charge record for the HouseTab Fee if it doesn't exist
       Charge.create(
-        user: user,
+        user:,
         amount: house_tab_fee_amount,
         status: 'unpaid',
         name: 'HouseTab Fee',

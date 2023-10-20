@@ -43,14 +43,14 @@
 
       <% if @bill.bill_image.attached? && @bill.bill_image.content_type == 'image/png' %>
         <div class="embed-container rounded overflow-hidden shadow-lg">
-          <%= image_tag @bill.bill_image, style: "max-width: 100%; height: auto; max-height: 300px;" %>
+          <%= image_tag @bill.bill_image, style: 'max-width: 100%; height: auto; max-height: 300px;' %>
         </div>
       <% end %>
     </div>
 
     <h2 class="text-lg font-bold mb-2">Users who have not paid:</h2>
     <ul>
-      <% @bill.charges.where(status: 'unpaid').each do |charge| %>
+      <% @bill.charges.where(status: 'unpaid').find_each do |charge| %>
         <li class="flex items-center justify-between mb-2">
           <%= charge.user.username %> <!-- Assuming you have a profile association -->
           <%= button_to 'Send Reminder', '', class: 'reminder-button' %>
@@ -60,7 +60,7 @@
 
     <h2 class="text-lg font-bold mt-4 mb-2">Users who have Paid:</h2>
     <ul>
-      <% @bill.charges.where(status: 'paid').each do |charge| %>
+      <% @bill.charges.where(status: 'paid').find_each do |charge| %>
         <li>
           <%= charge.user.username %> <!-- Assuming you have a profile association -->
         </li>

@@ -15,9 +15,9 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-  
+
     if @message.save
-      redirect_to member_profile_path(@message.recipient_id), notice: "Message sent successfully."
+      redirect_to member_profile_path(@message.recipient_id), notice: 'Message sent successfully.'
     else
       render :new
     end
@@ -26,16 +26,12 @@ class MessagesController < ApplicationController
   def mark_as_read
     @message = Message.find(params[:id])
     @message.update(read: true)
-    redirect_to root_path, notice: "Message marked as read."
-
+    redirect_to root_path, notice: 'Message marked as read.'
   end
 
-  
-  
   private
-  
+
   def message_params
     params.permit(:message, :recipient_id)
   end
-
 end

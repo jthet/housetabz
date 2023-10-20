@@ -245,33 +245,32 @@
   }
 </style>
 
-
 <div class="desktop-container">
   <div class="profile-container">
     <div class="flex flex-col items-center">
       <h1 class="text-4xl font-bold mb-6"><%= current_user.username %></h1>
-      
+
       <% if @profile.profile_picture.attached? %>
-        <%= image_tag @profile.profile_picture, class: "rounded-full w-48 h-48 mb-6" %>
+        <%= image_tag @profile.profile_picture, class: 'rounded-full w-48 h-48 mb-6' %>
       <% else %>
         <p>No profile picture available.</p>
       <% end %>
-      
+
       <% if @profile %>
         <div class="">
           <p class="text-lg"><strong>First Name:</strong> <%= @profile.first_name %></p>
           <p class="text-lg"><strong>Last Name:</strong> <%= @profile.last_name %></p>
           <p class="text-lg"><strong>Bio:</strong> <%= @profile.bio %></p>
-          
+
           <%= button_to 'Edit Profile', edit_user_profile_path(user_id: current_user.id), method: :get, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8' %>
-          
+
           <div class="balance-container">
   <p><strong>Current Tab:</strong> </p>
   <% balance = current_user.balance&.amount.to_f.ceil(2) %>
-  <% balance = 0 if balance < 0 %>
+  <% balance = 0 if balance.negative? %>
   <p class="balance">$<%= format('%.2f', balance.abs) %></p>
 </div>
-      
+
           <% if @user.house %>
             <div class="house-info">
               <p><strong>My House:</strong> <%= @user.house.name %></p>
@@ -287,17 +286,17 @@
       <% end %>
     </div>
   </div>
-  
+
   <div class="previous-payments-container">
     <h1 class="text-4xl font-bold mb-6">Previous Payments</h1>
-  
+
     <% if current_user.payments.any? %>
       <ul class="space-y-4">
         <% current_user.payments.each do |payment| %>
           <li class="previous-payment">
             <div class="payment-info">
-              <p class="payment-date"><%= payment.created_at.strftime("%B %d, %Y") %></p>
-              <p class="payment-amount">$<%=payment.amount %></p>
+              <p class="payment-date"><%= payment.created_at.strftime('%B %d, %Y') %></p>
+              <p class="payment-amount">$<%= payment.amount %></p>
             </div>
             <% payment.charges.each do |charge| %>
               <p class="charge-info"><%= charge.name %></p>

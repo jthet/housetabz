@@ -12,47 +12,46 @@ class User < ApplicationRecord
   has_many :messages, foreign_key: :recipient_id
   has_many :admin_messages, foreign_key: :recipient_id, class_name: 'AdminMessage'
 
-
   has_many :house_tab_fees
   belongs_to :house, optional: true
-  
+
   validates :username, presence: true, uniqueness: true
 
-  def self.ransackable_associations(auth_object = nil)
-    ["admin_messages", "balance", "charges", "house", "house_tab_fees", "member", "messages", "payments", "profile"]
+  def self.ransackable_associations(_auth_object = nil)
+    %w[admin_messages balance charges house house_tab_fees member messages payments profile]
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["admin", "created_at", "divided_amount", "email", "encrypted_password", "first_name", "house_id", "id", "paid_status", "remember_created_at", "reset_password_sent_at", "reset_password_token", "updated_at", "username"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[admin created_at divided_amount email encrypted_password first_name house_id id
+       paid_status remember_created_at reset_password_sent_at reset_password_token updated_at username]
   end
-  
+
   def has_unpaid_charges?
     charges.unpaid.any?
   end
 
   def calculate_balance
     unpaid_charges_sum = charges.where(status: 'unpaid').sum(:amount)
-    
   end
-  
+
   def update_paid_status
     puts "Updating paid status for User ID: #{id}"
-    
+
     charges_status = charges.reload.pluck(:status)
     puts "Charges Status: #{charges_status}"
-    
+
     unpaid_charges = charges.reload.where.not(status: 'paid')
     puts "Unpaid Charges: #{unpaid_charges.inspect}"
-  
-    self.update(paid_status: unpaid_charges.empty?)
+
+    update(paid_status: unpaid_charges.empty?)
     puts "Paid Status Updated: #{paid_status}"
   end
-  
+
   def soft_delete
     charges_sum = user.charges.sum(:amount)
     payments_sum = user.payments.sum(:amount)
     DeletedUser.create(
-      username: username,
+      username:,
       first_name: profile&.first_name,
       last_name: profile&.last_name,
       charges_sum: charges.sum(:amount),

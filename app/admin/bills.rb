@@ -22,7 +22,7 @@ ActiveAdmin.register Bill do
         if bill.bill_image.attached?
           image_tag(bill.bill_image)
         else
-          content_tag(:span, "No image attached")
+          content_tag(:span, 'No image attached')
         end
       end
     end
@@ -31,7 +31,7 @@ ActiveAdmin.register Bill do
   controller do
     def create
       @bill = Bill.new(bill_params)
-  
+
       if @bill.save
         initialize_tab_for_bill(@bill)
         update_tab_amount(@bill.tab) # Update the tab amount
@@ -42,42 +42,39 @@ ActiveAdmin.register Bill do
         render :new
       end
     end
-  
+
     def destroy
       @bill = Bill.find(params[:id])
-  
+
       # Delete associated charges
       @bill.charges.destroy_all
-  
+
       # Delete the bill
       @bill.destroy
-  
+
       update_tab_amount(@bill.tab) # Update the tab amount
       redirect_to admin_bills_path, notice: 'Bill successfully deleted.'
     end
-  
+
     private
-  
+
     def initialize_tab_for_bill(bill)
       month = bill.created_at.month
       year = bill.created_at.year
-    
+
       house_id = bill.house_id # Get the house_id from the bill
-    
-      tab = Tab.find_or_create_by(month: month, year: year, house_id: house_id)
-      bill.update(tab: tab)
+
+      tab = Tab.find_or_create_by(month:, year:, house_id:)
+      bill.update(tab:)
     end
-  
+
     def bill_params
       params.require(:bill).permit(:name, :amount, :house_id, :bill_image, :estimated, :due_date, :tab_id)
     end
-  
+
     def update_tab_amount(tab)
       total_amount = tab.bills.sum(:amount)
       tab.update(amount: total_amount)
     end
   end
-  
-
-
 end
