@@ -21,6 +21,30 @@ class ChargesController < ApplicationController
     end
   end
 
+  def send_reminder
+    charge = Charge.find(params[:id])
+    user = charge.user
+
+    # Create a message
+    message = user.messages.build(
+      content: params[:reminder_message],
+      sender_id: current_user.id,
+      recipient_id: user.id
+    )
+
+    if message.save
+      # Update the charge to indicate a reminder was sent
+      charge.update(reminder_sent: true)
+
+      flash[:success] = "Reminder sent successfully!"
+    else
+      flash[:error] = "Error sending reminder"
+    end
+
+    redirect_to :back
+  end
+end
+
   private
 
   def calculate_and_create_house_tab_fee(user)

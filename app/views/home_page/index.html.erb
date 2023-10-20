@@ -503,7 +503,7 @@ function showSlide(index) {
         },
       });
 
-     <% if current_user.charges.present? %>
+<% if current_user.charges.present? %>
   <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
   <% if unpaid_charges.any? %>
     const chargeData = <%= unpaid_charges.map { |charge| { name: charge.estimated ? 'Estimated ' + charge.name : charge.name, amount: charge.amount } }.to_json.html_safe %>;

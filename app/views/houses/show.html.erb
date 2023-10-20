@@ -42,7 +42,7 @@
                     <% status = user.paid_status ? 'Paid' : 'Unpaid' %>
                     <span class="<%= user.paid_status ? 'text-green-500' : 'text-red-500' %>">(Status: <%= status %>)</span>
                   </p>
-                  <p class="text-gray-400 italic">Balance: $<%= balance %></p> <!-- New line added -->
+                 
                 </div>
               </div>
             <% end %>
@@ -56,13 +56,20 @@
         <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
           <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="toggleUnpaidBills()">
             <% if @user.house.bills.select { |bill| bill.status == 'unpaid' }.empty? %>
-              Balance:
+              Current Tab: $0:00
             <% else %>
-              Balance: $<%= format('%.2f', @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }) %>
+              Current Tab: $<%= format('%.2f', @user.house.bills.select { |bill| bill.status == 'unpaid' && bill.amount.present? }.sum { |bill| bill.amount.to_f }) %>
             <% end %>
           </h2>
 
           <div id="unpaidBillsContainer" class="hidden">
+             <% if @user.house.bills.select { |bill| bill.status == 'unpaid' }.empty? %>
+    <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
+      <p>
+        <%= @user.house.name %> is all up to date on payments.
+      </p>
+    </div>
+    <% else %>
             <% @user.house.bills.select { |bill| bill.status == 'unpaid' }.each do |bill| %>
               <div class="bg-white rounded-lg shadow-lg p-4 mb-4">
                 <p class="text-lg">
@@ -81,11 +88,12 @@
                 <% end %>
               </div>
             <% end %>
+            <%end%>
           </div>
         </div>
 
         <div class="flex flex-col space-y-2">
-          <h2 class="text-2xl font-bold mb-4">Paid Bills:</h2>
+          <h2 class="text-2xl font-bold mb-4">Paid Tabz:</h2>
           <% @user.house.paid_bills.group_by { |paid_bill| paid_bill.created_at.strftime("%B") }.each do |month, paid_bills| %>
             <div class="bg-white rounded-lg shadow-lg p-4 mb-4 w-[400px]">
               <h2 class="text-2xl font-bold mb-4 hover:text-blue-500 cursor-pointer" onclick="togglePayments(this)"><%= month %></h2>

@@ -23,6 +23,11 @@ Rails.application.routes.draw do
     post 'join', on: :collection, to: 'houses#join_process'
   end
 
+  resources :charges do
+    post 'send_reminder', on: :member
+  end
+  
+
   get 'house/join', to: 'houses#join', as: 'join_house'
   post 'house/join', to: 'houses#join_process'
 
