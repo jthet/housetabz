@@ -72,7 +72,6 @@
   }
   }
 
-
   /* Styles for computer view */
   @media (min-width: 768px) {
     div.hidden.md\:w-1/2.md\:flex.justify-center {
@@ -145,8 +144,6 @@
     </div>
   </div>
 </section>
-
-
 
 <!-- Computer View -->
 <section class="bg-white text-green-500 py-40 border border-gray-300 computer-view">
@@ -235,38 +232,30 @@
   </div>
 </section>
 
-
-
-
-
-
 <footer class="bg-gray-900 text-white py-8">
   <div class="md:w-1/4 mx-auto md:ml-8"> <!-- Added md:ml-8 to move it to the left -->
     <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
     <%= form_for @contact, url: contacts_path do |f| %>
       <div class="mb-4">
-        <%= f.label :name, class: "block text-lg" %>
-        <%= f.text_field :name, class: "block w-full border border-gray-300 px-4 py-2 rounded text-black" %>
+        <%= f.label :name, class: 'block text-lg' %>
+        <%= f.text_field :name, class: 'block w-full border border-gray-300 px-4 py-2 rounded text-black' %>
       </div>
-      
+
        <div class="mb-4">
-        <%= f.label :email, class: "block text-lg" %>
-        <%= f.email_field :email, class: "block w-full border border-gray-300 px-4 py-2 rounded text-black" %>
+        <%= f.label :email, class: 'block text-lg' %>
+        <%= f.email_field :email, class: 'block w-full border border-gray-300 px-4 py-2 rounded text-black' %>
       </div>
-      
+
       <div class="mb-4">
-        <%= f.label :message, class: "block text-lg" %>
-        <%= f.text_area :message, rows: 4, class: "block w-full border border-gray-300 px-4 py-2 rounded text-black" %>
+        <%= f.label :message, class: 'block text-lg' %>
+        <%= f.text_area :message, rows: 4, class: 'block w-full border border-gray-300 px-4 py-2 rounded text-black' %>
       </div>
       <div class="mb-4">
-        <%= f.submit "Submit", class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full" %>
+        <%= f.submit 'Submit', class: 'bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full' %>
       </div>
     <% end %>
   </div>
 </footer>
-
-
-
 
 <script>
 
@@ -297,9 +286,6 @@ function showSlide(index) {
   carouselInner.style.transform = `translateX(${offset}px)`;
 }
 </script>
-  
-
-
 
 <% elsif current_user.profile.nil? %>
    <div class="flex justify-center items-center h-screen">
@@ -389,7 +375,7 @@ function showSlide(index) {
         <div class="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0 text-center">
           <% unpaid_bills_sum = current_user.house.bills.where(status: 'unpaid').sum(:amount) %>
           <h2 class="text-2xl font-bold">
-            <strong><%= current_user.house.name %></strong>: $<%= format('%.2f', unpaid_bills_sum.to_f) %>
+            <strong><%= current_user.house.name %></strong>: <span id="unpaidBillsSum">$0.00</span>
           </h2>
           <div class="flex justify-center" style="height: 300px;"> <!-- Added fixed height -->
             <canvas id="houseDonutChart" style="max-width: 300px;"></canvas>
@@ -400,7 +386,7 @@ function showSlide(index) {
           <h2 class="text-2xl font-bold">
             <strong>My Tab:</strong> $
             <% balance = current_user.balance&.amount.to_f.ceil(2) %>
-            <% balance = 0 if balance < 0 %>
+            <% balance = 0 if balance.negative? %>
             <%= format('%.2f', balance.abs).strip %>
           </h2>
           <div class="flex justify-center" style="height: 300px;"> <!-- Added fixed height -->
@@ -408,11 +394,20 @@ function showSlide(index) {
           </div>
         </div>
       </div>
-      <div class="flex justify-end mt-4">
-        <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Make Payment
-        </a>
-      </div>
+        <div class="flex justify-end mt-4">
+          <a href="/checkout" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Make Payment
+          </a>
+        </div>
+        <div>
+
+        </div>
+        <div class="flex justify-center items-center">
+          <div>Paid-Up Users:</div>
+        </div>
+        <div class="flex justify-center items-center">
+          <div id="paidUsers"></div>
+        </div>
     </div>
   </div>
     </div>
@@ -422,13 +417,13 @@ function showSlide(index) {
     <div class="bg-white rounded-lg shadow-lg p-6"> <!-- Added padding and rounded corners -->
       <h2 class="text-2xl font-bold mb-4">Incoming Messages:</h2>
       <ul class="space-y-4" style="max-height: 400px; overflow-y: auto;"> <!-- Added padding and rounded corners -->
-    
-       <% @incoming_messages.order(created_at: :desc).each do |message| %> 
+
+       <% @incoming_messages.order(created_at: :desc).each do |message| %>
         <% unless message.read %>
           <li class="border-l-4 border-blue-500 pl-4"> <!-- Added a border on the left side -->
             <div class="flex items-center justify-between"> <!-- Added flexbox to align items -->
               <div class="flex items-center space-x-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" height="1em" viewBox="0 0 448 512" fill="currentColor"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" height="1em" viewBox="0 0 448 512" fill="currentColor"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" /></svg>
                 <strong class="text-blue-600">From: <%= message.sender.username %></strong>
               </div>
               <div>
@@ -437,7 +432,7 @@ function showSlide(index) {
             </div>
             <p class="text-gray-800"><%= message.message %></p>
             <div class="mt-2">
-              <%= button_to "Mark as Read", mark_as_read_message_path(message), method: :put, class: 'text-white bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded' %> <!-- Styled the button -->
+              <%= button_to 'Mark as Read', mark_as_read_message_path(message), method: :put, class: 'text-white bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded' %> <!-- Styled the button -->
             </div>
           </li>
         <% end %>
@@ -451,7 +446,7 @@ function showSlide(index) {
   <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com
        License - https://fontawesome.com/license (Commercial License)
        Copyright 2023 Fonticons, Inc. -->
-  <path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z"/>
+  <path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z" />
 </svg>
 
                 <strong class="text-green-500">From: HouseTabz</strong>
@@ -462,7 +457,7 @@ function showSlide(index) {
             </div>
             <p class="text-gray-800"><%= admin_message.message %></p>
             <div class="mt-2">
-              <%= button_to "Mark as Read", mark_as_read_user_path(admin_message), method: :put, class: 'text-white bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded' %> <!-- Styled the button -->
+              <%= button_to 'Mark as Read', mark_as_read_user_path(admin_message), method: :put, class: 'text-white bg-green-500 hover:bg-green-600 font-bold py-2 px-4 rounded' %> <!-- Styled the button -->
             </div>
           </li>
         <% end %>
@@ -471,7 +466,6 @@ function showSlide(index) {
   </div>
 </div>
 
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
@@ -479,9 +473,31 @@ function showSlide(index) {
       const houseDonutChartCanvas = document.getElementById('houseDonutChart');
       const billsDonutChartCanvas = document.getElementById('billsDonutChart');
 
-      const houseMembers = <%= current_user.house.users.map { |user| user.profile&.first_name }.to_json.html_safe %>;
+      const houseMembers = <%= current_user.house.users.map { |user| [user.profile&.first_name, user.profile&.last_name].compact.join(' ') }.to_json.html_safe %>;
+      const houseMembersID = <%= current_user.house.users.map(&:id) %>;
+      const houseMembersBalance = <%= current_user.house.users.map { |user| user.balance&.amount } %>;
       const donutBackgroundColor = <%= current_user.house.users.map { |user| user.paid_status ? '#48bb78' : '#ef4444' }.to_json.html_safe %>;
-      const donutData = Array(houseMembers.length).fill(1);
+      const donutData = Array(houseMembers.length);
+
+      const totalHouseBalance = houseMembersBalance.reduce(function (accumulator, currentValue) {
+        return accumulator + currentValue;
+      }, 0);
+
+      const unpaidBillsSumElement = document.getElementById('unpaidBillsSum');
+      unpaidBillsSumElement.innerHTML = `$${totalHouseBalance.toFixed(2)}`;
+
+      const namesWithZeroBalance = [];
+
+      for (let i = 0; i < houseMembers.length; i++) {
+        if (houseMembersBalance[i] === 0) {
+          namesWithZeroBalance.push(houseMembers[i]);
+        }
+      }
+
+      console.log(namesWithZeroBalance);
+
+      const paidUsersElement = document.getElementById('paidUsers');
+      paidUsersElement.innerHTML = namesWithZeroBalance.map(name => `<div>${name}</div>`).join('');
 
       new Chart(houseDonutChartCanvas, {
         type: 'doughnut',
@@ -489,7 +505,7 @@ function showSlide(index) {
           labels: houseMembers.map((user) => `${user}`),
           datasets: [
             {
-              data: donutData,
+              data: houseMembersBalance,
               backgroundColor: donutBackgroundColor,
             },
           ],
@@ -503,10 +519,10 @@ function showSlide(index) {
         },
       });
 
-<% if current_user.charges.present? %>
+     <% if current_user.charges.present? %>
   <% unpaid_charges = current_user.charges.where(status: 'unpaid') %>
   <% if unpaid_charges.any? %>
-    const chargeData = <%= unpaid_charges.map { |charge| { name: charge.estimated ? 'Estimated ' + charge.name : charge.name, amount: charge.amount } }.to_json.html_safe %>;
+    const chargeData = <%= unpaid_charges.map { |charge| { name: charge.estimated ? "Estimated #{charge.name}" : charge.name, amount: charge.amount } }.to_json.html_safe %>;
     const billChartBackgroundColors = ['#f97316', '#ef4444', '#06b6d4', '#d946ef']; // Update with appropriate colors
   <% else %>
     const chargeData = [{ name: 'You have no current charges!', amount: 100 }]; // Update with an appropriate value
@@ -540,7 +556,5 @@ function showSlide(index) {
   </script>
 <% end %>
 
-
-
-
 <% end %>
+
