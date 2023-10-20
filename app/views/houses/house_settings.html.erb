@@ -1,0 +1,30 @@
+<p>Walt</p>
+<div>House Information</div>
+<div class="bottom-4 right-4">
+  <a href="#" id="open-modal">Add services</a>
+</div>
+
+<!-- Modal -->
+<div id="services-modal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+  <div class="modal-container bg-white w-1/2 p-8 shadow-md rounded">
+    <%= render 'houses/add_services' %>
+    <button id="close-modal" class="mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">Close</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const openModalButton = document.getElementById('open-modal');
+    const closeModalButton = document.getElementById('close-modal');
+    const modal = document.getElementById('services-modal');
+  
+    openModalButton.addEventListener('click', function() {
+      modal.classList.remove('hidden');
+    });
+  
+    closeModalButton.addEventListener('click', function() {
+      modal.classList.add('hidden');
+    });
+  });
+
+  </script>

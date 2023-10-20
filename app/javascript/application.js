@@ -5,3 +5,7 @@ import "controllers"
 
 
 //= require rails-ujs
+
+// app/assets/javascripts/application.js
+
+//= require add_services

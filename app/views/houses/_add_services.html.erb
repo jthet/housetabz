@@ -1,0 +1,20 @@
+<h1 class="text-3xl font-bold mb-4">Add Services</h1>
+
+<div class="flex justify-center items-center mt-4">
+  <div class="w-full md:w-2/3 lg:w-1/2 bg-white p-8 shadow-md rounded">
+    <h2 class="text-2xl font-bold mb-4">Available Services:</h2>
+
+    <!-- List of available services with links to their respective pages -->
+    <ul class="list-none pl-0">
+      <li class="mb-2">
+        <%= link_to "City of Austin Utilities", city_of_austin_utilities_path, class: "text-blue-500 hover:underline" %>
+      </li>
+      <li class="mb-2">
+        <%= link_to "Texas Gas", texas_gas_path, class: "text-blue-500 hover:underline" %>
+      </li>
+      <li>
+        <%= link_to "Wifi", wifi_path, class: "text-blue-500 hover:underline" %>
+      </li>
+    </ul>
+  </div>
+</div>

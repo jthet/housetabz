@@ -21,7 +21,10 @@ Rails.application.routes.draw do
   
   resources :houses, only: [:show, :new] do
     post 'join', on: :collection, to: 'houses#join_process'
+    get 'house_settings', on: :collection
+    get 'add_services', on: :collection
   end
+  
 
   resources :charges do
     post 'send_reminder', on: :member

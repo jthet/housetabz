@@ -17,9 +17,7 @@
     </div>
   <% end %>
 
-  <div class="text-center mt-4">
-    <%= link_to 'Add New Services', add_services_house_path, class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
-  </div>
+  
 
   <div class="section-divider flex flex-col md:flex-row justify-center">
     <div class="w-full md:w-1/2 mt-10 mr-10">
@@ -119,11 +117,16 @@
                 <% end %>
               </div>
             </div>
+            
           <% end %>
+          <div class="bottom-4 right-4">
+  <%= link_to 'House Settings', house_settings_houses_path, class: 'px-4 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700' %>
+</div>
         </div>
       </div>
     </div>
   </div>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const flashMessages = document.querySelectorAll(".flash-success, .flash-error");

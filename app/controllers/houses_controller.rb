@@ -20,6 +20,13 @@ class HousesController < ApplicationController
         end
       end
       
+      def house_settings
+        # Add any logic you need for the house settings page
+      end
+
+      def add_services
+        render 'add_services', layout: false
+      end
         def join
           # Render the view for joining a house
         end
