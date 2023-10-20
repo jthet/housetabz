@@ -1,29 +1,93 @@
+
+<style>
+.house-info-container {
+  font-family: Arial, sans-serif;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label {
+  flex: 1;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.data {
+  flex: 3;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  font-size: 16px;
+  color: #333;
+}
+
+.separator {
+  border: 1px solid #555;
+  margin: 10px 0;
+}
+
+
+</style>
 <% if current_user.house %>
-  <h2 class="text-xl font-bold mb-4">House Information</h2>
+  <div class="house-info-container">
+    <h2 class="section-title">House Information</h2>
 
-<h3 class="text-lg font-bold mb-2">Name:</h3>
-<%=current_user.house.name%>
-  <h3 class="text-lg font-bold mb-2">Users:</h3>
-  <ul>
-    <% current_user.house.users.each do |user| %>
-      <li><%= user.username %></li>
-    <% end %>
-  </ul>
+    <div class="row">
+      <div class="label">Name:</div>
+      <div class="data"><%= current_user.house.name %></div>
+    </div>
+    <hr class="separator">
 
-  <h3 class="text-lg font-bold mb-2">Bills:</h3>
-  <ul>
-    <% current_user.house.bills.each do |bill| %>
-      <li>
-        Name: <%= bill.name %>, 
-        Amount: $<%= format('%.2f', bill.amount) %>, 
-        Created At: <%= bill.created_at.strftime('%B %d, %Y') %>, 
-        Due Date: <%= bill.due_date.present? ? bill.due_date.strftime('%B %d, %Y') : 'N/A' %>
-      </li>
-    <% end %>
-  </ul>
+    <div class="row">
+      <div class="label">Users:</div>
+      <div class="data">
+        <ul class="list">
+          <% current_user.house.users.each do |user| %>
+            <li><%= user.username %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <hr class="separator">
 
-  <h3 class="text-lg font-bold mb-2">Address:</h3>
-  <p><%= current_user.house.address %></p>
+    <div class="row">
+      <div class="label">Bills:</div>
+      <div class="data">
+        <ul class="list">
+          <% current_user.house.bills.each do |bill| %>
+            <li>
+              Name: <%= bill.name %>, 
+              Amount: $<%= format('%.2f', bill.amount) %>, 
+              Created At: <%= bill.created_at.strftime('%B %d, %Y') %>, 
+              Due Date: <%= bill.due_date.present? ? bill.due_date.strftime('%B %d, %Y') : 'N/A' %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <hr class="separator">
+
+    <div class="row">
+      <div class="label">Address:</div>
+      <div class="data"><%= current_user.house.address %></div>
+    </div>
+  </div>
 <% else %>
   <p>No house information available.</p>
 <% end %>
