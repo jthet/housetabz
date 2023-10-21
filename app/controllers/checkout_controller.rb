@@ -12,12 +12,13 @@ class CheckoutController < ApplicationController
       return
     end
 
-    cancel_url = 'https://50c8-2600-387-f-7113-00-9.ngrok-free.app/checkout' # Replace with your cancel URL
-    success_url = "https://50c8-2600-387-f-7113-00-9.ngrok-free.app/checkout_success?user_id=#{user_id}&price=#{custom_price}"
+    cancel_url = 'http://127.0.0.1/checkout' # Replace with your cancel URL
+    success_url = "http://127.0.0.1/checkout_success?user_id=#{user_id}&price=#{custom_price}"
+
 
     session = Stripe::Checkout::Session.create(
-      success_url:,
-      cancel_url:,
+      success_url: success_url,
+      cancel_url: cancel_url,
       payment_method_types: ['card'],
       metadata: {
         user_id: user_id.to_s
@@ -36,19 +37,10 @@ class CheckoutController < ApplicationController
     )
 
     render json: { id: session.id }
-  rescue Stripe::StripeError => e
-    render json: { error: e.message }, status: :unprocessable_entity
-  end
-
-  def checkout_success
-    user_id = params[:user_id].to_i
-    custom_price = params[:price].to_f
-
-    webhooks_controller = WebhooksController.new
-    webhooks_controller.handle_successful_payment(user_id, custom_price)
-
-    render 'checkout/checkout_success'
-  end
+    rescue Stripe::StripeError => e
+      puts "Stripe Error: #{e.message}"
+      render json: { error: e.message }, status: :unprocessable_entity
+    end
 
   def checkout_success
     user_id = params[:user_id].to_i
