@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/charge.rb
 class Charge < ApplicationRecord
   belongs_to :user

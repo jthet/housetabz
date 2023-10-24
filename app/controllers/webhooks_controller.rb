@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -9,7 +11,7 @@ class WebhooksController < ApplicationController
     # Verify the signature
     begin
       event = Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
-    rescue JSON::ParserError, Stripe::SignatureVerificationError => e
+    rescue JSON::ParserError, Stripe::SignatureVerificationError
       # Invalid payload or signature
       return head :bad_request
     end
@@ -66,11 +68,11 @@ class WebhooksController < ApplicationController
       end
 
       # Create the payment record
-      payment = Payment.create(user_id: user_id, amount: amount_paid)
+      payment = Payment.create(user_id:, amount: amount_paid)
 
       # Associate the charges with the payment
       charges_to_cover.each do |charge|
-        ChargePayment.create(payment: payment, charge: charge)
+        ChargePayment.create(payment:, charge:)
       end
 
       # Update the paid status of the user
@@ -78,7 +80,7 @@ class WebhooksController < ApplicationController
 
       puts "User: #{user_id}"
       puts "Amount: #{amount_paid}"
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       puts "User not found with ID: #{user_id}"
       # You can add additional error handling or logging here if needed
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCityOfAustinUtilitiesServices < ActiveRecord::Migration[6.0]
   def change
     create_table :city_of_austin_utilities_services do |t|

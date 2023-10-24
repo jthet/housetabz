@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register AdminMessage do
   permit_params :sender_id, :recipient_id, :message
 

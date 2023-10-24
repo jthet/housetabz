@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/tab.rb
 class Tab < ApplicationRecord
   belongs_to :house

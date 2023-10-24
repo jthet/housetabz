@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/texas_gas_service.rb
 
 class TexasGasService < ApplicationRecord

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register House do
   permit_params :name, :address
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Bill do
   permit_params :name, :amount, :house_id, :bill_image, :due_date
 
