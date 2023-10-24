@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/controllers/services_controller.rb
 
 class ServicesController < ApplicationController
@@ -59,11 +61,6 @@ class ServicesController < ApplicationController
   end
 
   private
-
-  # Strong parameters for City of Austin Utilities form
-  def city_of_austin_utilities_params
-    params.require(:city_of_austin_utilities_service).permit(:account_number, :other_attributes)
-  end
 
   # Strong parameters for Texas Gas form
   def texas_gas_params

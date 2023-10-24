@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/wifi_service.rb
 
 class WifiService < ApplicationRecord

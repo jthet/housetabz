@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/charge.rb
 class Charge < ApplicationRecord
   belongs_to :user
@@ -39,7 +41,7 @@ class Charge < ApplicationRecord
   end
 
   def update_bill_status
-    return unless bill.present?
+    return if bill.blank?
 
     if bill.charges.all?(&:paid?)
       bill.update(status: 'paid')

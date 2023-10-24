@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebhooksController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -9,7 +11,7 @@ class WebhooksController < ApplicationController
     # Verify the signature
     begin
       event = Stripe::Webhook.construct_event(payload, sig_header, webhook_secret)
-    rescue JSON::ParserError, Stripe::SignatureVerificationError => e
+    rescue JSON::ParserError, Stripe::SignatureVerificationError
       # Invalid payload or signature
       return head :bad_request
     end
@@ -78,12 +80,11 @@ class WebhooksController < ApplicationController
 
       puts "User: #{user_id}"
       puts "Amount: #{amount_paid}"
-    rescue ActiveRecord::RecordNotFound => e
+    rescue ActiveRecord::RecordNotFound
       puts "User not found with ID: #{user_id}"
       # You can add additional error handling or logging here if needed
     end
   end
-
   # Make the handle_successful_payment method accessible from outside
   public :handle_successful_payment
 end
