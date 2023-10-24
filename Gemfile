@@ -8,13 +8,6 @@ gem 'rails', '~> 7.0.5'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-# Linter
-gem 'rubocop', require: false
-
-gem 'rubocop-rails', require: false
-
-# erb file linter
-gem 'erb_lint', require: false
 
 # Use pg as the database for Active Record
 gem 'pg', '~> 1.1'
@@ -58,11 +51,20 @@ gem 'bootsnap', require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-end
 
-group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem 'web-console'
+
+  gem 'bundler-audit'
+
+  gem 'brakeman', require: false
+
+  # Linter
+  gem 'rubocop', require: false
+
+  gem 'rubocop-rails', require: false
+
+  # erb file linter
+  gem 'erb_lint', require: false
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -76,6 +78,11 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+end
+
+group :development do
+  gem 'web-console'
+  # ... any other development gems
 end
 
 gem 'tailwindcss-rails', '~> 2.0'
@@ -95,3 +102,5 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'dotenv', '~> 2.7', '>= 2.7.6'
 
 gem 'sqlite3', '~> 1.4'
+
+

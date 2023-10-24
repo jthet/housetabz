@@ -43,7 +43,6 @@ class ChargesController < ApplicationController
 
     redirect_to :back
   end
-end
 
   private
 
@@ -78,5 +77,4 @@ end
       )
     end
   end
-  
 end
