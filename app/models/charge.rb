@@ -41,7 +41,7 @@ class Charge < ApplicationRecord
   end
 
   def update_bill_status
-    return unless bill.present?
+    return if bill.blank?
 
     if bill.charges.all?(&:paid?)
       bill.update(status: 'paid')

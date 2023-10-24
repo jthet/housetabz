@@ -36,7 +36,9 @@ ActiveAdmin.register User do
     user = User.find(params[:id])
     profile = user.profile
 
-    if current_admin_user != user
+    if current_admin_user == user
+      redirect_to admin_users_path, alert: 'Admin users cannot be deleted.'
+    else
       # Calculate the sums before destroying associated records
       charges_sum = user.charges.sum(:amount)
       payments_sum = user.payments.sum(:amount)
@@ -69,8 +71,6 @@ ActiveAdmin.register User do
       user.destroy
 
       redirect_to admin_users_path, notice: 'User has been deleted.'
-    else
-      redirect_to admin_users_path, alert: 'Admin users cannot be deleted.'
     end
   end
 
