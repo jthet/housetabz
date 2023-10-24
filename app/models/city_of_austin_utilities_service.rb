@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/models/city_of_austin_utilities_service.rb
 
 class CityOfAustinUtilitiesService < ApplicationRecord

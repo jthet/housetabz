@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class WebhooksControllerTest < ActionDispatch::IntegrationTest
+<<<<<<< HEAD
   test 'should get stripe' do
       mock_payload = {
       #... other Stripe payload data
@@ -10,3 +13,9 @@ class WebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 end
+=======
+  # test "the truth" do
+  #   assert true
+  # end
+end
+>>>>>>> main

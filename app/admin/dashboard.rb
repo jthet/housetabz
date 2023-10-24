@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # app/admin/dashboard.rb
 
 ActiveAdmin.register_page 'Dashboard' do
@@ -58,5 +60,5 @@ ActiveAdmin.register_page 'Dashboard' do
         end
       end
     end
-  end # content
+  end
 end

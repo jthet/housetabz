@@ -15,7 +15,7 @@ run_lint() {
 # Main Script Execution
 
 # Lint Ruby files
-run_lint "Linting .rb files" bundle exec rubocop -a
+run_lint "Linting .rb files" bundle exec rubocop -a --config config/.rubocop.yml --debug --cache false
 
 # Hint for manual autocorrection
 echo "Tip: Manually run 'bundle exec rubocop -A' to force autocorrect."

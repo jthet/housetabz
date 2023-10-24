@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ActiveAdmin.register Tab do
   permit_params :month, :year, :house_id, :amount
 

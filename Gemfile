@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -102,5 +104,3 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'dotenv', '~> 2.7', '>= 2.7.6'
 
 gem 'sqlite3', '~> 1.4'
-
-

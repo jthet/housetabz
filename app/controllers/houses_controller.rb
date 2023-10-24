@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HousesController < ApplicationController
   def show
     @user = current_user
@@ -35,7 +37,7 @@ class HousesController < ApplicationController
   def join_process
     house = House.find_by(name: params[:house_name])
 
-    if house && house.authenticate(params[:house_password])
+    if house&.authenticate(params[:house_password])
       # Associate the house with the current user
       current_user.update_attribute(:house_id, house.id)
       redirect_to user_house_path(current_user, house), notice: 'You have joined the house successfully.'

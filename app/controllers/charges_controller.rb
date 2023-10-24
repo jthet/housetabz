@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChargesController < ApplicationController
   def calculate_charges
     @bills = Bill.all
@@ -14,7 +16,7 @@ class ChargesController < ApplicationController
         # Check if the associated bill is estimated and set the charge's estimated attribute accordingly
         estimated = bill.estimated
 
-        user.charges.create(amount: user_charge, status: 'unpaid', estimated: estimated)
+        user.charges.create(amount: user_charge, status: 'unpaid', estimated:)
 
         calculate_and_create_house_tab_fee(user)
       end
@@ -36,9 +38,9 @@ class ChargesController < ApplicationController
       # Update the charge to indicate a reminder was sent
       charge.update(reminder_sent: true)
 
-      flash[:success] = "Reminder sent successfully!"
+      flash[:success] = 'Reminder sent successfully!'
     else
-      flash[:error] = "Error sending reminder"
+      flash[:error] = 'Error sending reminder'
     end
 
     redirect_to :back
@@ -55,13 +57,13 @@ class ChargesController < ApplicationController
     house_tab_fee_amount = BigDecimal(house_tab_fee_amount.to_s)
 
     # Find or create the HouseTabFee record for the user
-    house_tab_fee = HouseTabFee.find_or_create_by(status: 'unpaid', user: user)
+    house_tab_fee = HouseTabFee.find_or_create_by(status: 'unpaid', user:)
 
     # Update the amount of the HouseTabFee
     house_tab_fee.update(amount: house_tab_fee_amount)
 
     # Find the HouseTab Fee charge for the user (if it exists)
-    house_tab_fee_charge = Charge.find_by(user: user, name: 'HouseTab Fee', bill: nil)
+    house_tab_fee_charge = Charge.find_by(user:, name: 'HouseTab Fee', bill: nil)
 
     if house_tab_fee_charge
       # Update the HouseTab Fee charge amount and status

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -31,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def calculate_balance
-    unpaid_charges_sum = charges.where(status: 'unpaid').sum(:amount)
+    charges.where(status: 'unpaid').sum(:amount)
   end
 
   def update_paid_status
@@ -48,8 +50,8 @@ class User < ApplicationRecord
   end
 
   def soft_delete
-    charges_sum = user.charges.sum(:amount)
-    payments_sum = user.payments.sum(:amount)
+    user.charges.sum(:amount)
+    user.payments.sum(:amount)
     DeletedUser.create(
       username:,
       first_name: profile&.first_name,

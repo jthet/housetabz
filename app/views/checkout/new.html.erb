@@ -28,7 +28,7 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": "<%= form_authenticity_token %>",
+          "X-CSRF-Token": "<%= form_authenticity_token.to_json %>",
         },
         body: JSON.stringify({ price: price }),
       });
@@ -74,7 +74,7 @@
   <form action="/checkout_sessions" method="POST" class="mt-4 flex justify-center">
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <%= hidden_field_tag :user_id, current_user.id %>
-  <input type="number" id="price" name="price" step="0.01" placeholder="Verify your Tab amount" class="border border-gray-400 rounded px-4 py-2 mr-2" required>
+  <input type="number" id="price" name="price" step="0.01" placeholder="Verify your Tab amount" class="border border-gray-400 rounded px-4 py-2 mr-2" autocomplete="on" required>
   <button type="submit" id="checkout-button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-20 rounded">Checkout</button>
 </form>
 <div id="error-message" class="text-red-500 text-sm mt-2 hidden">Entered amount must match your balance.</div>
