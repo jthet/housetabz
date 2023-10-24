@@ -66,11 +66,11 @@ class WebhooksController < ApplicationController
       end
 
       # Create the payment record
-      payment = Payment.create(user_id:, amount: amount_paid)
+      payment = Payment.create(user_id: user_id, amount: amount_paid)
 
       # Associate the charges with the payment
       charges_to_cover.each do |charge|
-        ChargePayment.create(payment:, charge:)
+        ChargePayment.create(payment: payment, charge: charge)
       end
 
       # Update the paid status of the user
@@ -83,7 +83,6 @@ class WebhooksController < ApplicationController
       # You can add additional error handling or logging here if needed
     end
   end
-
   # Make the handle_successful_payment method accessible from outside
   public :handle_successful_payment
 end
