@@ -1,13 +1,26 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  amount: MyString
-  decimal: MyString
-  house: one
+# bills.yml
 
-two:
-  name: MyString
-  amount: MyString
-  decimal: MyString
-  house: two
+bill1:
+  date_issued: <%= Date.current - 7.days %>
+  due_date: <%= Date.current + 7.days %>
+  status: unpaid
+  bill_image: bill1.jpg
+  estimated: false
+  tab_id: 1
+  amount: 150.00
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+bill2:
+  date_issued: <%= Date.current - 14.days %>
+  due_date: <%= Date.current - 7.days %>
+  status: paid
+  bill_image: bill2.jpg
+  estimated: true
+  tab_id: 2
+  amount: 75.00
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+

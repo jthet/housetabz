@@ -1,15 +1,26 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# tabs.yml
 
-one:
-  user: one
+tab1:
   month: 1
-  year: 1
-  total_charges: 9.99
-  total_payments: 9.99
+  year: 2023
+  paid: false
+  amount: 200.00
+  house_id: 1
+  user: user1
+  total_charges: 300.00
+  total_payments: 100.00
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
-two:
-  user: two
-  month: 1
-  year: 1
-  total_charges: 9.99
-  total_payments: 9.99
+tab2:
+  month: 2
+  year: 2023
+  paid: true
+  amount: 250.00
+  house_id: 2
+  user: user2
+  total_charges: 400.00
+  total_payments: 250.00
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>

@@ -27,8 +27,10 @@ development:
   timeout: 5000
 
 test:
-  <<: *default
-  database: housetabz_test
+  adapter: sqlite3 # or postgresql or mysql2, based on what you use
+  database: db/test.sqlite3 # ensure this is pointing to the right location
+  pool: 5
+  timeout: 5000
 
 production:
   url: <%= ENV['DATABASE_URL'] %>

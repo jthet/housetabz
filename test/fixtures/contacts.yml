@@ -1,11 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  email: MyString
-  message: MyText
+# contacts.yml
 
-two:
-  name: MyString
-  email: MyString
-  message: MyText
+contact1:
+  name: John Doe
+  email: john@example.com
+  message: This is a test message from John.
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+contact2:
+  name: Jane Smith
+  email: jane@example.com
+  message: This is a test message from Jane.
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>

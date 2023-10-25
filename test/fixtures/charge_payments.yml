@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# charge_payments.yml
+
+charge_payment1:
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+charge_payment2:
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>

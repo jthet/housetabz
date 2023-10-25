@@ -1,13 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user: one
-  first_name: MyString
-  last_name: MyString
-  bio: MyText
+# profiles.yml
 
-two:
-  user: two
-  first_name: MyString
-  last_name: MyString
-  bio: MyText
+profile1:
+  user_id: 1
+  first_name: John
+  last_name: Doe
+  bio: This is John's profile.
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+profile2:
+  user_id: 2
+  first_name: Jane
+  last_name: Smith
+  bio: This is Jane's profile.
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>

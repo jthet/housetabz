@@ -1,0 +1,22 @@
+# test/fixtures/admin_users.yml
+
+# admin_users.yml
+
+admin_user1:
+  email: admin1@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'password') %>
+  reset_password_token: null
+  reset_password_sent_at: null
+  remember_created_at: null
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+admin_user2:
+  email: admin2@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(AdminUser, 'password') %>
+  reset_password_token: null
+  reset_password_sent_at: null
+  remember_created_at: null
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+

@@ -1,17 +1,27 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  username: MyString
-  first_name: MyString
-  last_name: MyString
-  charges_sum: 9.99
-  payments_sum: 9.99
-  balance_sum: 9.99
+# deleted_users.yml
 
-two:
-  username: MyString
-  first_name: MyString
-  last_name: MyString
-  charges_sum: 9.99
-  payments_sum: 9.99
-  balance_sum: 9.99
+deleted_user1:
+  username: deleted_user1
+  first_name: Alice
+  last_name: Johnson
+  charges_sum: 100.00
+  payments_sum: 50.00
+  balance_sum: 50.00
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+  user_id: 1
+  balance: 50.00
+
+deleted_user2:
+  username: deleted_user2
+  first_name: Bob
+  last_name: Smith
+  charges_sum: 75.00
+  payments_sum: 75.00
+  balance_sum: 0.00
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>
+  user_id: 2
+  balance: 0.00

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Bill < ApplicationRecord
   belongs_to :house
   belongs_to :tab, optional: true

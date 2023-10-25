@@ -1,9 +1,11 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @user = users(:john_doe) # Get the user labeled "one" from users.yml
+  end
+
+  def test_username
+    assert_equal 'john_doe', @user.username
+  end
 end

@@ -1,13 +1,19 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# houses.yml
 
-one:
-  name: MyString
-  address: MyString
-  password_digest: MyString
-  joinable: false
+# houses.yml
 
-two:
-  name: MyString
-  address: MyString
-  password_digest: MyString
+house1:
+  name: House A
+  address: 123 Main Street
+  password_digest: <%= BCrypt::Password.create('password') %>
   joinable: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+
+house2:
+  name: House B
+  address: 456 Elm Street
+  password_digest: <%= BCrypt::Password.create('password') %>
+  joinable: true
+  created_at: <%= Time.current - 1.day %>
+  updated_at: <%= Time.current - 1.day %>

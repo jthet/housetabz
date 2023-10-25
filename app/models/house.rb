@@ -7,6 +7,9 @@ class House < ApplicationRecord
   has_many :tabs
   has_many :paid_bills
 
+  validates :name, presence: true
+  validates :address, presence: true
+
   def self.ransackable_attributes(_auth_object = nil)
     %w[address created_at id joinable name password_digest updated_at bills_id tabs_id]
   end

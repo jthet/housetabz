@@ -53,7 +53,7 @@ class User < ApplicationRecord
     user.charges.sum(:amount)
     user.payments.sum(:amount)
     DeletedUser.create(
-      username:,
+      username: username,
       first_name: profile&.first_name,
       last_name: profile&.last_name,
       charges_sum: charges.sum(:amount),

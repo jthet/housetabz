@@ -1,13 +1,20 @@
+# test/fixtures/admin_messages.yml
+
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+admin_message1:
   sender_id: 1
-  recipient_id: 1
-  message: MyText
+  recipient_id: 2
+  message: This is the first admin message.
   read: false
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
-two:
-  sender_id: 1
+admin_message2:
+  sender_id: 2
   recipient_id: 1
-  message: MyText
-  read: false
+  message: Reply to the first admin message.
+  read: true
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
+

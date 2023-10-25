@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ChargePayment < ApplicationRecord
   belongs_to :payment
   belongs_to :charge
